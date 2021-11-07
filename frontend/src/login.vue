@@ -1,18 +1,37 @@
 <template>
   <div id="app">
+    <form @submit.prevent="register">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
 <div class="wrapper fadeInDown">
   <div id="formContent">
-    <br>
+    <!-- Tabs Titles -->
 
-    <form @submit.prevent="register">
-      <input type="text" id="register" class="fadeIn first" name="register" placeholder="Email" v-model="email">
-      <input type="text" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
-      <input type="submit" class="fadeIn fourth" value="Registracija">
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form>
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
+    <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="/login">Već ste korisnik?</a>
+      <a class="underlineHover" href="#">Forgot Password?</a>
     </div>
 
   </div>
