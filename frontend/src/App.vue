@@ -29,10 +29,7 @@ export default {
     async register(){
       let a={
         email:this.email,
-        lozinka:this.password.toString(),
-        ime:'joe',
-        prezime:'mama',
-        admin_id:1
+        lozinka:this.password.toString()
       }
       await Registracija.register(a);
     }
