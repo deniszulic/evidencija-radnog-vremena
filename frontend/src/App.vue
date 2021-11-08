@@ -17,6 +17,22 @@
 
   </div>
 </div>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <br>
+
+    <form @submit.prevent="login">
+      <input type="text" id="login" class="fadeIn first" name="login" placeholder="Email" v-model="email_login">
+      <input type="text" id="password" class="fadeIn second" name="login" placeholder="lozinka" v-model="password_login">
+      <input type="submit" class="fadeIn fourth" value="Login">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="/login">Već ste korisnik?</a>
+    </div>
+
+  </div>
+</div>
 
 
   </div><!-- app -->
@@ -29,16 +45,26 @@ export default {
   data(){
     return{
       email:'',
-      password:''
+      password:'',
+      email_login:'',
+      password_login:''
     }
   },
   methods:{
     async register(){
       let a={
         email:this.email,
-        lozinka:this.password.toString()
+        lozinka:this.password.toString(),
+        admin:false
       }
       await Registracija.register(a);
+    },
+    async login(){
+      let a={
+        email:this.email_login,
+        lozinka:this.password_login.toString()
+      }
+      await Registracija.log(a);
     }
   }
 }
