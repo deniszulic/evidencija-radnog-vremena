@@ -18,4 +18,20 @@ let Registracija = {
         return true*/
   },
 };
-export { Registracija };
+let Auth={
+    getUser(){
+        return JSON.parse(localStorage.getItem("user"))
+    },
+    logout(){
+        localStorage.removeItem('user');
+    },
+    state:{
+        get admin(){
+            let user=Auth.getUser();
+            if(user){
+                return user[0].admin
+            }
+        }
+    }
+}
+export { Registracija, Auth };

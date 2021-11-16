@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-if="state==true || state==false">
+      <router-view/>
+      </div>
+      <div v-else>
+        <pocetna/>
+        </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+//import HelloWorld from '@/components/HelloWorld.vue'
+import { Auth } from "@/services";
+import pocetna from './pocetna.vue';
 export default {
+  components: { pocetna },
   name: 'Home',
-  components: {
-    HelloWorld
-  }
+  data(){
+    return{
+      state:Auth.state.admin
+    }
+  },
 }
 </script>

@@ -1,51 +1,6 @@
 <template>
-  <div id="app">
     <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <router-link to="pocetna">Home <span class="sr-only"></span></router-link>
-      </li>
-      <li class="nav-item active">
-        <router-link to="login">Login <span class="sr-only"></span></router-link>
-      </li>
-      <li class="nav-item active">
-        <router-link to="register"> Register <span class="sr-only"></span></router-link>
-      </li>
-      <li class="nav-item active" >
-        <a v-if="state==false"
-                    @click.prevent="logout"
-                    class="btn btn-danger my-2 my-sm-0 mr-2"
-                    href="#"
-                  >Logout</a>
-      </li>
-    </ul>
-  </div>
-</nav></div>
-<!--
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <br>
-
-    <form @submit.prevent="register">
-      <input type="text" id="register" class="fadeIn first" name="register" placeholder="Email" v-model="email">
-      <input type="text" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
-      <input type="submit" class="fadeIn fourth" value="Registracija">
-    </form>
-
-    <div id="formFooter">
-      <a class="underlineHover" href="/login">Već ste korisnik?</a>
-    </div>
-
-  </div>
-</div>
-<div class="wrapper fadeInDown">
+    <div class="wrapper fadeInDown">
   <div id="formContent">
     <br>
 
@@ -60,61 +15,37 @@
     </div>
 {{usao}}
   </div>
-</div>-->
-<div class="container">
-<router-view/>
 </div>
-
-
-  </div><!-- app -->
+    </div>
 </template>
-
 <script>
 import {Registracija} from "@/services";
 import { Auth } from "@/services";
 export default {
-  name: 'App',
+  name: 'login',
   data(){
     return{
-      email:'',
-      password:'',
       email_login:'',
       password_login:'',
-      usao:'',
-      state:Auth.state.admin
+      usao:''
     }
   },
-  methods: {
-    logout() {
-      Auth.logout();
-      this.$router.push({ path: 'pocetna' });
-    }
-  }
-  /*methods:{
-    async register(){
-      let a={
-        email:this.email,
-        lozinka:this.password.toString(),
-        admin:false
-      }
-      await Registracija.register(a);
-    },
+  methods:{
     async login(){
       let a={
         email:this.email_login,
         lozinka:this.password_login.toString()
       }
       await Registracija.log(a);
-      if(/*log==true &&*/ /*Auth.state.admin==false){
+      if(/*log==true && */Auth.state.admin==false){
         this.usao="jesam";
         this.$router.push({name:"korisnik"})
       }
       else{this.usao=Auth.state.admin}
     }
-  }*/
+  }
 }
 </script>
-
 <style>
 
 /* BASIC */
