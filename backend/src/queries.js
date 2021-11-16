@@ -1,4 +1,5 @@
-import bcrypt from "bcrypt";
+require("dotenv").config();
+import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const Pool = require('pg').Pool
@@ -34,14 +35,29 @@ const createUser = async (request, response) => {
 }
 const login = async (request, response) => {
   const { email,lozinka} = request.body
-  pool.query('SELECT lozinka FROM korisnik WHERE email=$1', [email], (error, results) => {
+  pool.query('SELECT lozinka, admin, email FROM korisnik WHERE email=$1', [email], (error, results) => {
     if (error) {
       throw error
     }
-    if(results.rows[0].lozinka && bcrypt.compare(lozinka,results.rows.lozinka)){
-      console.log("ok boomer")
-    }
-    console.log(results.rows[0].lozinka)
+    //console.log(results.rows[0].admin)
+    bcrypt.compare(lozinka, results.rows[0].lozinka).then(function(result) { 
+      if(result && results.rows[0].lozinka){
+        delete results.rows[0].lozinka;
+        console.log(results.rows)
+        let token = jwt.sign(email, process.env.JWT_KEY, 
+          {algorithm: "HS512"},
+          {expiresIn: "7d"}
+        );
+        return{
+          token,
+          admin:results.rows[0].admin,
+          email:results.rows[0].email
+        }
+      }
+      else{
+        throw new Error("Cannot authenticate");
+      }
+  });
     response.status(200).json(results.rows);
   })
 }
