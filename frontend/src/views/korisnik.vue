@@ -11,6 +11,11 @@ export default{
     return{
       admin:Auth.state.admin
     }
+  },
+  watch:{
+    getFullPath(){
+    this.usao()
+  }
   }
 }
 </script>

@@ -2,32 +2,56 @@
   <div id="app">
     <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <a class="navbar-brand" href="#page-top"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="30"></a>
+                
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><router-link to="pocetna" class="nav-link">Home <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link to="register"  class="nav-link"> Register <span class="sr-only"></span></router-link></li>
+                    
+                    <li class="nav-item active" >
+                    <router-link to="calendar" v-if="state==false" class="nav-link"> Upiši sate <span class="sr-only"></span></router-link>
+      </li>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <router-link to="pocetna">Home <span class="sr-only"></span></router-link>
-      </li>
-      <li class="nav-item active">
-        <router-link to="login">Login <span class="sr-only"></span></router-link>
-      </li>
-      <li class="nav-item active">
-        <router-link to="register"> Register <span class="sr-only"></span></router-link>
-      </li>
-      <li class="nav-item active" >
+                    <li class="nav-item active" >
         <a v-if="state==false"
                     @click.prevent="logout"
                     class="btn btn-danger my-2 my-sm-0 mr-2"
                     href="#"
                   >Logout</a>
       </li>
-    </ul>
-  </div>
-</nav></div>
+                    
+                    </ul>
+                </div>
+
+</nav>
+
+<!-- Navigation
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container px-4">
+                <a class="navbar-brand" href="#page-top"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="50"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><router-link to="pocetna" class="nav-link">Home <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link to="register" class="nav-link"> Register <span class="sr-only"></span></router-link></li>
+                    
+                    <li class="nav-item active" >
+        <a v-if="state==false"
+                    @click.prevent="logout"
+                    class="btn btn-danger my-2 my-sm-0 mr-2"
+                    href="#"
+                  >Logout</a>
+      </li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </nav>-->
+
+</div>
 <!--
 <div class="wrapper fadeInDown">
   <div id="formContent">
