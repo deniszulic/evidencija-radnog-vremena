@@ -44,6 +44,9 @@ export default {
        // this.store.state=Auth.state.admin;
         this.$router.push({name:"korisnik"})
       }
+      else if(Auth.state.admin==true){
+        this.$router.push({name:"admin"})
+      }
       else{this.usao=Auth.state.admin}
     }
   }

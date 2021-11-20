@@ -11,7 +11,7 @@
                         <li class="nav-item"><router-link v-if="store.state==null" to="register"  class="nav-link"> Register <span class="sr-only"></span></router-link></li>
                     
                     <li class="nav-item active" >
-                    <router-link to="calendar" v-if="store.state!=null" class="nav-link"><!--{{state}}--> Upiši sate <span class="sr-only"></span></router-link>
+                    <router-link to="calendar" v-if="store.state==false" class="nav-link"><!--{{state}}--> Upiši sate <span class="sr-only"></span></router-link>
       </li>
 
                     <li class="nav-item active" >

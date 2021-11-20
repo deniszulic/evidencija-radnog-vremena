@@ -41,6 +41,11 @@ const routes = [
     path: '/pocetna',
     name: 'pocetna',
     component: () => import('../views/pocetna.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../views/admin.vue')
   }
 ]
 
@@ -57,6 +62,9 @@ router.beforeEach((to,from,next)=>{
   const admin=Auth.state.admin;
   if(loginPotreban && admin==false){
     return next('/korisnik')
+  }
+  if(loginPotreban && admin==true){
+    return next('/admin')
   }
   else next()
 })
