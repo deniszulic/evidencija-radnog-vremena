@@ -116,17 +116,17 @@ export default {
     },
     async kalendar(){
       let podaci={
-        brsati:this.brsati,
+        br_sati:this.brsati,
         prekovremeni:this.prekovremeni,
         blagdan:this.blagdan,
-        nocni:this.nocni,
+        nocni_rad:this.nocni,
         odsutan:this.odsutan,
-        posaoodkuce:this.posaoodkuce,
+        rad_od_kuce:this.posaoodkuce,
         napomena:this.napomena,
-        datum_obavljanja_pocetak:'2020-01-01',
-        datum_obavljanja_kraj:'2020-01-01',
+        datum_obavljanja_pocetak:this.range.start,
+        datum_obavljanja_kraj:this.range.end,
         email:Auth.state.email,
-        id:Auth.state.id,
+        korisnik_id:Auth.state.id,
         postavljeno:Date.now()
       }
       await Podaci.datumi(podaci);
@@ -139,8 +139,8 @@ export default {
     blagdan:null,
     nocni:null,
     odsutan:null,
-    posaoodkuce:'',
-    napomena:'',
+    posaoodkuce:null,
+    napomena:null,
     //suma:null,
     range: {
       //start:this.currentDate() /*this.currentDate()*/,
@@ -156,6 +156,9 @@ computed:{
      // if(isNaN(this.brsati))
       return this.brsati+this.prekovremeni+this.blagdan+this.nocni+this.odsutan
     //}
+  },
+  provjera:function(){
+    if(this.napomena=="") return this.napomena=null;
   }
 }
   /*mounted () {

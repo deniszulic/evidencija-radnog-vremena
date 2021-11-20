@@ -82,10 +82,10 @@ const login = async (request, response) => {
   );
 };
 const createData = async (request, response) => {
-  const { brsati,prekovremeni,blagdan,nocni,odsutan,posaoodkuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,id,postavljeno } = request.body;
+  const { br_sati,prekovremeni,blagdan,nocni_rad,odsutan,rad_od_kuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,korisnik_id,postavljeno } = request.body;
   pool.query(
-    "INSERT INTO kalendar (brsati,prekovremeni,blagdan,nocni,odsutan,posaoodkuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,id,postavljeno) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
-    [brsati,prekovremeni,blagdan,nocni,odsutan,posaoodkuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,id,postavljeno],
+    "INSERT INTO kalendar (br_sati,prekovremeni,blagdan,nocni_rad,odsutan,rad_od_kuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,korisnik_id,postavljeno) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
+    [br_sati,prekovremeni,blagdan,nocni_rad,odsutan,rad_od_kuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,korisnik_id,postavljeno],
     (error, results) => {
       try {
         response.status(201).send(`ID: ${results.rows[0].id}`);
