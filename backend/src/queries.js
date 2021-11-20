@@ -46,13 +46,14 @@ const createUser = async (request, response) => {
 const login = async (request, response) => {
   const { email, lozinka } = request.body;
   pool.query(
-    "SELECT lozinka, admin, email FROM korisnik WHERE email=$1",
+    "SELECT lozinka, admin, email, id FROM korisnik WHERE email=$1",
     [email],
     (error, results) => {
-      if (error) {
+      /*if (error) {
         throw error;
-      }
+      }*/
       //console.log(results.rows[0].admin)
+      try{
       bcrypt.compare(lozinka, results.rows[0].lozinka).then(function (result) {
         if (result && results.rows[0].lozinka) {
           delete results.rows[0].lozinka;
@@ -67,16 +68,35 @@ const login = async (request, response) => {
             token,
             admin: results.rows[0].admin,
             email: results.rows[0].email,
+            id:results.rows[0].id
           };
         } else {
           throw new Error("Cannot authenticate");
         }
       });
       response.status(200).json(results.rows);
+      }catch(error){
+        console.log(error);
+      }
+    }
+  );
+};
+const createData = async (request, response) => {
+  const { brsati,prekovremeni,blagdan,nocni,odsutan,posaoodkuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,id,postavljeno } = request.body;
+  pool.query(
+    "INSERT INTO kalendar (brsati,prekovremeni,blagdan,nocni,odsutan,posaoodkuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,id,postavljeno) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
+    [brsati,prekovremeni,blagdan,nocni,odsutan,posaoodkuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,id,postavljeno],
+    (error, results) => {
+      try {
+        response.status(201).send(`ID: ${results.rows[0].id}`);
+      } catch (e) {
+        console.log(e);
+      }
     }
   );
 };
 module.exports = {
   createUser,
   login,
+  createData
 };

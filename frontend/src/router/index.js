@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import {Auth} from '@/services'
+import store from '@/store.js'
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,17 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+//kao ako u aplikaciji trazi da ides u navedene rute a admin je false onda umjesto tih ruta idi na rutu korisnik
+router.beforeEach((to,from,next)=>{
+  const javneStranice=["/login","/register","/pocetna","/"]
+  const loginPotreban=javneStranice.includes(to.path)
+  console.log(loginPotreban)
+  const admin=Auth.state.admin;
+  if(loginPotreban && admin==false){
+    return next('/korisnik')
+  }
+  else next()
 })
 
 export default router

@@ -8,7 +8,7 @@
   <img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="350" height="100">
   <hr>
 </div>
-
+<form @submit.prevent="kalendar">
 <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -20,14 +20,14 @@
       <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Broj radnih sati</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours">
+      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" required v-model.number="brsati">
     </div>
   </div>
 <br>
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Prekovremeni</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours">
+      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="prekovremeni">
     </div>
   </div>
 
@@ -35,21 +35,28 @@
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Rad vikendom/blagdanom</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours">
+      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="blagdan">
     </div>
   </div>
 <br>
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Noćni rad</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours">
+      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="nocni">
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-6 col-form-label">Odsutan</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="odsutan">
     </div>
   </div>
 <br>
 
 <div class="form-group col-md-5">
       <label for="inputState">Rad od kuće</label>
-      <select id="inputState" class="form-control">
+      <select v-model="posaoodkuce" id="inputState" class="form-control" >
         <option selected>NE</option>
         <option>DA</option>
       </select>
@@ -57,7 +64,7 @@
 <br>
     <div class="form-group col-md-10">
     <label for="exampleFormControlTextarea1">Napomena: </label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="napomena"></textarea>
   </div>
 
 
@@ -65,12 +72,13 @@
     <div class="col-sm">
       <h2>Status:</h2>
       <p><i>Ukupno dana: 2</i></p>
-      <p><i>Ukupno sati: 4</i></p>
+      <p><i>Ukupno sati: {{suma}}</i></p>
       <!--<p><i>{{range.start}} - {{range.end}}</i></p>-->
     </div>
   </div>
 </div>
-
+<button type="submit">Pošalji</button>
+</form>
 
 <!--
 {{currentDate}}
@@ -87,8 +95,11 @@
 
 <script>
 import { Calendar, DatePicker } from 'v-calendar';
+import {Podaci} from '@/services'
+import {Auth} from '@/services'
 
 export default {
+  name:"calendar",
   components: {
     Calendar,
     DatePicker
@@ -96,24 +107,60 @@ export default {
   methods: {
     currentDate() {
       const current = new Date();
-      const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
+      /*const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
       const time = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
       const dateTime = date +' '+ time;
       
-      return dateTime;
+      return dateTime;*/
+      return current.getMonth;
+    },
+    async kalendar(){
+      let podaci={
+        brsati:this.brsati,
+        prekovremeni:this.prekovremeni,
+        blagdan:this.blagdan,
+        nocni:this.nocni,
+        odsutan:this.odsutan,
+        posaoodkuce:this.posaoodkuce,
+        napomena:this.napomena,
+        datum_obavljanja_pocetak:'2020-01-01',
+        datum_obavljanja_kraj:'2020-01-01',
+        email:Auth.state.email,
+        id:Auth.state.id,
+        postavljeno:Date.now()
+      }
+      await Podaci.datumi(podaci);
     }
   },
   data() {
   return {
+    brsati:null,
+    prekovremeni:null,
+    blagdan:null,
+    nocni:null,
+    odsutan:null,
+    posaoodkuce:'',
+    napomena:'',
+    //suma:null,
     range: {
-      start: currentDate(),
-      end: currentDate(),
+      //start:this.currentDate() /*this.currentDate()*/,
+      //end:'' /*this.currentDate()*/,
+      start: new Date(),
+      end: new Date()
     }
   }
 },
-  mounted () {
+computed:{
+  suma:function(){
+    //if(this.brsati>0||this.prekovremeni>0||this.blagdan>0||this.nocni>0||this.odsutan>0){
+     // if(isNaN(this.brsati))
+      return this.brsati+this.prekovremeni+this.blagdan+this.nocni+this.odsutan
+    //}
+  }
+}
+  /*mounted () {
       this.currentDate()
-    }/*,
+    }*//*,
     watch:{
       range
     }*/

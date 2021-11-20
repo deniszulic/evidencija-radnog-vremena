@@ -26,10 +26,7 @@ export default {
   data(){
     return{
       email:'',
-      password:'',
-      email_login:'',
-      password_login:'',
-      usao:''
+      password:''
     }
   },
   methods:{

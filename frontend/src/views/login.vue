@@ -21,13 +21,15 @@
 <script>
 import {Registracija} from "@/services";
 import { Auth } from "@/services";
+import store from '@/store.js'
 export default {
   name: 'login',
   data(){
     return{
       email_login:'',
       password_login:'',
-      usao:''
+      usao:'',
+      store
     }
   },
   methods:{
@@ -38,7 +40,8 @@ export default {
       }
       await Registracija.log(a);
       if(/*log==true && */Auth.state.admin==false){
-        this.usao="jesam";
+        //this.usao="jesam";
+       // this.store.state=Auth.state.admin;
         this.$router.push({name:"korisnik"})
       }
       else{this.usao=Auth.state.admin}

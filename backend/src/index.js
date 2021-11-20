@@ -18,6 +18,7 @@ app.use(
 
 app.post('/register', db.createUser)
 app.post('/login', db.login)
+app.post('/data', db.createData)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

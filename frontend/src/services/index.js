@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "@/store"
 
 let Service = axios.create({
   baseURL: "http://localhost:3000/",
@@ -18,6 +19,11 @@ let Registracija = {
         return true*/
   },
 };
+let Podaci={
+  async datumi(data){
+    return await Service.post("/data",data);
+  }
+}
 let Auth={
     getUser(){
         return JSON.parse(localStorage.getItem("user"))
@@ -29,9 +35,23 @@ let Auth={
         get admin(){
             let user=Auth.getUser();
             if(user){
+              store.state=user[0].admin;
                 return user[0].admin
             }
+            else{return null;}
+        },
+        get email(){
+          let user=Auth.getUser();
+          if(user){
+            return user[0].email;
+          }
+        },
+        get id(){
+          let user=Auth.getUser();
+          if(user){
+            return user[0].id;
+          }
         }
     }
 }
-export { Registracija, Auth };
+export { Registracija, Auth, Podaci };

@@ -2,20 +2,20 @@
   <div id="app">
     <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#page-top"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="30"></a>
+      <router-link to="pocetna" class="nav-link"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="30"></router-link>
                 
   <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><router-link to="pocetna" class="nav-link">Home <span class="sr-only"></span></router-link></li>
-                        <li class="nav-item"><router-link to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
-                        <li class="nav-item"><router-link to="register"  class="nav-link"> Register <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link v-if="store.state==null" to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link v-if="store.state==null" to="register"  class="nav-link"> Register <span class="sr-only"></span></router-link></li>
                     
                     <li class="nav-item active" >
-                    <router-link to="calendar" v-if="state==false" class="nav-link"> Upiši sate <span class="sr-only"></span></router-link>
+                    <router-link to="calendar" v-if="store.state!=null" class="nav-link"><!--{{state}}--> Upiši sate <span class="sr-only"></span></router-link>
       </li>
 
                     <li class="nav-item active" >
-        <a v-if="state==false"
+        <a v-if="store.state!=null"
                     @click.prevent="logout"
                     class="btn btn-danger my-2 my-sm-0 mr-2"
                     href="#"
@@ -96,21 +96,18 @@
 <script>
 import {Registracija} from "@/services";
 import { Auth } from "@/services";
+import store from '@/store.js'
 export default {
   name: 'App',
   data(){
     return{
-      email:'',
-      password:'',
-      email_login:'',
-      password_login:'',
-      usao:'',
-      state:Auth.state.admin
+      store
     }
   },
   methods: {
     logout() {
       Auth.logout();
+      this.store.state=null;
       this.$router.push({ path: 'pocetna' });
     }
   }
