@@ -17,6 +17,7 @@
     </div>
     
     <div class="col-sm">
+      <br><br>
       <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Broj radnih sati</label>
     <div class="col-sm-4">
@@ -71,13 +72,15 @@
     </div>
     <div class="col-sm">
       <h2>Status:</h2>
-      <p><i>Ukupno dana: 2</i></p>
       <p><i>Ukupno sati: {{suma}}</i></p>
-      <!--<p><i>{{range.start}} - {{range.end}}</i></p>-->
+      <p>Odabrani datumi:</p>
+      <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
+      <br>
+    <button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button>
     </div>
   </div>
 </div>
-<button type="submit">Pošalji</button>
+
 </form>
 
 <!--
@@ -157,6 +160,12 @@ computed:{
       return this.brsati+this.prekovremeni+this.blagdan+this.nocni+this.odsutan
     //}
   },
+  formattedDateStart() {
+      return moment(this.range.start).format('DD-MM-YYYY')// dan,mjesec, godina
+    },
+    formattedDateEnd() {
+      return moment(this.range.end).format('DD-MM-YYYY')
+    },
   provjera:function(){
     if(this.napomena=="") return this.napomena=null;
   }
@@ -170,3 +179,17 @@ computed:{
 }
 
 </script>
+
+<style>
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display:inline-block;
+  margin: 40px 8px 10px 8px; 
+  color: #cccccc;
+}
+
+</style>

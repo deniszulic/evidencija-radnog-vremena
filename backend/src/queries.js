@@ -21,14 +21,14 @@ const pool = new Pool({
   })
 }*/
 const createUser = async (request, response) => {
-  const { email, admin } = request.body;
+  const { email, admin, datumReg } = request.body;
   //const {lozinka}=bcrypt.hash(request.body,8);
   const { lozinka } = request.body;
   const salt = bcrypt.genSaltSync(8);
   const hash = bcrypt.hashSync(lozinka, salt);
   pool.query(
-    "INSERT INTO korisnik (email, lozinka,admin) VALUES ($1, $2, $3) RETURNING id",
-    [email, hash, admin],
+    "INSERT INTO korisnik (email, lozinka,admin, datumReg) VALUES ($1, $2, $3) RETURNING id",
+    [email, hash, admin, datumReg],
     (error, results) => {
       /*if (error) {
       throw error

@@ -6,12 +6,12 @@
 
     <form @submit.prevent="login">
       <input type="text" id="login" class="fadeIn first" name="login" placeholder="Email" v-model="email_login">
-      <input type="text" id="password" class="fadeIn second" name="login" placeholder="lozinka" v-model="password_login">
+      <input type="password" id="password" class="fadeIn second" name="login" placeholder="lozinka" v-model="password_login">
       <input type="submit" class="fadeIn fourth" value="Login">
     </form>
 
     <div id="formFooter">
-      <a class="underlineHover" href="/login">Već ste korisnik?</a>
+      <a class="underlineHover" href="/register">Registriraj se </a>
     </div>
 {{usao}}
   </div>
@@ -136,7 +136,7 @@ h2.active {
 
 /* FORM TYPOGRAPHY*/
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type=button], input[type=submit], input[type=reset]   {
   background-color: #56baed;
   border: none;
   color: white;
@@ -170,7 +170,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;

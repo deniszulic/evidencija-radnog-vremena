@@ -3,10 +3,16 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <br>
-
     <form @submit.prevent="register">
-      <input type="text" id="register" class="fadeIn first" name="register" placeholder="Email" v-model="email">
-      <input type="text" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
+      <input required type="text" id="register" class="fadeIn first" name="register" placeholder="Email" v-model="email">
+      <input required type="password" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
+      <input required type="password" id="password2" class="fadeIn second" name="register" placeholder="ponovljena lozinka" v-model="password2">
+      <!--<center><hr><div class="form-group col-md-5 ">
+      <select required v-model="posaoodkuce" id="inputState22" class="form-control fadeIn second" >
+        <option selected>PROFESOR</option>
+        <option>ASISTENT</option>
+      </select>
+    </div></center><br>-->
       <input type="submit" class="fadeIn fourth" value="Registracija">
     </form>
 
@@ -26,15 +32,20 @@ export default {
   data(){
     return{
       email:'',
-      password:''
+      password:'',
+      password2: ''
     }
   },
   methods:{
     async register(){
+      if(this.password !== this.password2 || this.password2 !== this.password){
+        alert("Lozinke se ne podudaraju !");
+      }
       let a={
         email:this.email,
         lozinka:this.password.toString(),
-        admin:false
+        admin:false,
+        datumReg: Date.now()
       }
       await Registracija.register(a);
     }
@@ -160,7 +171,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
