@@ -64,17 +64,18 @@ const login = async (request, response) => {
             { algorithm: "HS512" },
             { expiresIn: "7d" }
           );
-          return {
+          /*return {
             token,
             admin: results.rows[0].admin,
             email: results.rows[0].email,
             id:results.rows[0].id
-          };
+          };*/
+		  response.status(200).json(results.rows);
         } else {
           throw new Error("Cannot authenticate");
         }
       });
-      response.status(200).json(results.rows);
+      //response.status(200).json(results.rows);
       }catch(error){
         console.log(error);
       }
