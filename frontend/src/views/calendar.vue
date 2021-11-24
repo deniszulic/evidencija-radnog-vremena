@@ -76,6 +76,7 @@
       <p>Odabrani datumi:</p>
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
+      <input type="file" name="pic" @change="onFileChange"/>
     <button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button>
     </div>
   </div>
@@ -108,6 +109,10 @@ export default {
     DatePicker
   },
   methods: {
+    onFileChange(e){
+      const selected=e.target.files[0];
+      this.img=selected;
+    },
     currentDate() {
       const current = new Date();
       /*const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
@@ -117,22 +122,54 @@ export default {
       return dateTime;*/
       return current.getMonth;
     },
+    /*async slika(){
+      const fd=new FormData();
+      return await fd.append('image',this.img,this.img.name)
+    },*/
     async kalendar(){
-      let podaci={
-        br_sati:this.brsati,
-        prekovremeni:this.prekovremeni,
-        blagdan:this.blagdan,
-        nocni_rad:this.nocni,
-        odsutan:this.odsutan,
-        rad_od_kuce:this.posaoodkuce,
-        napomena:this.napomena,
-        datum_obavljanja_pocetak:this.range.start,
-        datum_obavljanja_kraj:this.range.end,
-        email:Auth.state.email,
-        korisnik_id:Auth.state.id,
-        postavljeno:Date.now()
+      const fd=new FormData();
+      if(this.img!=null){
+        console.log("prvi")
+        let podaci={
+          br_sati:this.brsati,
+          prekovremeni:this.prekovremeni,
+          blagdan:this.blagdan,
+          nocni_rad:this.nocni,
+          odsutan:this.odsutan,
+          rad_od_kuce:this.posaoodkuce,
+          napomena:this.napomena,
+          datum_obavljanja_pocetak:this.range.start,
+          datum_obavljanja_kraj:this.range.end,
+          email:Auth.state.email,
+          korisnik_id:Auth.state.id,
+          postavljeno:Date.now()
+        }
+        let id=await Podaci.datumi(podaci);
+        if(id.data!=null){
+          console.log("treci")
+          console.log(id)
+          fd.append('image',this.img,id.data)
+          await Podaci.slika(fd)
+        }
       }
-      await Podaci.datumi(podaci);
+      else{
+        console.log("drugi")
+        let podaci={
+          br_sati:this.brsati,
+          prekovremeni:this.prekovremeni,
+          blagdan:this.blagdan,
+          nocni_rad:this.nocni,
+          odsutan:this.odsutan,
+          rad_od_kuce:this.posaoodkuce,
+          napomena:this.napomena,
+          datum_obavljanja_pocetak:this.range.start,
+          datum_obavljanja_kraj:this.range.end,
+          email:Auth.state.email,
+          korisnik_id:Auth.state.id,
+          postavljeno:Date.now()
+        }
+        await Podaci.datumi(podaci);
+      }
     }
   },
   data() {
@@ -144,6 +181,8 @@ export default {
     odsutan:null,
     posaoodkuce:null,
     napomena:null,
+    img:null,
+    image:null,
     //suma:null,
     range: {
       //start:this.currentDate() /*this.currentDate()*/,
@@ -157,7 +196,7 @@ computed:{
   suma:function(){
     //if(this.brsati>0||this.prekovremeni>0||this.blagdan>0||this.nocni>0||this.odsutan>0){
      // if(isNaN(this.brsati))
-      return this.brsati+this.prekovremeni+this.blagdan+this.nocni+this.odsutan
+      return this.brsati+this.prekovremeni+this.blagdan+this.nocni-this.odsutan
     //}
   },
   formattedDateStart() {

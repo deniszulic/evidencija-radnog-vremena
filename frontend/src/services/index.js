@@ -22,6 +22,9 @@ let Registracija = {
 let Podaci={
   async datumi(data){
     return await Service.post("/data",data);
+  },
+  async slika(data){
+    return await Service.post("/slika",data);
   }
 }
 let Auth={

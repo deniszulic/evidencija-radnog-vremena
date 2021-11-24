@@ -8,6 +8,7 @@ const app = express();
 const port = 3000;
 const db = require('./queries')
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload');
 app.use(cors())
 app.use(bodyParser.json())
 app.use(
@@ -15,10 +16,12 @@ app.use(
     extended: true,
   })
 )
+app.use(fileUpload());
 
 app.post('/register', db.createUser)
 app.post('/login', db.login)
 app.post('/data', db.createData)
+app.post('/slika', db.createImage)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

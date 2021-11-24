@@ -27,7 +27,7 @@ const createUser = async (request, response) => {
   const salt = bcrypt.genSaltSync(8);
   const hash = bcrypt.hashSync(lozinka, salt);
   pool.query(
-    "INSERT INTO korisnik (email, lozinka,admin, datumReg) VALUES ($1, $2, $3) RETURNING id",
+    "INSERT INTO korisnik (email, lozinka,admin, datumReg) VALUES ($1, $2, $3,$4) RETURNING id",
     [email, hash, admin, datumReg],
     (error, results) => {
       /*if (error) {
@@ -84,12 +84,36 @@ const login = async (request, response) => {
 };
 const createData = async (request, response) => {
   const { br_sati,prekovremeni,blagdan,nocni_rad,odsutan,rad_od_kuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,korisnik_id,postavljeno } = request.body;
+  //console.log(request.body)
+ // console.log(request.files)
   pool.query(
     "INSERT INTO kalendar (br_sati,prekovremeni,blagdan,nocni_rad,odsutan,rad_od_kuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,korisnik_id,postavljeno) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id",
     [br_sati,prekovremeni,blagdan,nocni_rad,odsutan,rad_od_kuce,napomena,datum_obavljanja_pocetak,datum_obavljanja_kraj,email,korisnik_id,postavljeno],
     (error, results) => {
       try {
-        response.status(201).send(`ID: ${results.rows[0].id}`);
+        //response.status(201).send(`ID: ${results.rows[0].id}`);
+        //response.sendStatus(201).send(results.rows[0].id)
+        //console.log(results.rows[0].id)
+        response.status(200).send((results.rows[0].id).toString());
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  );
+};
+const createImage = async (request, response) => {
+  const{name,data}=request.files.image
+  let id=Number(name)
+  let name1=name+"_"+Date.now()
+  console.log(name)
+  console.log(data)
+  pool.query(
+    "INSERT INTO slika (name,img,kalendar_id) VALUES ($1, $2, $3) RETURNING id",
+    [name1,data,id],
+    (error, results) => {
+      try {
+        response.status(200).send((results.rows[0].id).toString());
+       //response.sendStatus(200);
       } catch (e) {
         console.log(e);
       }
@@ -99,5 +123,6 @@ const createData = async (request, response) => {
 module.exports = {
   createUser,
   login,
-  createData
+  createData,
+  createImage
 };
