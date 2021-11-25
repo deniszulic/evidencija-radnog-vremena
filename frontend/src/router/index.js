@@ -38,6 +38,11 @@ const routes = [
     component: () => import('../views/calendar.vue')
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../views/profile.vue')
+  },
+  {
     path: '/pocetna',
     name: 'pocetna',
     component: () => import('../views/pocetna.vue')

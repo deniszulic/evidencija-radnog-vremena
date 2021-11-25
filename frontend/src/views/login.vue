@@ -3,7 +3,10 @@
     <div class="wrapper fadeInDown">
   <div id="formContent">
     <br>
-
+<div v-if="errorMessage" class="alert alert-danger">
+          <strong>Ups!</strong>
+          Podaci nisu ispravno upisani ili ne postoje
+        </div>
     <form @submit.prevent="login">
       <input type="text" id="login" class="fadeIn first" name="login" placeholder="Email" v-model="email_login">
       <input type="password" id="password" class="fadeIn second" name="login" placeholder="lozinka" v-model="password_login">
@@ -29,7 +32,8 @@ export default {
       email_login:'',
       password_login:'',
       usao:'',
-      store
+      store,
+      errorMessage:''
     }
   },
   methods:{
@@ -38,18 +42,24 @@ export default {
         email:this.email_login,
         lozinka:this.password_login.toString()
       }
+      try{
       await Registracija.log(a);
-      if(/*log==true && */Auth.state.admin==false){
-        //this.usao="jesam";
-       // this.store.state=Auth.state.admin;
+      if(Auth.state.admin==false){
+       console.log("ulogiran")
         this.$router.push({name:"korisnik"})
       }
       else if(Auth.state.admin==true){
         this.$router.push({name:"admin"})
+        console.log("Welcome admin")
       }
       else{this.usao=Auth.state.admin}
     }
+    catch (error) {
+        this.errorMessage = error.message;
+        console.log("Greška");
+      }
   }
+}
 }
 </script>
 <style>

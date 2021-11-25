@@ -1,10 +1,17 @@
 <template>
   <div>
+
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <br>
+    <div v-if="errorMessage1" class="alert alert-danger">
+          <strong>Greška! </strong>
+          <strong v-if="errorMessage">(Lozinke se ne podudaraju!)</strong>
+        </div>
     <form @submit.prevent="register">
-      <input required type="text" id="register" class="fadeIn first" name="register" placeholder="Email" v-model="email">
+      <input required type="text" id="register" class="fadeIn first" name="register" placeholder="ime" v-model="ime">
+      <input required type="text" id="register2" class="fadeIn first" name="register" placeholder="prezime" v-model="prezime">
+      <input required type="text" id="register3" class="fadeIn first" name="register" placeholder="Email" v-model="email">
       <input required type="password" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
       <input required type="password" id="password2" class="fadeIn second" name="register" placeholder="ponovljena lozinka" v-model="password2">
       <!--<center><hr><div class="form-group col-md-5 ">
@@ -33,13 +40,15 @@ export default {
     return{
       email:'',
       password:'',
-      password2: ''
+      password2: '',
+      errorMessage: '',
+      errorMessage1:''
     }
   },
   methods:{
     async register(){
       if(this.password !== this.password2 || this.password2 !== this.password){
-        alert("Lozinke se ne podudaraju !");
+        this.errorMessage = "Lozinke se ne podudaraju !";
       }
       let a={
         email:this.email,
@@ -47,7 +56,14 @@ export default {
         admin:false,
         datumReg: Date.now()
       }
+      try{
       await Registracija.register(a);
+      this.$router.push({name:"login"})
+      }
+      catch (error) {
+        this.errorMessage1 = error.message;
+        console.log("Greška");
+      }
     }
   }
 }

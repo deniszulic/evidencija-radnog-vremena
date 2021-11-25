@@ -13,6 +13,9 @@
                     <li class="nav-item active" >
                     <router-link to="calendar" v-if="store.state==false" class="nav-link"><!--{{state}}--> Upiši sate <span class="sr-only"></span></router-link>
       </li>
+      <li class="nav-item active" >
+                    <router-link to="profile" v-if="store.state==false" class="nav-link"><!--{{state}}--> Profil <span class="sr-only"></span></router-link>
+      </li>
 
                     <li class="nav-item active" >
         <a v-if="store.state!=null"
@@ -140,21 +143,21 @@ export default {
 
 /* BASIC */
 
-html {
+/*html {
   background-color: #56baed;
-}
+}*/
 
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
 }
 
-a {
+/*a {
   color: #92badd;
   display:inline-block;
   text-decoration: none;
   font-weight: 400;
-}
+}*/
 
 
 
