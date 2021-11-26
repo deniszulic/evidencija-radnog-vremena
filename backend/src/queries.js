@@ -21,14 +21,14 @@ const pool = new Pool({
   })
 }*/
 const createUser = async (request, response) => {
-  const { email, admin, datumReg } = request.body;
+  const { email, admin, datumReg, ime, prezime } = request.body;
   //const {lozinka}=bcrypt.hash(request.body,8);
   const { lozinka } = request.body;
   const salt = bcrypt.genSaltSync(8);
   const hash = bcrypt.hashSync(lozinka, salt);
   pool.query(
-    "INSERT INTO korisnik (email, lozinka,admin, datumReg) VALUES ($1, $2, $3,$4) RETURNING id",
-    [email, hash, admin, datumReg],
+    "INSERT INTO korisnik (email, lozinka,admin, datumReg, ime, prezime) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+    [email, hash, admin, datumReg, ime, prezime],
     (error, results) => {
       /*if (error) {
       throw error
@@ -46,7 +46,7 @@ const createUser = async (request, response) => {
 const login = async (request, response) => {
   const { email, lozinka } = request.body;
   pool.query(
-    "SELECT lozinka, admin, email, id FROM korisnik WHERE email=$1",
+    "SELECT lozinka, admin, email, id, ime, prezime FROM korisnik WHERE email=$1",
     [email],
     (error, results) => {
       /*if (error) {
@@ -120,9 +120,21 @@ const createImage = async (request, response) => {
     }
   );
 };
+const dataById = (request, response) => {
+  const id = parseInt(request.params.id)
+  //console.log(id)
+
+  pool.query('SELECT datum_obavljanja_pocetak, datum_obavljanja_kraj, br_sati, prekovremeni, rad_od_kuce, odsutan, nocni_rad, postavljeno, blagdan, napomena FROM kalendar WHERE korisnik_id=$1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
 module.exports = {
   createUser,
   login,
   createData,
-  createImage
+  createImage,
+  dataById
 };

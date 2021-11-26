@@ -27,6 +27,15 @@ let Podaci={
     return await Service.post("/slika",data);
   }
 }
+let dohvatpodataka={
+  async getdatauser(id){
+    let response = await Service.get(`/getdata/${id}`);
+    let data=response.data
+    return{
+      data
+    }
+  }
+}
 let Auth={
     getUser(){
         return JSON.parse(localStorage.getItem("user"))
@@ -54,7 +63,20 @@ let Auth={
           if(user){
             return user[0].id;
           }
+        },
+        get name(){
+          let user=Auth.getUser();
+          if(user){
+            return user[0].ime;
+          }
+        },
+        get surname(){
+          let user=Auth.getUser();
+          if(user){
+            return user[0].prezime;
+          }
         }
     }
 }
-export { Registracija, Auth, Podaci };
+
+export { Registracija, Auth, Podaci, dohvatpodataka };

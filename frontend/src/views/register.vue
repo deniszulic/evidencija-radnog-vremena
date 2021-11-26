@@ -38,6 +38,8 @@ export default {
   name: 'register',
   data(){
     return{
+      ime:'',
+      prezime:'',
       email:'',
       password:'',
       password2: '',
@@ -51,6 +53,8 @@ export default {
         this.errorMessage = "Lozinke se ne podudaraju !";
       }
       let a={
+        ime:this.ime,
+        prezime:this.prezime,
         email:this.email,
         lozinka:this.password.toString(),
         admin:false,
