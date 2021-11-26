@@ -124,7 +124,7 @@ const dataById = (request, response) => {
   const id = parseInt(request.params.id)
   //console.log(id)
 
-  pool.query('SELECT datum_obavljanja_pocetak, datum_obavljanja_kraj, br_sati, prekovremeni, rad_od_kuce, odsutan, nocni_rad, postavljeno, blagdan, napomena FROM kalendar WHERE korisnik_id=$1', [id], (error, results) => {
+  pool.query('SELECT id, datum_obavljanja_pocetak, datum_obavljanja_kraj, br_sati, prekovremeni, rad_od_kuce, odsutan, nocni_rad, postavljeno, blagdan, napomena FROM kalendar WHERE korisnik_id=$1', [id], (error, results) => {
     if (error) {
       throw error
     }

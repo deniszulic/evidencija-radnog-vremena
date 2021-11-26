@@ -31,9 +31,8 @@ let dohvatpodataka={
   async getdatauser(id){
     let response = await Service.get(`/getdata/${id}`);
     let data=response.data
-    return{
-      data
-    }
+    //console.log(data)
+    return data
   }
 }
 let Auth={
