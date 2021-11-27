@@ -1,4 +1,6 @@
 export default{
     state:null,
-    errorMessage:''
+    errorMessage:'',
+    podaci:[],
+    filter:[]
 }

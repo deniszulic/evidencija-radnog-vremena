@@ -29,28 +29,29 @@
 <table class="table table-striped" >
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Mjesec</th>
-          <th scope="col">Ukupno sati</th>
-          <th scope="col"></th>
+          <!--<th scope="col">#</th>-->
+          <th scope="col">Godina i mjesec</th>
+          <!--<th scope="col">Ukupno sati</th>
+          <th scope="col"></th>-->
         </tr>
       </thead>
-      <tbody  v-for="data in month" :key="data">
-        <tr>
-          <th scope="row">1</th>
-          <td>{{data}}</td>
+      <!--<tbody  v-for="data in month" :key="data">
+        <tr>-->
+          <!--<th scope="row">1</th>-->
+         <!-- <td>{{data}}</td>
           <td>
             <button
               type="button"
               class="btn btn-success"
               data-toggle="modal"
-              data-target="#exampleModal"
+              data-target="#exampleModal" @click="show()"
             >
               Detalji
             </button>
           </td>
         </tr>
-      </tbody>
+      </tbody>-->
+      <mojioglasi :podaci="data" v-for="data in month" :key="data.id"/>
     </table>
 </div>
 
@@ -67,16 +68,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        Upload potpisa: 
+      <div class="modal-body" >
+        <!--ID:{{data.id}} <br/>Datum pocetak:{{data.datum_obavljanja_pocetak}}<br/> Datum Kraj:{{data.datum_obavljanja_kraj}}-->
        <!-- <input type="file" name="pic" @change="onFileChange"/>-->
+       {{store.filter}}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close()">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
@@ -96,6 +98,8 @@ import {dohvatpodataka} from '@/services'
 import {Auth} from '@/services'
 import mojioglasi from "@/components/mojioglasi.vue"
 import moment from "moment";
+import Mojioglasi from '../components/mojioglasi.vue';
+import store from '@/store.js'
 
 export default {
   name:"profile",
@@ -105,11 +109,12 @@ export default {
     mojioglasi
   },
   data() {
+    Mojioglasi
   return {
     ime:Auth.state.name,
     prezime:Auth.state.surname,
     email:Auth.state.email,
-    podaci:[],
+    store,
     filtered:[]
   }
 },
@@ -125,8 +130,36 @@ watch: {
   },
   methods:{
     async fetchData(){
-      this.podaci=await dohvatpodataka.getdatauser(Auth.state.id)
+      this.store.podaci=await dohvatpodataka.getdatauser(Auth.state.id)
       //console.log(this.podaci)
+    },
+    /*show(data){
+      moment.locale("hr")
+      $("#exampleModal").modal("show");
+      //console.log(this.month)
+      /*if(moment(data.datum_obavljanja_pocetak).format('YYYY MMMM')==this.month){
+        this.filtered=this.podaci
+      }*/
+      /*for(let i=0;i<this.podaci.length;i++){
+        console.log(this.month)
+        let datum=moment(this.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM')
+        console.log(datum)
+        if((datum==this.month[0])){
+          //this.filtered=this.podaci
+          this.filtered.concat(this.podaci)
+          //console.log("aaa")
+        }
+      }
+    },*/
+    /*show(data){
+      $("#exampleModal").modal("show");
+      /*for(let i=0;i<this.podaci.length;i++){
+        moment(this.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM').find(this.month)
+      }*/
+   // },
+    close(){
+      $("#exampleModal").modal("hide");
+      this.store.filter=[]
     }
   },
   computed:{
@@ -143,7 +176,7 @@ watch: {
     }*/
     //return [...new Set(this.podaci.map(x=>x.moment(x.datum_obavljanja_pocetak).format('MMMM')))]
     moment.locale("hr")
-   return [...new Set(this.podaci.map(data=>moment(data.datum_obavljanja_pocetak).format('MMMM')))]
+   return [...new Set(this.store.podaci.map(data=>moment(data.datum_obavljanja_pocetak).format('YYYY MMMM')))]
   }
 }}
 
