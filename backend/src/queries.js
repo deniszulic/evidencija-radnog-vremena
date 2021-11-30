@@ -125,10 +125,29 @@ const dataById = (request, response) => {
   //console.log(id)
 
   pool.query('SELECT id, datum_obavljanja_pocetak, datum_obavljanja_kraj, br_sati, prekovremeni, rad_od_kuce, odsutan, nocni_rad, postavljeno, blagdan, napomena FROM kalendar WHERE korisnik_id=$1', [id], (error, results) => {
-    if (error) {
+    /*if (error) {
       throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
     }
-    response.status(200).json(results.rows)
+  })
+};
+const updatemydata = async (request, response) => {
+  const id = parseInt(request.params.id)
+  const { datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan } = request.body
+  //console.log(br_sati)
+  pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan], (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
   })
 }
 module.exports = {
@@ -136,5 +155,6 @@ module.exports = {
   login,
   createData,
   createImage,
-  dataById
+  dataById,
+  updatemydata
 };

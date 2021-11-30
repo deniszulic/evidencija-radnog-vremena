@@ -25,6 +25,9 @@ let Podaci={
   },
   async slika(data){
     return await Service.post("/slika",data);
+  },
+  async updatemydata(id,data){
+    return await Service.patch(`/mydata/${id}`,data)
   }
 }
 let dohvatpodataka={

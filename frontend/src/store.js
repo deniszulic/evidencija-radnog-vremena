@@ -2,5 +2,6 @@ export default{
     state:null,
     errorMessage:'',
     podaci:[],
-    filter:[]
+    filter:[],
+    open:false
 }

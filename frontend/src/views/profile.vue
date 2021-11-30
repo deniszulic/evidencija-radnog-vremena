@@ -27,31 +27,50 @@
 <hr>
  <!--<mojioglasi :podaci="data" v-for="data in podaci" :key="data.id"/>-->
 <table class="table table-striped" >
-      <thead>
+  <thead v-if="store.open">
         <tr>
-          <!--<th scope="col">#</th>-->
+          <th scope="col"><button @click="back()">Natrag</button></th>
+          <th scope="col">Datum početak</th>
+          <th scope="col">Datum kraj</th>
+          <th scope="col">Broj sati</th>
+          <th scope="col">Prekovremeni</th>
+          <th scope="col">Rad od kuće</th>
+          <th scope="col">Odsutan</th>
+          <th scope="col">Noćni rad</th>
+          <th scope="col">Blagdan</th>
+          <th scope="col">Napomena</th>
+        </tr>
+      </thead>
+      <thead v-if="!store.open">
+        <tr>
           <th scope="col">Godina i mjesec</th>
           <!--<th scope="col">Ukupno sati</th>
           <th scope="col"></th>-->
         </tr>
       </thead>
-      <!--<tbody  v-for="data in month" :key="data">
-        <tr>-->
-          <!--<th scope="row">1</th>-->
-         <!-- <td>{{data}}</td>
+      <tbody v-if="store.open">
+        <mojioglasi :podaci="filtered" />        
+      </tbody>
+      <!--<div v-if="!open">-->
+      <tbody v-if="!store.open">
+        <tr v-for="data in month" :key="data.id">
+         <!-- <th scope="row">1</th>-->
+         <td>{{data}}</td>
           <td>
             <button
               type="button"
               class="btn btn-success"
               data-toggle="modal"
-              data-target="#exampleModal" @click="show()"
+              data-target="#exampleModal" @click="show(data)"
             >
               Detalji
             </button>
           </td>
         </tr>
+      </tbody><!--</div>-->
+     <!-- <tbody>
+        <mojioglasi :podaci="data" v-for="data in month" :key="data.id"/>
       </tbody>-->
-      <mojioglasi :podaci="data" v-for="data in month" :key="data.id"/>
     </table>
 </div>
 
@@ -63,6 +82,8 @@
 
 
 <!-- Modal -->
+<!--
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -73,9 +94,7 @@
         </button>
       </div>
       <div class="modal-body" >
-        <!--ID:{{data.id}} <br/>Datum pocetak:{{data.datum_obavljanja_pocetak}}<br/> Datum Kraj:{{data.datum_obavljanja_kraj}}-->
-       <!-- <input type="file" name="pic" @change="onFileChange"/>-->
-       {{store.filter}}
+       {{filtered}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close()">Close</button>
@@ -83,7 +102,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 
   </div>
 
@@ -115,7 +134,8 @@ export default {
     prezime:Auth.state.surname,
     email:Auth.state.email,
     store,
-    filtered:[]
+    filtered:[],
+    open:false
   }
 },
 /*async mounted(){
@@ -132,6 +152,9 @@ watch: {
     async fetchData(){
       this.store.podaci=await dohvatpodataka.getdatauser(Auth.state.id)
       //console.log(this.podaci)
+    },
+    back() {
+      this.store.open=false;
     },
     /*show(data){
       moment.locale("hr")
@@ -157,6 +180,21 @@ watch: {
         moment(this.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM').find(this.month)
       }*/
    // },
+   show(data){
+     //$("#exampleModal").modal("show");
+     /*Radi ali se duplaju podaci obv
+     for(let i=0;i<this.store.podaci.length;i++){
+       if(moment(this.store.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM')==data){
+         this.filtered.push(this.store.podaci[i])
+       }
+     }*/
+      this.store.open=true
+
+     //RADI BEZ DA SE DUPLA!!!
+     moment.locale("hr")
+     let a=this.store.podaci.filter(element=>moment(element.datum_obavljanja_pocetak).format('YYYY MMMM')==data)
+     this.filtered=a.map(obj=>({...obj}))
+   },
     close(){
       $("#exampleModal").modal("hide");
       this.store.filter=[]

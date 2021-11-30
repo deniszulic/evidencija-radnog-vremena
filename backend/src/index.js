@@ -23,6 +23,7 @@ app.post('/login', db.login)
 app.post('/data', db.createData)
 app.post('/slika', db.createImage)
 app.get('/getdata/:id', db.dataById)
+app.patch('/mydata/:id',db.updatemydata)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
