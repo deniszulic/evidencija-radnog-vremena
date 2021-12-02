@@ -12,6 +12,7 @@
       <br>
       <img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="350" height="100">
       <!-- zamjeniti sa slikom profila uwu -->
+      <br><br>
       <h3>Ime: {{ime}}</h3>
       <p>Prezime: {{prezime}}</p>
       <p>Email: {{email}}</p>
@@ -19,7 +20,7 @@
     
     <div class="col-sm">
       <h2>Status:</h2>
-      <p><i>Ukupno potpisano:</i></p>
+      <p><i>Ukupno potpisano:</i> 33</p>
       <p>Nerješeno: 3</p>
       <p>Ukupno GO: 11</p>{{month}}
     </div>
@@ -29,7 +30,7 @@
 <table class="table table-striped" >
   <thead v-if="store.open">
         <tr>
-          <th scope="col"><button @click="back()">Natrag</button></th>
+          <th scope="col"><button type="button" class="btn btn-dark" @click="back()">Natrag</button></th>
           <th scope="col">Datum početak</th>
           <th scope="col">Datum kraj</th>
           <th scope="col">Broj sati</th>
@@ -41,29 +42,38 @@
           <th scope="col">Napomena</th>
         </tr>
       </thead>
+      <!-- <tbody v-if="store.open">-->
+        <mojioglasi :podaci="filtered" />        
+      <!--</tbody>-->
       <thead v-if="!store.open">
         <tr>
-          <th scope="col">Godina i mjesec</th>
-          <!--<th scope="col">Ukupno sati</th>
-          <th scope="col"></th>-->
+          <th scope="col">Kalendar</th>
         </tr>
       </thead>
-      <tbody v-if="store.open">
-        <mojioglasi :podaci="filtered" />        
-      </tbody>
-      <!--<div v-if="!open">-->
+     
       <tbody v-if="!store.open">
         <tr v-for="data in month" :key="data.id">
-         <!-- <th scope="row">1</th>-->
          <td>{{data}}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModal" @click="show(data)"
+            >
+              Detalji
+            </button>
+          </td>
           <td>
             <button
               type="button"
               class="btn btn-success"
               data-toggle="modal"
-              data-target="#exampleModal" @click="show(data)"
+              data-target="#confirmmodal" @click="confirmmodal(data)"
             >
-              Detalji
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+</svg>
             </button>
           </td>
         </tr>
@@ -82,27 +92,31 @@
 
 
 <!-- Modal -->
-<!--
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close()">
+        <h5 class="modal-title" id="exampleModalLabel">Potpisivanje</h5>
+        <button type="button" class="close" data-dismiss="modal" @click="close()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" >
-       {{filtered}}
+      <div class="modal-body">
+        Broj sati: <br>
+        Mjesec: <br>
+        Prekovremeni: <br>
+        Napomena: <br>
+<br><hr>
+        Upload potpisa:
+        <input type="file" name="pic" @change="onFileChange"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Pošalji</button>
       </div>
     </div>
   </div>
-</div>-->
+</div>
 
   </div>
 
@@ -153,6 +167,10 @@ watch: {
       this.store.podaci=await dohvatpodataka.getdatauser(Auth.state.id)
       //console.log(this.podaci)
     },
+    onFileChange(e){
+      const selected=e.target.files[0];
+      this.img=selected;
+    },
     back() {
       this.store.open=false;
     },
@@ -195,8 +213,13 @@ watch: {
      let a=this.store.podaci.filter(element=>moment(element.datum_obavljanja_pocetak).format('YYYY MMMM')==data)
      this.filtered=a.map(obj=>({...obj}))
    },
+   confirmmodal(data){
+     $("#confirmmodal").modal("show");
+   },
     close(){
       $("#exampleModal").modal("hide");
+      $("#confirmmodal").modal("hide");
+
       this.store.filter=[]
     }
   },

@@ -165,7 +165,7 @@ body {
 
 /* STRUCTURE */
 
-.wrapper {
+/*.wrapper {
   display: flex;
   align-items: center;
   flex-direction: column; 
@@ -173,7 +173,7 @@ body {
   width: 100%;
   min-height: 100%;
   padding: 20px;
-}
+}*/
 
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;

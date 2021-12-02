@@ -1,84 +1,32 @@
 <template>
-  <div>
-<table1 :podaci="filtered" />
 
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ažuriranje</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              @click="close()"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Datum obavljanja početak:
-            {{moment(datump).format('DD MM YYYY')}}<br>
-            <input
-              type="date"
-              v-model="datump"
-            /><br /><br>Datum obavljanja kraj:
-            {{moment(datumk).format('DD MM YYYY')}}<br>
-            <input
-              type="date"
-              v-model="datumk"
-            /><br /><br>Broj sati:<input
-              type="text"
-              v-model="brsati"
-            /><br />Prekovremeni:<input
-              type="text"
-              v-model="prekovremeni"
-            /><br />Rad od kuće:<input
-              type="text"
-              v-model="rad_od_kuce"
-            /><br />Odsutan:<input type="text" v-model="odsutan" /><br />Noćni
-            rad:<input type="text" v-model="nocni_rad" /><br />Blagdan:<input
-              type="text"
-              v-model="blagdan"
-            /><br />Napomena:<textarea class="form-control" v-model="napomena" />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-dismiss="modal"
-              @click="close()"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              @click="savechanges()"
-            >
-              Save changes
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-  <!--</div>-->
-</template>
+<tbody v-if="store.open">
+    <tr v-for="data in podaci" :key="data.id">
+      <td></td>
+      <td>
+        {{ moment(data.datum_obavljanja_pocetak).format("YYYY MMMM") }}
+      </td>
+
+      <!--<td>{{podaci.datum_obavljanja_pocetak}}</td>-->
+      <td>{{ moment(data.datum_obavljanja_kraj).format("YYYY MMMM") }} - {{moment(datump).format("YYYY MMMM")}}</td>
+      <td>{{ data.br_sati }}</td>
+      <td>{{ data.prekovremeni }}</td>
+      <td>{{ data.rad_od_kuce }}</td>
+      <td>{{ data.odsutan }}</td>
+      <td>{{ data.nocni_rad }}</td>
+      <td>{{ data.blagdan }}</td>
+      <td>{{ data.napomena }}</td>
+      
+      <td><button type="button" class="btn btn-primary" @click="update(data)">Ažuriraj podatke</button></td>
+    </tr>
+
+    </tbody>
+
+    </template>
+
 <script>
 import moment from "moment";
 import store from "@/store.js";
-import secondtable from "../components/secondtable.vue";
-import table1 from "@/components/table1.vue"
-import {dohvatpodataka} from '@/services'
 import {Podaci} from '@/services'
 export default {
   props: ["podaci"],
@@ -92,7 +40,6 @@ export default {
       store,
       showtable: false,
       moment,
-      filtered:[],
       datump: "",
       datumk: "",
       brsati: "",

@@ -1,29 +1,35 @@
-<template>
+<template >
     <div>
-        <h1>Početna stranica</h1>
 
-
-<body class="d-flex h-100 text-center text-white bg-dark">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  
-
-  <main class="px-3">
-    <h1>mda nez</h1>
-    <p class="lead">lorem ipsum lorem ipsum lorem ipsum lorem ipsum v lorem ipsum v v lorem ipsum ipsum v lorem ipsum v v lorem ipsum ipsum v lorem ipsum v v lorem ipsum ipsum v lorem ipsum v v lorem ipsum ipsum v lorem ipsum v v lorem ipsum.</p>
-    <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-    </p>
-  </main>
-
-  <footer class="mt-auto text-white-50">
-    <p>owa owa</p>
-  </footer>
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                      <img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="350" height="100">
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">
+                          Track your working time
+                    
+                        </p>
+                        <a class="btn btn-primary btn-xl" href="/register">Find Out More</a>
+                    </div>
+                </div>
+                <div class="jumbotron">
+  <h1 class="display-4">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
 </div>
+            </div>
+        </header>
 
 
-    
-  </body>
+
 
     </div>
     
@@ -41,6 +47,11 @@ export default{
  * Globals
  */
 
+ /*div {
+  background-image: url('https://i.ibb.co/1rsSV9s/background.jpg');
+  background-repeat: no-repeat;
+}*/
+
 
 /* Custom default button */
 .btn-secondary,
@@ -57,7 +68,11 @@ export default{
 
 body {
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5); /* OVOOOOO CSS */
+  background-image: url('https://i.ibb.co/1rsSV9s/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
 
 .cover-container {

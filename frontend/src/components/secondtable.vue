@@ -1,6 +1,6 @@
 <template>
     <tr>
-          <td><!--{{podaci}}-->aaa</td>
+          <td><!--{{podaci}}--></td>
           <td>
             <button
               type="button"
