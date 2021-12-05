@@ -65,16 +65,11 @@
             </button>
           </td>
           <td>
-            <button
-              type="button"
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#confirmmodal" @click="confirmmodal(data)"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+            
+          <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-</svg>
-            </button>
+</svg></button>
+            
           </td>
         </tr>
       </tbody><!--</div>-->
@@ -90,31 +85,19 @@
   <DatePicker v-model="range" is-range />-->
   </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="confirmmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Potpisivanje</h5>
-        <button type="button" class="close" data-dismiss="modal" @click="close()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Potpisivanje sati</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
         Broj sati: <br>
         Mjesec: <br>
         Prekovremeni: <br>
         Napomena: <br>
-<br><hr>
-        Upload potpisa:
-        <input type="file" name="pic" @change="onFileChange"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close()">Close</button>
-        <button type="button" class="btn btn-primary">Pošalji</button>
-      </div>
-    </div>
+
+        Upload potpisa: <input type="file" name="pic" @change="onFileChange"/>
+<br>
   </div>
 </div>
 
@@ -212,16 +195,7 @@ watch: {
      moment.locale("hr")
      let a=this.store.podaci.filter(element=>moment(element.datum_obavljanja_pocetak).format('YYYY MMMM')==data)
      this.filtered=a.map(obj=>({...obj}))
-   },
-   confirmmodal(data){
-     $("#confirmmodal").modal("show");
-   },
-    close(){
-      $("#exampleModal").modal("hide");
-      $("#confirmmodal").modal("hide");
-
-      this.store.filter=[]
-    }
+   }
   },
   computed:{
     month:function(){

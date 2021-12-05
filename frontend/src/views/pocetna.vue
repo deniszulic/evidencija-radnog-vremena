@@ -28,7 +28,15 @@
             </div>
         </header>
 
-
+<div class="jumbotron">
+  <h1 class="display-4">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div>
 
 
     </div>
@@ -67,12 +75,12 @@ export default{
  */
 
 body {
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5); /* OVOOOOO CSS */
+  /*text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5); /* OVOOOOO CSS 
   background-image: url('https://i.ibb.co/1rsSV9s/background.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: 100% 100%;
+  background-size: 100% 100%;*/
 }
 
 .cover-container {
