@@ -124,7 +124,7 @@ const dataById = (request, response) => {
   const id = parseInt(request.params.id)
   //console.log(id)
 
-  pool.query('SELECT id, datum_obavljanja_pocetak, datum_obavljanja_kraj, br_sati, prekovremeni, rad_od_kuce, odsutan, nocni_rad, postavljeno, blagdan, napomena FROM kalendar WHERE korisnik_id=$1', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 ORDER BY postavljeno DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -150,11 +150,23 @@ const updatemydata = async (request, response) => {
     }
   })
 }
+const getimg=async(req,res)=>{
+  pool.query('SELECT slika.img FROM slika WHERE slika.name=$1',["1"], (error, results) => {
+    try{
+res.status(200).json(results.rows[0])
+//res.end(results.rows[0])
+//res.end(img.img)
+    }catch(e){
+      console.log(e);
+    }
+  })
+}
 module.exports = {
   createUser,
   login,
   createData,
   createImage,
   dataById,
-  updatemydata
+  updatemydata,
+  getimg
 };

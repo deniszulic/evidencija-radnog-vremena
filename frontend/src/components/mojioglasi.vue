@@ -126,12 +126,11 @@
             </button>
           </div>
           <div class="modal-body">
-            Datum obavljanja početak:{{moment(datump).format('DD MM YYYY')}}<br>
+            Datum obavljanja početak:<br>
             <input
               type="date"
               v-model="datump"
-            /><br /><br>Datum obavljanja kraj:
-            {{moment(datumk).format('DD MM YYYY')}}<br><input
+            /><br /><br>Datum obavljanja kraj:<br><input
               type="date"
               v-model="datumk"
             /><br />Broj sati:<input
@@ -148,7 +147,8 @@
               type="text"
               v-model="blagdan"
             /><br />Napomena:<textarea v-model="napomena" />
-          </div>
+            <img :src="'data:image/png;base64,' + $pic"/>
+             </div>
           <div class="modal-footer">
             <button
               type="button"
@@ -200,10 +200,13 @@ export default {
       blagdan: "",
       napomena: "",
       id: "",
+      pic:""
     };
   },
   methods: {
     show(podaci) {
+      //mislim da nis ne radi ovo provjerit cu
+
       moment.locale("hr");
       //console.log(podaci)
       //console.log(moment(this.store.podaci.datum_obavljanja_pocetak).format('YYYY MMMM'))
@@ -220,7 +223,7 @@ export default {
           //this.store.datum_obavljanja_pocetak[i]=this.store.podaci[i].datum_obavljanja_pocetak
           //this.store.filter=[]
           this.store.filter.push(this.store.podaci[i]);
-          $("#exampleModal").modal("show");
+         // $("#exampleModal").modal("show");
         }
       }
     },
@@ -235,16 +238,49 @@ export default {
     anothertable(podaci) {
       this.showtable = true;
     },
+    hexToBase64(str) {
+    return btoa(String.fromCharCode.apply(null, str.toString().replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+},
+_arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+},
     update(data) {
       this.id = data.id;
-      this.datump = data.datum_obavljanja_pocetak;
-      this.datumk = data.datum_obavljanja_kraj;
+      this.datump = new Date(data.datum_obavljanja_pocetak).toISOString().slice(0,10);
+      this.datumk = new Date(data.datum_obavljanja_kraj).toISOString().slice(0,10);
       (this.brsati = data.br_sati), (this.prekovremeni = data.prekovremeni);
       this.rad_od_kuce = data.rad_od_kuce;
       this.odsutan = data.odsutan;
       this.nocni_rad = data.nocni_rad;
       this.blagdan = data.blagdan;
       this.napomena = data.napomena;
+      /*if(data.img!=null){
+      this.pic="data:image/jpeg;base64,"+this.hexToBase64(data.img.data)}*/
+      /*let reader = new FileReader();
+      this.pic=btoa(data.img.data)*/
+
+      /*let binary = Buffer.from(data.img); //or Buffer.from(data, 'binary')
+let imgData = new Blob(binary.buffer, { type: 'application/octet-binary' });
+let link = URL.createObjectURL(imgData);
+
+let img = new Image();
+img.onload = () => URL.revokeObjectURL(link);
+this.pic = link;*/
+//this.pic=data.img;
+/*const buffer = Buffer.from(data.img.data);
+
+const base64String = buffer.toString('base64');
+console.log(base64String)
+this.pic=base64String*/
+//this.pic=data.img;
+const imgData = this._arrayBufferToBase64(data.img.data)
+commit(this.pic, imgData);
       $("#exampleModal").modal("show");
     },
     close() {
@@ -278,7 +314,20 @@ export default {
               x.blagdan=update.blagdan
             }
           }
-        })
+          for(let [i,x] of this.podaci.entries()){
+            if(x.id==this.id){
+              x.datum_obavljanja_pocetak=update.datum_obavljanja_pocetak
+              x.datum_obavljanja_kraj=update.datum_obavljanja_kraj
+              x.br_sati=update.br_sati
+              x.prekovremeni=update.prekovremeni
+              x.odsutan=update.odsutan
+              x.rad_od_kuce=update.rad_od_kuce
+              x.nocni_rad=update.nocni_rad
+              x.napomena=update.napomena
+              x.blagdan=update.blagdan
+            }
+          }
+        }).then(()=>$("#exampleModal").modal("hide"))
     },
   },
 };

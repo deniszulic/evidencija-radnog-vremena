@@ -42,9 +42,9 @@
           <th scope="col">Napomena</th>
         </tr>
       </thead>
-      <!-- <tbody v-if="store.open">-->
+      <tbody v-if="store.open">
         <mojioglasi :podaci="filtered" />        
-      <!--</tbody>-->
+      </tbody>
       <thead v-if="!store.open">
         <tr>
           <th scope="col">Kalendar</th>

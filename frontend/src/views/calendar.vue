@@ -21,7 +21,7 @@
       <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Broj radnih sati</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" required v-model.number="brsati">
+      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="brsati">
     </div>
   </div>
 <br>
