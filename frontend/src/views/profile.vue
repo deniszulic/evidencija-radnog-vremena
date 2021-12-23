@@ -28,20 +28,6 @@
 <hr>
  <!--<mojioglasi :podaci="data" v-for="data in podaci" :key="data.id"/>-->
 <table class="table table-striped" >
-  <thead v-if="store.open">
-        <tr>
-          <th scope="col"><button type="button" class="btn btn-dark" @click="back()">Natrag</button></th>
-          <th scope="col">Datum početak</th>
-          <th scope="col">Datum kraj</th>
-          <th scope="col">Broj sati</th>
-          <th scope="col">Prekovremeni</th>
-          <th scope="col">Rad od kuće</th>
-          <th scope="col">Odsutan</th>
-          <th scope="col">Noćni rad</th>
-          <th scope="col">Blagdan</th>
-          <th scope="col">Napomena</th>
-        </tr>
-      </thead>
       <tbody v-if="store.open">
         <mojioglasi :podaci="filtered" />        
       </tbody>
@@ -64,13 +50,13 @@
               Detalji
             </button>
           </td>
-          <td>
+          <!--<td>
             
           <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
 </svg></button>
             
-          </td>
+          </td>-->
         </tr>
       </tbody><!--</div>-->
      <!-- <tbody>
@@ -85,7 +71,7 @@
   <DatePicker v-model="range" is-range />-->
   </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<!--<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasRightLabel">Potpisivanje sati</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -99,7 +85,7 @@
         Upload potpisa: <input type="file" name="pic" @change="onFileChange"/>
 <br>
   </div>
-</div>
+</div>-->
 
   </div>
 
@@ -114,7 +100,6 @@ import {dohvatpodataka} from '@/services'
 import {Auth} from '@/services'
 import mojioglasi from "@/components/mojioglasi.vue"
 import moment from "moment";
-import Mojioglasi from '../components/mojioglasi.vue';
 import store from '@/store.js'
 
 export default {
@@ -125,7 +110,6 @@ export default {
     mojioglasi
   },
   data() {
-    Mojioglasi
   return {
     ime:Auth.state.name,
     prezime:Auth.state.surname,

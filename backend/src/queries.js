@@ -153,8 +153,21 @@ const updatemydata = async (request, response) => {
 const getimg=async(req,res)=>{
   pool.query('SELECT slika.img FROM slika WHERE slika.name=$1',["1"], (error, results) => {
     try{
-res.status(200).json(results.rows[0])
-//res.end(results.rows[0])
+//res.status(200).json(results.rows[0])
+
+//res.status(200).send(results.rows[0].img)
+
+/*var jsonObj = JSON.parse(results.rows[0].img);
+var jsonStr = JSON.stringify(jsonObj);
+const buf = Buffer.from(jsonStr);*/
+let a=res.status(200).json(results.rows[0].img)
+var jsonObj = JSON.parse(a);
+var jsonStr = JSON.stringify(jsonObj);
+const buf = Buffer.from(jsonStr)
+console.log(buf)
+
+//res.status(200).arrayBuffer(results.rows[0].img)
+//res.end(results.rows[0].img)
 //res.end(img.img)
     }catch(e){
       console.log(e);

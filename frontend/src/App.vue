@@ -14,7 +14,7 @@
                     <router-link to="calendar" v-if="store.state==false" class="nav-link"><!--{{state}}--> Upiši sate <span class="sr-only"></span></router-link>
       </li>
       <li class="nav-item active" >
-                    <router-link to="profile" v-if="store.state==false" class="nav-link"><!--{{state}}--> Profil <span class="sr-only"></span></router-link>
+                    <router-link to="profile" v-if="store.state==false" class="nav-link" @click.native="changevalue()"><!--{{state}}--> Profil <span class="sr-only"></span></router-link>
       </li>
 
                     <li class="nav-item active" >
@@ -112,6 +112,9 @@ export default {
       Auth.logout();
       this.store.state=null;
       this.$router.push({ path: 'pocetna' });
+    },
+    changevalue(){
+      this.store.open=false
     }
   }
   /*methods:{
