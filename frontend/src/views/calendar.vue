@@ -21,14 +21,14 @@
       <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Broj radnih sati</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="brsati">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="brsati">
     </div>
   </div>
 <br>
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Prekovremeni</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="prekovremeni">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="prekovremeni">
     </div>
   </div>
 
@@ -36,28 +36,28 @@
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Rad vikendom/blagdanom</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="blagdan">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="blagdan">
     </div>
   </div>
 <br>
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Noćni rad</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="nocni">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="nocni">
     </div>
   </div>
   <br>
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Odsutan</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="odsutan">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="odsutan">
     </div>
   </div>
 <br>
 
 <div class="form-group col-md-5">
       <label for="inputState">Rad od kuće</label>
-      <select v-model="posaoodkuce" id="inputState" class="form-control" >
+      <select required v-model="posaoodkuce" id="inputState" class="form-control" >
         <option selected>NE</option>
         <option>DA</option>
       </select>
@@ -77,17 +77,58 @@
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
       <input type="file" name="pic" @change="onFileChange"/>
-    <button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button>
+    <!--<button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button> -->
+    <br><hr>
+    <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasWithBothOptions">Pošalji</button>
+
     </div>
+  </div>
+</div>
+
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Prijava sati</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body small">
+        
+    <h6>Pocetak: {{formattedDateStart}} | Kraj: {{formattedDateEnd}} | Ukupno sati: {{suma}}</h6>
+
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Radni sati</th>
+        <th>Prekovremeno</th>
+        <th>rad vikendom</th>
+        <th>nocni rad</th>
+        <th>odsutan</th>
+        <th>rad od kuce</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{brsati}}</td>
+        <td>{{prekovremeno}}</td>
+        <td>{{blagdan}}</td>
+        <td>{{nocni}}</td>
+        <td>{{odsutan}}</td>
+        <td>{{posaoodkuce}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+<input required class="form-check-input" type="checkbox" id="gridCheck1" > 
+<label class="form-check-label" for="gridCheck1"> 
+           Potvrđujem točnost podataka i želim unijeti sate
+        </label><br>
+
+    <button type="submit" class="btn btn-success btn-lg">Pošalji</button>
   </div>
 </div>
 
 </form>
 
-<!--
-{{currentDate}}
-
-  <DatePicker v-model="range" is-range />-->
   </div>
 
 
@@ -150,6 +191,7 @@ export default {
           console.log(id)
           fd.append('image',this.img,id.data)
           await Podaci.slika(fd)
+          this.$router.push({name:"home"})
         }
       }
       else{
@@ -169,6 +211,7 @@ export default {
           postavljeno:Date.now()
         }
         await Podaci.datumi(podaci);
+        this.$router.push({name:"home"})
       }
     }
   },

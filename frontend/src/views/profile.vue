@@ -20,14 +20,12 @@
     
     <div class="col-sm">
       <h2>Status:</h2>
-      <p><i>Ukupno potpisano:</i> 33</p>
-      <p>Nerješeno: 3</p>
-      <p>Ukupno GO: 11</p>{{month}}
+      <p>Ukupno mjeseci: {{totalmonths}}</p>
     </div>
   </div>
 <hr>
  <!--<mojioglasi :podaci="data" v-for="data in podaci" :key="data.id"/>-->
-<table class="table table-striped" >
+<table class="table table-bordered" >
       <tbody v-if="store.open">
         <mojioglasi :podaci="filtered" />        
       </tbody>
@@ -38,9 +36,11 @@
       </thead>
      
       <tbody v-if="!store.open">
-        <tr v-for="data in month" :key="data.id">
+        <tr v-for="(data, index) in month" :key="data.id" >
+          
+         <td class="col-md-1">{{totalmonths=++index}}. </td>
          <td>{{data}}</td>
-          <td>
+          <td class="col-md-3" style="text-align:center;">
             <button
               type="button"
               class="btn btn-primary"
@@ -50,42 +50,18 @@
               Detalji
             </button>
           </td>
-          <!--<td>
-            
-          <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-</svg></button>
-            
-          </td>-->
+
+          <td class="col-md-2">
+            <b>Status:  Unsolved</b> <!-- div v-if za rjeseno/nerjeseno -->
+          </td>
+
         </tr>
-      </tbody><!--</div>-->
-     <!-- <tbody>
-        <mojioglasi :podaci="data" v-for="data in month" :key="data.id"/>
-      </tbody>-->
+      </tbody>
+
     </table>
 </div>
 
-<!--
-{{currentDate}}
-
-  <DatePicker v-model="range" is-range />-->
   </div>
-
-<!--<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">Potpisivanje sati</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-        Broj sati: <br>
-        Mjesec: <br>
-        Prekovremeni: <br>
-        Napomena: <br>
-
-        Upload potpisa: <input type="file" name="pic" @change="onFileChange"/>
-<br>
-  </div>
-</div>-->
 
   </div>
 
@@ -115,6 +91,7 @@ export default {
     prezime:Auth.state.surname,
     email:Auth.state.email,
     store,
+    totalmonths:'',
     filtered:[],
     open:false
   }
@@ -141,66 +118,21 @@ watch: {
     back() {
       this.store.open=false;
     },
-    /*show(data){
-      moment.locale("hr")
-      $("#exampleModal").modal("show");
-      //console.log(this.month)
-      /*if(moment(data.datum_obavljanja_pocetak).format('YYYY MMMM')==this.month){
-        this.filtered=this.podaci
-      }*/
-      /*for(let i=0;i<this.podaci.length;i++){
-        console.log(this.month)
-        let datum=moment(this.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM')
-        console.log(datum)
-        if((datum==this.month[0])){
-          //this.filtered=this.podaci
-          this.filtered.concat(this.podaci)
-          //console.log("aaa")
-        }
-      }
-    },*/
-    /*show(data){
-      $("#exampleModal").modal("show");
-      /*for(let i=0;i<this.podaci.length;i++){
-        moment(this.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM').find(this.month)
-      }*/
-   // },
    show(data){
-     //$("#exampleModal").modal("show");
-     /*Radi ali se duplaju podaci obv
-     for(let i=0;i<this.store.podaci.length;i++){
-       if(moment(this.store.podaci[i].datum_obavljanja_pocetak).format('YYYY MMMM')==data){
-         this.filtered.push(this.store.podaci[i])
-       }
-     }*/
       this.store.open=true
 
      //RADI BEZ DA SE DUPLA!!!
      moment.locale("hr")
-     let a=this.store.podaci.filter(element=>moment(element.datum_obavljanja_pocetak).format('YYYY MMMM')==data)
+     let a=this.store.podaci.filter(element=>moment(element.datum_obavljanja_pocetak).format('MMMM YYYY')==data)
      this.filtered=a.map(obj=>({...obj}))
    }
   },
   computed:{
     month:function(){
-      //for(let i=0;i<this.podaci.length;i++){
-        /*if(this.podaci[i].datum_obavljanja_pocetak.getMonth==this.podaci[i].datum_obavljanja_kraj.getMonth){
-          console.log(this.podaci[i].datum_obavljanja_pocetak.getMonth)
-        }*/
-        /*console.log(moment(this.podaci[i].datum_obavljanja_pocetak).format('MMMM'))
-      }*/
-      /*return this.podaci.filter(item=>{
-        return moment(item.datum_obavljanja_pocetak).format('MMMM')
-      })
-    }*/
-    //return [...new Set(this.podaci.map(x=>x.moment(x.datum_obavljanja_pocetak).format('MMMM')))]
     moment.locale("hr")
-   return [...new Set(this.store.podaci.map(data=>moment(data.datum_obavljanja_pocetak).format('YYYY MMMM')))]
+   return [...new Set(this.store.podaci.map(data=>moment(data.datum_obavljanja_pocetak).format('MMMM YYYY')))]
   }
 }}
-
-//
-// These are required files we must include these libraries 
 
 </script>
 

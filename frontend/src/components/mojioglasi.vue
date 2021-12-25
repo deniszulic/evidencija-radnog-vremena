@@ -1,93 +1,11 @@
 <template>
-  <!--<div>-->
-  <!--<table class="table table-striped">
-      <thead>
+          <div class="container table-bordered">
+            <thead class="thead-dark"  v-if="store.open">
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Mjesec</th>
-          <th scope="col">Ukupno sati</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>-->
-  <!--<td>Veljača</td>-->
-  <!--<td>{{podaci.datum_obavljanja_pocetak|moment}}</td>
-          <td>{{podaci.br_sati}}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#exampleModal"
-            >
-              Detalji
-            </button>
-          </td>
-        </tr>-->
-  <!--<tr>
-          <th scope="row">2</th>
-          <td>Ožujsko</td>
-          <td>11</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#exampleModal"
-            >
-              Potpiši
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Travanj</td>
-          <td>233</td>
-          <td>
-            <button type="button" class="disabled btn btn-dark">
-              Potpisano
-            </button>
-          </td>
-        </tr>-->
-  <!--</tbody>
-    </table>-->
-  <!--<th scope="row">1</th>-->
-
-  <!--<div v-if="showtable==false">
-          <tr >
-          <td>{{podaci}}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#exampleModal" @click="anothertable(podaci)"
-            >
-              Detalji
-            </button>
-          </td></tr></div>
-          <div v-if="showtable==true">
-          <tr>
-          <td>cyka</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#exampleModal"
-            >
-              hmm da
-            </button>
-          </td></tr></div>-->
-          <div>
-            <thead v-if="store.open">
-        <tr>
-          <th scope="col"><button type="button" class="btn btn-dark" @click="back()">Natrag</button></th>
+          <th scope="col"><button type="button" class="btn btn-dark" style="margin-right: 10px;" @click="back()">Natrag</button></th>
           <th scope="col">Datum početak</th>
           <th scope="col">Datum kraj</th>
-          <th scope="col">Broj sati</th>
+          <th scope="col" >Broj sati</th>
           <th scope="col">Prekovremeni</th>
           <th scope="col">Rad od kuće</th>
           <th scope="col">Odsutan</th>
@@ -96,18 +14,17 @@
           <th scope="col">Napomena</th>
         </tr>
       </thead>
-    <tr v-for="data in podaci" :key="data.id">
+    <tr v-for="data in podaci" :key="data.id" class="table-bordered" style="text-align:center;">
       <!--<button @click="back()">Natrag</button>-->
 
       <!--<td>Joe</td>
       <td>Bama</td>-->
       <td></td>
       <td>
-        {{ moment(data.datum_obavljanja_pocetak).format("YYYY MMMM") }}
+        {{ moment(data.datum_obavljanja_pocetak).format("DD MMMM YYYY") }}
       </td>
 
-      <!--<td>{{podaci.datum_obavljanja_pocetak}}</td>-->
-      <td>{{ moment(data.datum_obavljanja_kraj).format("YYYY MMMM") }}</td>
+      <td>{{ moment(data.datum_obavljanja_kraj).format("DD MMMM YYYY") }}</td>
       <td>{{ data.br_sati }}</td>
       <td>{{ data.prekovremeni }}</td>
       <td>{{ data.rad_od_kuce }}</td>
@@ -115,7 +32,7 @@
       <td>{{ data.nocni_rad }}</td>
       <td>{{ data.blagdan }}</td>
       <td>{{ data.napomena }}</td>
-      <td><button @click="update(data)">Ažuriraj podatke</button></td>
+      <td><button type="button" class="btn btn-warning"  @click="update(data)">Ažuriraj podatke</button></td>
       <td><button @click="getdata(data)" class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
 </svg></button></td>
@@ -131,7 +48,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Uređivanje</h5>
             <button
               type="button"
               class="close"
@@ -158,12 +75,8 @@
               v-model="prekovremeni"
             /><br />Rad od kuće:
             <select v-model="rad_od_kuce" id="inputState" class="form-control" >
-        <!--<option selected v-if="this.rad_od_kuce=='DA'">{{rad_od_kuce}}</option>
-        <option selected v-if="this.rad_od_kuce=='NE'">{{rad_od_kuce}}</option>-->
-        <!-- <option>{{rad_od_kuce}}</option> -->
         <option>DA</option>
         <option>NE</option>
-        <!-- <option>DA</option> -->
       </select>
            <!-- <input
               type="text"
@@ -172,7 +85,7 @@
             rad:<input type="text" v-model="nocni_rad" /><br />Blagdan:<input
               type="text"
               v-model="blagdan"
-            /><br />Napomena:<textarea v-model="napomena" />
+            /><br />Napomena:<textarea class="form-control" v-model="napomena" />
             <img id="image" class="img-thumbnail" :src="pic"/>
              </div>
           <div class="modal-footer">
@@ -182,14 +95,14 @@
               data-dismiss="modal"
               @click="close()"
             >
-              Close
+              Zatvori
             </button>
             <button
               type="submit"
-              class="btn btn-primary"
+              class="btn btn-success"
               @click="savechanges()"
             >
-              Save changes
+              Spremi
             </button>
           </div>
         </div>
@@ -391,3 +304,7 @@ var arrayBuffer = data.img.__ob__.value.data;
   },
 };
 </script>
+
+<style scoped>
+
+</style>
