@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="jumbotron">
-  <h1 class="display-4">Profil</h1>
+  <h1 class="display-4">Zaključano</h1>
   <hr>
 </div>
     <!-- {{podaci}} -->
