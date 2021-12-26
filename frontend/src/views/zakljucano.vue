@@ -6,14 +6,14 @@
 </div>
     <!-- {{podaci}} -->
     <table class="table">
-  <thead class="thead-dark">
+   <!-- <thead class="thead-dark">
       <td>#</td>
       <td>Razdoblje</td>
       <td>Status</td>
       <td></td>
-  </thead>
+  </thead>  -->
   <tbody>
-    <tr v-for="(data,index) in podaci" :key="data.id" >
+     <!-- <tr v-for="(data,index) in podaci" :key="data.id" >
           
          <td class="">{{index+1}}. </td>
          <td class="col-md-7">{{moment(data.datum_obavljanja_pocetak).format("DD.MM.YYYY")}} - {{moment(data.datum_obavljanja_kraj).format("DD.MM.YYYY")}} </td>
@@ -22,9 +22,10 @@
             <b>Zaključano</b>
           </td>
 <td class="col-md-1">
-           <button class="btn btn-light"><img src='https://svgshare.com/i/d3E.svg' width=20% height=20% /></button>
+           <button class="btn btn-light" @click="generateReport()"><img src='https://svgshare.com/i/d3E.svg' width=20% height=20% /></button>
           </td>
-        </tr>
+        </tr>   -->
+       <zakljucanotablica :data="podaci"/>
   </tbody>
 </table>
 
@@ -37,8 +38,14 @@
 import moment from "moment";
 import {dohvatpodataka} from '@/services'
 import {Auth} from '@/services'
+import zakljucanotablica from'@/components/zakljucanotablica.vue'
+//import VueHtml2pdf from 'vue-html2pdf'
 export default {
   name: "zakljucano",
+  components:{
+    zakljucanotablica,
+    //VueHtml2pdf
+  },
   data() {
     return {
       podaci: [],
@@ -54,7 +61,10 @@ export default {
   methods:{
     async fetchData(){
       this.podaci=await dohvatpodataka.getlockeddata(Auth.state.id)
-    }
+    },
+    /*generateReport () {
+            this.$refs.html2Pdf.generatePdf()
+        }*/
   },
   filters: {
     moment: function (date) {

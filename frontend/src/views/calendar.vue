@@ -21,14 +21,14 @@
       <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Broj radnih sati</label>
     <div class="col-sm-4">
-      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="brsati">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours"  min="0" v-model.number="brsati">
     </div>
   </div>
 <br>
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Prekovremeni</label>
     <div class="col-sm-4">
-      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="prekovremeni">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" min="0" v-model.number="prekovremeni">
     </div>
   </div>
 
@@ -36,21 +36,21 @@
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Rad vikendom/blagdanom</label>
     <div class="col-sm-4">
-      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="blagdan">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" min="0" v-model.number="blagdan">
     </div>
   </div>
 <br>
  <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Noćni rad</label>
     <div class="col-sm-4">
-      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="nocni">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" min="0" v-model.number="nocni">
     </div>
   </div>
   <br>
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-6 col-form-label">Odsutan</label>
     <div class="col-sm-4">
-      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" v-model.number="odsutan">
+      <input required type="number" class="form-control" id="inputPassword" placeholder="Hours" min="0" v-model.number="odsutan">
     </div>
   </div>
 <br>
