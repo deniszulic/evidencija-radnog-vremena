@@ -39,6 +39,11 @@ let dohvatpodataka={
     let data=response.data
     //console.log(data)
     return data
+  },
+  async getlockeddata(id){
+    let response = await Service.get(`/locked/${id}`);
+    let data=response.data
+    return data
   }
 }
 let Auth={

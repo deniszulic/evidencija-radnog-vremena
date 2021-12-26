@@ -178,6 +178,19 @@ const lock = async (request, response) => {
     }
   })
 }
+const lockeddata = (request, response) => {
+  const id = parseInt(request.params.id)
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 AND kalendar.zakljucano=true ORDER BY postavljeno DESC', [id], (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
 module.exports = {
   createUser,
   login,
@@ -185,5 +198,6 @@ module.exports = {
   createImage,
   dataById,
   updatemydata,
-  lock
+  lock,
+  lockeddata
 };

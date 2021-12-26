@@ -16,6 +16,9 @@
       <li class="nav-item active" >
                     <router-link to="profile" v-if="store.state==false" class="nav-link" @click.native="changevalue()"><!--{{state}}--> Profil <span class="sr-only"></span></router-link>
       </li>
+      <li class="nav-item active" >
+                    <router-link to="zakljucano" v-if="store.state==false" class="nav-link">Zaključano<span class="sr-only"></span></router-link>
+      </li>
 
                     <li class="nav-item active" >
         <a v-if="store.state!=null"
