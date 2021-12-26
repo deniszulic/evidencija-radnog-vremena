@@ -1,4 +1,5 @@
 <template>
+<div>
           <div class="container table-bordered">
             <thead class="thead-dark"  v-if="store.open">
         <tr>
@@ -33,9 +34,10 @@
       <td>{{ data.blagdan }}</td>
       <td>{{ data.napomena }}</td>
       <td><button type="button" class="btn btn-warning"  @click="update(data)">Ažuriraj podatke</button></td>
-      <td><button @click="getdata(data)" class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+      <td><button @click="getdata(data)" class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasWithBothOptions"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-</svg></button></td>
+</svg></button>
+</td>
     </tr>
     <div
       class="modal fade"
@@ -108,24 +110,35 @@
         </div>
       </div>
     </div>
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">Potpisivanje sati</h5>
+    <h5 id="offcanvasRightLabel">Zaključaj datume</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-         <!-- Broj sati:{{brsati}} <br>
-        Mjesec: <br>
+    <div class="p-3 border bg-light">
+        Broj sati:{{brsati}} <br>
+        Datumi: <b>{{datump}}</b> - <b>{{datumk}}</b><br>
         Prekovremeni: {{prekovremeni}}<br>
+        Rad vikendom/blagdanom: {{blagdan}}<br>
+        Nocni rad: {{nocni_rad}}<br>
+        odsutan: {{odsutan}}<br>
+        od kuce: {{rad_od_kuce}}<br>
         Napomena: {{napomena}}<br>
-
-        Upload potpisa: <input type="file" name="pic" />  -->
-        <button @click="lock()">Zaključaj</button>
-<br>
+        <br></div>
+        <div class="p-3 border bg-light">
+        <p>Potpis:</p><img id="image" class="img-thumbnail" :src="pic"/><br>
+         <input type="file" name="pic" />  
+        <br><br></div><br>
+        <button class="btn btn-success" @click="lock()">Zaključaj</button>
   </div>
 </div>
+
+
     </div>
 
+</div>
   <!--</div>-->
 </template>
 <script>
