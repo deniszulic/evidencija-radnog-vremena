@@ -1,7 +1,7 @@
 <template>
   <div v-if="admin==false">
     <h3>Dobro došao nazad, {{ime}}</h3>
-    <div class="jumbotron jumbotron-fluid"><!-- v-if -->
+    <div class="jumbotron jumbotron-fluid"> <!-- v-if -->
   <div class="container">
     <div class="alert alert-danger" role="alert">
   Imate nepotpisanih sati !

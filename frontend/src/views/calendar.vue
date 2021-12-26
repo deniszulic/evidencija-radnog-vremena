@@ -76,6 +76,7 @@
       <p>Odabrani datumi:</p>
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
+      <h2>upload Potpisa (neobavezno):</h2>
       <input type="file" name="pic" accept="image/png, image/jpeg" @change="onFileChange"/>
     <!--<button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button> -->
     <br><hr>
