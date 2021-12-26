@@ -24,7 +24,8 @@ app.post('/data', db.createData)
 app.post('/slika', db.createImage)
 app.get('/getdata/:id', db.dataById)
 app.patch('/mydata/:id',db.updatemydata)
-app.get("/bigoof",db.getimg)
+app.patch('/lock/:id', db.lock)
+//app.get("/bigoof",db.getimg)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

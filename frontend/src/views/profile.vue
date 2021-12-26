@@ -20,25 +20,24 @@
     
     <div class="col-sm">
       <h2>Status:</h2>
-      <p>Ukupno mjeseci: {{totalmonths}}</p>
+      <p>Ukupno mjeseci: {{month.length}}</p>
     </div>
   </div>
 <hr>
  <!--<mojioglasi :podaci="data" v-for="data in podaci" :key="data.id"/>-->
 <table class="table table-bordered" >
-      <tbody v-if="store.open">
-        <mojioglasi :podaci="filtered" />        
-      </tbody>
-      <thead v-if="!store.open">
+  <thead v-if="!store.open">
         <tr>
           <th scope="col">Kalendar</th>
         </tr>
-      </thead>
-     
+      </thead> 
+      <tbody v-if="store.open">
+        <mojioglasi :podaci="filtered" />        
+      </tbody>     
       <tbody v-if="!store.open">
-        <tr v-for="(data, index) in month" :key="data.id" >
+        <tr v-for="(data,index) in month" :key="data.id" >
           
-         <td class="col-md-1">{{totalmonths=++index}}. </td>
+         <td class="col-md-1">{{index+1}}. </td>
          <td>{{data}}</td>
           <td class="col-md-3" style="text-align:center;">
             <button
@@ -91,7 +90,7 @@ export default {
     prezime:Auth.state.surname,
     email:Auth.state.email,
     store,
-    totalmonths:'',
+    //totalmonths:null,
     filtered:[],
     open:false
   }

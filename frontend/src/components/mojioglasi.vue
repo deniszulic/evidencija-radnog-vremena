@@ -114,12 +114,13 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-        Broj sati:{{brsati}} <br>
+         <!-- Broj sati:{{brsati}} <br>
         Mjesec: <br>
         Prekovremeni: {{prekovremeni}}<br>
         Napomena: {{napomena}}<br>
 
-        Upload potpisa: <input type="file" name="pic" />
+        Upload potpisa: <input type="file" name="pic" />  -->
+        <button @click="lock()">Zaključaj</button>
 <br>
   </div>
 </div>
@@ -284,6 +285,7 @@ var arrayBuffer = data.img.__ob__.value.data;
               x.nocni_rad=update.nocni_rad
               x.napomena=update.napomena
               x.blagdan=update.blagdan
+              break;
             }
           }
           for(let [i,x] of this.podaci.entries()){
@@ -297,10 +299,46 @@ var arrayBuffer = data.img.__ob__.value.data;
               x.nocni_rad=update.nocni_rad
               x.napomena=update.napomena
               x.blagdan=update.blagdan
+              break;
             }
           }
         }).then(()=>$("#exampleModal").modal("hide"))
     },
+    async lock(){
+      let data={
+        zakljucano:true
+      }
+      await Podaci.lockdata(this.id, data).then(()=>{
+        $("#offcanvasRight").offcanvas("hide");
+        /*for(let [i,x] of this.store.podaci.entries()){
+            if(x.id==this.id){
+              console.log("aaa")
+              x.zakljucano=true
+              this.store.podaci.slice(i)
+            }
+          }
+          for(let [i,x] of this.podaci.entries()){
+            if(x.id==this.id){
+              console.log("bbb")
+              x.zakljucano=true
+              this.podaci.slice(i)
+            }
+          }*/
+          //this.store.podaci.filter(a => a.id != this.id);
+        /*this.store.podaci.entries().filter(a=>a.id!=this.id);
+        this.podaci.entries().filter(a=>a.id!=this.id);*/
+        for (let i =0; i < this.store.podaci.length; i++)
+   if (this.store.podaci[i].id == this.id) {
+      this.store.podaci.splice(i,1);
+      break;
+   }
+   for (let i =0; i < this.store.podaci.length; i++)
+   if (this.podaci[i].id == this.id) {
+      this.podaci.splice(i,1);
+      break;
+   }
+      })
+    }
   },
 };
 </script>

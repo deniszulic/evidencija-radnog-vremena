@@ -76,7 +76,7 @@
       <p>Odabrani datumi:</p>
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
-      <input type="file" name="pic" @change="onFileChange"/>
+      <input type="file" name="pic" accept="image/png, image/jpeg" @change="onFileChange"/>
     <!--<button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button> -->
     <br><hr>
     <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasWithBothOptions">Pošalji</button>
@@ -109,7 +109,7 @@
     <tbody>
       <tr>
         <td>{{brsati}}</td>
-        <td>{{prekovremeno}}</td>
+        <td>{{prekovremeni}}</td>
         <td>{{blagdan}}</td>
         <td>{{nocni}}</td>
         <td>{{odsutan}}</td>
@@ -190,8 +190,8 @@ export default {
           console.log("treci")
           console.log(id)
           fd.append('image',this.img,id.data)
-          await Podaci.slika(fd)
-          this.$router.push({name:"home"})
+          await Podaci.slika(fd).then(()=>{
+          this.$router.push({name:"korisnik"})})
         }
       }
       else{
@@ -210,8 +210,8 @@ export default {
           korisnik_id:Auth.state.id,
           postavljeno:Date.now()
         }
-        await Podaci.datumi(podaci);
-        this.$router.push({name:"home"})
+        await Podaci.datumi(podaci).then(()=>{
+        this.$router.push({name:"korisnik"})})
       }
     }
   },

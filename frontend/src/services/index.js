@@ -28,6 +28,9 @@ let Podaci={
   },
   async updatemydata(id,data){
     return await Service.patch(`/mydata/${id}`,data)
+  },
+  async lockdata(id,data){
+    return await Service.patch(`/lock/${id}`,data)
   }
 }
 let dohvatpodataka={

@@ -124,7 +124,7 @@ const dataById = (request, response) => {
   const id = parseInt(request.params.id)
   //console.log(id)
 
-  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 ORDER BY postavljeno DESC', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 AND kalendar.zakljucano IS NOT true ORDER BY postavljeno DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -150,16 +150,9 @@ const updatemydata = async (request, response) => {
     }
   })
 }
-const getimg=async(req,res)=>{
+/*const getimg=async(req,res)=>{
   pool.query('SELECT slika.img FROM slika WHERE slika.name=$1',["1"], (error, results) => {
     try{
-//res.status(200).json(results.rows[0])
-
-//res.status(200).send(results.rows[0].img)
-
-/*var jsonObj = JSON.parse(results.rows[0].img);
-var jsonStr = JSON.stringify(jsonObj);
-const buf = Buffer.from(jsonStr);*/
 let a=res.status(200).json(results.rows[0].img)
 var jsonObj = JSON.parse(a);
 var jsonStr = JSON.stringify(jsonObj);
@@ -173,6 +166,17 @@ console.log(buf)
       console.log(e);
     }
   })
+}*/
+const lock = async (request, response) => {
+  const id = parseInt(request.params.id)
+  const { zakljucano } = request.body
+  pool.query('UPDATE kalendar SET zakljucano=$2 WHERE id=$1',[id, zakljucano], (error, results) => {
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
 }
 module.exports = {
   createUser,
@@ -181,5 +185,5 @@ module.exports = {
   createImage,
   dataById,
   updatemydata,
-  getimg
+  lock
 };
