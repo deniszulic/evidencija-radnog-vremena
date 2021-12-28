@@ -191,6 +191,38 @@ const lockeddata = (request, response) => {
     }
   })
 };
+const getalldata = (request, response) => {
+  const id = parseInt(request.params.id)
+  //console.log(id)
+
+  pool.query('SELECT DISTINCT email FROM kalendar', (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
+const getalldatabyemail = (request, response) => {
+  const id = request.params.id.toString()
+  //console.log(id)
+  //console.log(id)
+
+  pool.query('SELECT * FROM kalendar WHERE email=$1', [id], (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+      //console.log(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
 module.exports = {
   createUser,
   login,
@@ -199,5 +231,7 @@ module.exports = {
   dataById,
   updatemydata,
   lock,
-  lockeddata
+  lockeddata,
+  getalldata,
+  getalldatabyemail
 };

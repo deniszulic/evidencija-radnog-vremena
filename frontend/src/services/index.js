@@ -44,6 +44,16 @@ let dohvatpodataka={
     let response = await Service.get(`/locked/${id}`);
     let data=response.data
     return data
+  },
+  async getalldata(){
+    let response = await Service.get('/alldata');
+    let data=response.data
+    return data
+  },
+  async getlockeddatabyemail(id){
+    let response = await Service.get(`/alldatabyemail/${id}`);
+    let data=response.data
+    return data
   }
 }
 let Auth={
