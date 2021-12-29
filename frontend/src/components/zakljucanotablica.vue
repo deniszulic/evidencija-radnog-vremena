@@ -93,35 +93,6 @@ export default {
     },
     download(data) {
       var doc = new jsPDF();
-      //doc.addFont("NotoSans-Regular-normal.js", "NotoSans-Regular", "normal");
-      //doc.setFont("NotoSans", "normal")
-      /*doc.addFont('NotoSans-Regular.ttf', 'NotoSans', 'normal');
-doc.setFont('NotoSans');*/
-      /*doc.addFont('NotoSans-Regular.ttf', 'custom', 'normal');
-doc.setFont('custom');*/
-      //var img = new Image()
-      /*var x = document.createElement("IMG");
-x.src = '../assets/header.PNG'*/
-      //var imgData = 'data:image/png;base64,'+ this.encode('../assets/header.PNG');
-      /*var img = new Image();
-img.src = path.resolve('../assets/header.png');*/
-
-      /*imageToBase64("../assets/header.png") 
-    .then(
-        (response) => {
-            console.log(response)
-            var bytes1 = new Uint8Array(response);
-            let header= 'data:image/png;base64,'+this.encode(bytes1);
-doc.addImage(header, 'png', 10, 110)
-        }
-    )
-    .catch(
-        (error) => {
-            console.log(error); // Logs an error if there was one
-        }
-    )*/
-      
-
       doc.addImage(image, "PNG", 0, 0);
       if (data.datum_obavljanja_pocetak != null) {
         doc.text(

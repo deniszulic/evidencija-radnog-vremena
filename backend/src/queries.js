@@ -106,7 +106,11 @@ const createImage = async (request, response) => {
   let id=Number(name)
   let name1=name+"_"+Date.now()
   console.log(name)
-  console.log(data)
+  console.log(Buffer.byteLength(data))
+  /*if(Buffer.byteLength(data)>512000){
+    console.log("sheesh")
+  }
+  else{*/
   pool.query(
     "INSERT INTO slika (name,img,kalendar_id) VALUES ($1, $2, $3) RETURNING id",
     [name1,data,id],
@@ -211,7 +215,24 @@ const getalldatabyemail = (request, response) => {
   //console.log(id)
   //console.log(id)
 
-  pool.query('SELECT * FROM kalendar WHERE email=$1', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1', [id], (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+      //console.log(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
+const deletedata = (request, response) => {
+  const id = request.params.id
+  //console.log(id)
+  //console.log(id)
+
+  pool.query('DELETE FROM kalendar WHERE id=$1', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -233,5 +254,6 @@ module.exports = {
   lock,
   lockeddata,
   getalldata,
-  getalldatabyemail
+  getalldatabyemail,
+  deletedata
 };

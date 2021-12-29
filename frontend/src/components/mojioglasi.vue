@@ -219,36 +219,6 @@ encode (input) {
       this.nocni_rad = data.nocni_rad;
       this.blagdan = data.blagdan;
       this.napomena = data.napomena;
-      /*if(data.img!=null){
-      this.pic="data:image/jpeg;base64,"+this.hexToBase64(data.img.data)}*/
-      /*let reader = new FileReader();
-      this.pic=btoa(data.img.data)*/
-
-      /*let binary = Buffer.from(data.img); //or Buffer.from(data, 'binary')
-let imgData = new Blob(binary.buffer, { type: 'application/octet-binary' });
-let link = URL.createObjectURL(imgData);
-
-let img = new Image();
-img.onload = () => URL.revokeObjectURL(link);
-this.pic = link;*/
-//this.pic=data.img;
-/*const buffer = Buffer.from(data.img.data);
-
-const base64String = buffer.toString('base64');
-console.log(base64String)
-this.pic=base64String*/
-//this.pic=data.img;
-/*const imgData = this._arrayBufferToBase64(data.img.data)
-commit(this.pic, imgData);*/
-
-/*var jsonObj = JSON.parse(data.img);
-var jsonStr = JSON.stringify(jsonObj);
-const buf = Buffer.from(jsonStr)
-this.pic=buf;*/
-
-/*console.log(data.img.__ob__.value.data)
-this.pic=data.img.__ob__.value.data;
-*/
 if(data.img!=null){
 var arrayBuffer = data.img.__ob__.value.data;
     var bytes = new Uint8Array(arrayBuffer);

@@ -6,7 +6,7 @@
   <tr>
     <th>Email</th>
   </tr>
-  <tr v-for="a in podaci" :key="a.email"  >
+  <tr v-for="a in store.admindata" :key="a.email"  >
     <td>{{a.email}}</td>
     <td><button type="button"
               class="btn btn-primary"
@@ -44,7 +44,7 @@ export default {
   },
   methods:{
     async fetchData(){
-      this.podaci=await dohvatpodataka.getalldata()
+      this.store.admindata=await dohvatpodataka.getalldata()
     },
     async details(data){
         //console.log(data)

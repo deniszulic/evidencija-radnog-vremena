@@ -28,6 +28,7 @@ app.patch('/mydata/:id',db.updatemydata)
 app.patch('/lock/:id', db.lock)
 app.get('/alldata', db.getalldata)
 app.get('/alldatabyemail/:id', db.getalldatabyemail)
+app.delete('/delete/:id', db.deletedata)
 //app.get("/bigoof",db.getimg)
 
 app.listen(port, () => {

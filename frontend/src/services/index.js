@@ -31,6 +31,9 @@ let Podaci={
   },
   async lockdata(id,data){
     return await Service.patch(`/lock/${id}`,data)
+  },
+  async deletespecificdata(id){
+    return await Service.delete(`delete/${id}`)
   }
 }
 let dohvatpodataka={
