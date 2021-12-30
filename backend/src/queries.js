@@ -141,9 +141,9 @@ const dataById = (request, response) => {
 };
 const updatemydata = async (request, response) => {
   const id = parseInt(request.params.id)
-  const { datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan } = request.body
+  const { datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano } = request.body
   //console.log(br_sati)
-  pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan], (error, results) => {
+  pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10, zakljucano=$11 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -199,10 +199,28 @@ const getalldata = (request, response) => {
   const id = parseInt(request.params.id)
   //console.log(id)
 
-  pool.query('SELECT DISTINCT email FROM kalendar', (error, results) => {
+  pool.query('SELECT DISTINCT ON (email) email, postavljeno, zakljucano FROM kalendar WHERE zakljucano IS NOT TRUE ORDER BY email, postavljeno DESC', (error, results) => {
     /*if (error) {
       throw error
     }*/
+    results.rows.sort((a,b) => (a.postavljeno > b.postavljeno) ? -1 : ((b.postavljeno > a.postavljeno) ? 1 : 0))
+    //console.log(results.rows)
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
+const getalldata1 = (request, response) => {
+  const id = parseInt(request.params.id)
+  //console.log(id)
+
+  pool.query('SELECT DISTINCT ON (email) email, postavljeno, zakljucano FROM kalendar WHERE zakljucano IS TRUE ORDER BY email, postavljeno DESC', (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    results.rows.sort((a,b) => (a.postavljeno > b.postavljeno) ? -1 : ((b.postavljeno > a.postavljeno) ? 1 : 0))
     try{
       response.status(200).json(results.rows)
     }catch(e){
@@ -215,7 +233,24 @@ const getalldatabyemail = (request, response) => {
   //console.log(id)
   //console.log(id)
 
-  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1 AND kalendar.zakljucano IS NOT true ORDER BY kalendar.postavljeno DESC', [id], (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+      //console.log(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
+const getalldatabyemail1 = (request, response) => {
+  const id = request.params.id.toString()
+  //console.log(id)
+  //console.log(id)
+
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1 AND kalendar.zakljucano=true ORDER BY kalendar.postavljeno DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -254,6 +289,8 @@ module.exports = {
   lock,
   lockeddata,
   getalldata,
+  getalldata1,
   getalldatabyemail,
+  getalldatabyemail1,
   deletedata
 };

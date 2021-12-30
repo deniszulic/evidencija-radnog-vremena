@@ -6,7 +6,7 @@
                 
   <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><router-link to="pocetna" class="nav-link">Home <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link to="pocetna" class="nav-link" @click.native="changevalue()">Home <span class="sr-only"></span></router-link></li>
                         <li class="nav-item"><router-link v-if="store.state==null" to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
                         <li class="nav-item"><router-link v-if="store.state==null" to="register"  class="nav-link"> Register <span class="sr-only"></span></router-link></li>
                     
@@ -18,6 +18,9 @@
       </li>
       <li class="nav-item active" >
                     <router-link to="zakljucano" v-if="store.state==false" class="nav-link">Zaključano<span class="sr-only"></span></router-link>
+      </li>
+      <li class="nav-item active" >
+                    <router-link to="adminzakljucano" v-if="store.state==true" class="nav-link" @click.native="changevalue()"><!--{{state}}--> Zaključano <span class="sr-only"></span></router-link>
       </li>
 
                     <li class="nav-item active" >

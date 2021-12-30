@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="store.state==false">
     <div class="jumbotron">
   <h1 class="display-4">Zaključano</h1>
   <hr>
@@ -39,6 +39,7 @@ import moment from "moment";
 import {dohvatpodataka} from '@/services'
 import {Auth} from '@/services'
 import zakljucanotablica from'@/components/zakljucanotablica.vue'
+import store from '@/store.js'
 //import VueHtml2pdf from 'vue-html2pdf'
 export default {
   name: "zakljucano",
@@ -49,7 +50,8 @@ export default {
   data() {
     return {
       podaci: [],
-      moment
+      moment,
+      store
     };
   },
   created() {

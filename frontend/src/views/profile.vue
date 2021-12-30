@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" v-if="store.state==false">
 <div class="container">
 
 <div class="jumbotron">

@@ -1,12 +1,12 @@
 <template>
     <div v-if="store.state==true">
-        <h1>Podaci koje korisnik nije zaključao</h1>
+        <h1>Podaci koje korisnik je zaključao</h1>
         <!-- <admintablica :data="podaci"/> -->
         <table v-if="!store.open">
   <tr>
     <th>Email</th>
   </tr>
-  <tr v-for="a in store.admindata" :key="a.email"  >
+  <tr v-for="a in store.admindata1" :key="a.email"  >
     <td>{{a.email}}</td>
     <td><button type="button"
               class="btn btn-primary"
@@ -15,19 +15,19 @@
   </tr>
 </table>
 <table v-if="store.open">
-<admintablicaotkljucano :data="data"/>
+<admintablica :data="data"/>
 </table>
     </div>
 </template>
 <script>
 import {dohvatpodataka} from '@/services'
 import {Auth} from '@/services'
-import admintablicaotkljucano from'@/components/admintablicaotkljucano.vue'
+import admintablica from'@/components/admintablica.vue'
 import store from "@/store.js";
 export default {
-    name:'admin',
+    name:'adminzakljucano',
     components:{
-        admintablicaotkljucano
+        admintablica
     },
     data(){
         return{
@@ -44,12 +44,12 @@ export default {
   },
   methods:{
     async fetchData(){
-      this.store.admindata=await dohvatpodataka.getalldata()
+      this.store.admindata1=await dohvatpodataka.getalldata1()
     },
     async details(data){
         //console.log(data)
         //let a=data.email
-        this.data=await dohvatpodataka.getlockeddatabyemail(data)
+        this.data=await dohvatpodataka.getlockeddatabyemail1(data)
         this.store.open=true;
         //console.log(this.data)
     }

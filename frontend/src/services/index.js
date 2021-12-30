@@ -53,8 +53,18 @@ let dohvatpodataka={
     let data=response.data
     return data
   },
+  async getalldata1(){
+    let response = await Service.get('/alldata1');
+    let data=response.data
+    return data
+  },
   async getlockeddatabyemail(id){
     let response = await Service.get(`/alldatabyemail/${id}`);
+    let data=response.data
+    return data
+  },
+  async getlockeddatabyemail1(id){
+    let response = await Service.get(`/alldatabyemail1/${id}`);
     let data=response.data
     return data
   }

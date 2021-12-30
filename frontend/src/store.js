@@ -3,5 +3,6 @@ export default{
     errorMessage:'',
     podaci:[],
     admindata:[],
+    admindata1:[],
     open:false
 }

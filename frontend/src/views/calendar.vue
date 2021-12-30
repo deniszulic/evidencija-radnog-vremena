@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" v-if="store.state==false">
 <div class="container">
 
 <div class="jumbotron">
@@ -143,6 +143,7 @@
 import { Calendar, DatePicker } from 'v-calendar';
 import {Podaci} from '@/services'
 import {Auth} from '@/services'
+import store from '@/store.js'
 
 export default {
   name:"calendar",
@@ -218,6 +219,7 @@ export default {
   },
   data() {
   return {
+    store,
     brsati:null,
     prekovremeni:null,
     blagdan:null,

@@ -161,7 +161,7 @@ export default {
   },
   methods: {
     async back() {
-      this.store.admindata1=await dohvatpodataka.getalldata1()
+      this.store.admindata=await dohvatpodataka.getalldata()
       
         this.store.open = false;
     },
@@ -341,7 +341,7 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
               x.nocni_rad = update.nocni_rad;
               x.napomena = update.napomena;
               x.blagdan = update.blagdan;
-              if(update.zakljucano==false){
+              if(update.zakljucano==true){
                 this.data.splice(i,1);
               }
               break;
