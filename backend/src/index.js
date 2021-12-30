@@ -30,7 +30,12 @@ app.get('/alldata', db.getalldata)
 app.get('/alldata1', db.getalldata1)
 app.get('/alldatabyemail/:id', db.getalldatabyemail)
 app.get('/alldatabyemail1/:id', db.getalldatabyemail1)
+app.get('/adminmydata/:id', db.getadminmydata)
 app.delete('/delete/:id', db.deletedata)
+app.patch('/updatemyadmindata/:id', db.updateadmindata)
+app.get('/getadmindata/:id', db.getadminmydata)
+//app.delete('/deletepassword/:id', db.deletepass)
+app.patch('/updatemyadminpass/:id', db.updateadminpass)
 //app.get("/bigoof",db.getimg)
 
 app.listen(port, () => {

@@ -67,8 +67,26 @@ let dohvatpodataka={
     let response = await Service.get(`/alldatabyemail1/${id}`);
     let data=response.data
     return data
+  },
+  async getadminmydata(id){
+    let response = await Service.get(`/getadmindata/${id}`);
+    let data=response.data
+    return data
   }
 }
+let azuriraj={
+  async updateadmindata(id,data){
+    return await Service.patch(`/updatemyadmindata/${id}`,data)
+  },
+  async updateadminpass(id,data){
+    return await Service.patch(`/updatemyadminpass/${id}`,data)
+  }
+}
+/*let deletedata={
+  async deletepassword(id){
+    return await Service.delete(`deletepassword/${id}`)
+  }
+}*/
 let Auth={
     getUser(){
         return JSON.parse(localStorage.getItem("user"))
@@ -112,4 +130,4 @@ let Auth={
     }
 }
 
-export { Registracija, Auth, Podaci, dohvatpodataka };
+export { Registracija, Auth, Podaci, dohvatpodataka, azuriraj };

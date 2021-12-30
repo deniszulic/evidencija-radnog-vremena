@@ -262,6 +262,16 @@ const getalldatabyemail1 = (request, response) => {
     }
   })
 };
+const getadminmydata = (request, response) => {
+  const id = request.params.id.toString()
+  pool.query('SELECT ime, prezime, datumreg FROM korisnik WHERE id=$1', [id], (error, results) => {
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
 const deletedata = (request, response) => {
   const id = request.params.id
   //console.log(id)
@@ -279,6 +289,58 @@ const deletedata = (request, response) => {
     }
   })
 };
+const updateadmindata = async (request, response) => {
+  const id = parseInt(request.params.id)
+  const { ime, prezime } = request.body
+  pool.query('UPDATE korisnik SET ime=$2, prezime=$3 WHERE id=$1',[id, ime, prezime], (error, results) => {
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+}
+/*const deletepass = (request, response) => {
+  const id = request.params.id
+  pool.query('DELETE FROM korisnik WHERE id=$1', [id], (error, results) => {
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};*/
+
+/*
+const updateadminpass = async (request, response) => {
+  const id = parseInt(request.params.id)
+  const { lozinka } = request.body
+  pool.query('UPDATE korisnik SET lozinka=$2 WHERE id=$1',[id, lozinka], (error, results) => {
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+}*/
+const updateadminpass = async (request, response) => {
+  //const {lozinka}=bcrypt.hash(request.body,8);
+  const { lozinka } = request.body;
+  const id = parseInt(request.params.id)
+  const salt = bcrypt.genSaltSync(8);
+  const hash = bcrypt.hashSync(lozinka, salt);
+  pool.query(
+    "UPDATE korisnik SET lozinka=$2 WHERE id=$1",
+    [id, hash],
+    (error, results) => {
+      try {
+        response.status(200).json(results.rows)
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  );
+};
 module.exports = {
   createUser,
   login,
@@ -292,5 +354,9 @@ module.exports = {
   getalldata1,
   getalldatabyemail,
   getalldatabyemail1,
-  deletedata
+  deletedata,
+  getadminmydata,
+  updateadmindata,
+  //deletepass,
+  updateadminpass
 };
