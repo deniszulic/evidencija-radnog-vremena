@@ -130,7 +130,7 @@
         <div class="p-3 border bg-light">
         <p>Potpis:</p><img id="image1" class="img-thumbnail" :src="pic"/><br>
          <!-- <input type="file" name="pic" />   -->
-        <br><br></div><br>
+        <br><br></div><i>Provjeriti podatke prije zaključavanja!</i><br>
         <button class="btn btn-success" @click="lock()">Zaključaj</button>
   </div>
 </div>
@@ -300,23 +300,7 @@ var arrayBuffer = data.img.__ob__.value.data;
       }
       await Podaci.lockdata(this.id, data).then(()=>{
         $("#offcanvasRight").offcanvas("hide");
-        /*for(let [i,x] of this.store.podaci.entries()){
-            if(x.id==this.id){
-              console.log("aaa")
-              x.zakljucano=true
-              this.store.podaci.slice(i)
-            }
-          }
-          for(let [i,x] of this.podaci.entries()){
-            if(x.id==this.id){
-              console.log("bbb")
-              x.zakljucano=true
-              this.podaci.slice(i)
-            }
-          }*/
-          //this.store.podaci.filter(a => a.id != this.id);
-        /*this.store.podaci.entries().filter(a=>a.id!=this.id);
-        this.podaci.entries().filter(a=>a.id!=this.id);*/
+        
         for (let i =0; i < this.store.podaci.length; i++)
    if (this.store.podaci[i].id == this.id) {
       this.store.podaci.splice(i,1);
@@ -328,6 +312,7 @@ var arrayBuffer = data.img.__ob__.value.data;
       break;
    }
       })
+      this.$router.push({name:"zakljucano"})
     }
   },
 };

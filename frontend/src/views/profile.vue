@@ -7,13 +7,50 @@
   <hr>
 </div>
 <div class="container">
-  <div class="row">
+
+<div class="container px-4">
+  <div class="row gx-5">
+    <div class="col">
+     <div class="p-3 border bg-light">
+       <div class="form-group">
+    <label for="exampleInputname">Ime</label><br>
+    <input type="text" class="form-control" id="exampleInputname" aria-describedby="name" placeholder="Ime" v-model="ime">
+  </div>
+  <div class="form-group">
+    <label for="surname">Prezime</label><br>
+    <input type="text" class="form-control" id="surname" aria-describedby="surname" placeholder="Prezime" v-model="prezime">
+  </div>
+  <div class="form-group">
+    <label for="dateregistration">Datum registracije</label><br>
+    <input type="text" class="form-control" id="dateregistration" aria-describedby="dateregistration" placeholder="Datum registracije" v-model="datumreg" disabled>
+  </div>
+  <button type="button" class="btn btn-primary" @click="updatedata()">Spremi promjene</button>
+     </div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">
+        <h2>Status:</h2>
+      <p>Ukupno mjeseci: {{month.length}}</p>
+      <div class="form-group">
+    <label for="changepass">Promijeni šifru</label><br>
+    <input type="password" class="form-control" id="changepass" aria-describedby="changepass" placeholder="Nova lozinka" v-model="changepassword" >
+  </div><br>
+  <button type="button" class="btn btn-primary" @click="updatepassword()">Spremi novu lozinku</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!--<div class="row">
     <div class="col-sm">
       <br>
       <img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="350" height="100">
-      <!-- zamjeniti sa slikom profila uwu -->
       <br><br>
       <h1>Promijeni svoje podatke</h1>
+
   <div class="form-group">
     <label for="exampleInputname">Ime</label><br>
     <input type="text" class="form-control" id="exampleInputname" aria-describedby="name" placeholder="Ime" v-model="ime">
@@ -27,9 +64,6 @@
     <input type="text" class="form-control" id="dateregistration" aria-describedby="dateregistration" placeholder="Datum registracije" v-model="datumreg" disabled>
   </div>
   <button type="button" class="btn btn-primary" @click="updatedata()">Spremi promjene</button>
-      <!-- <h3>Ime: {{ime}}</h3>
-      <p>Prezime: {{prezime}}</p>
-      <p>Email: {{email}}</p> -->
     </div>
     
     <div class="col-sm">
@@ -41,7 +75,7 @@
   </div>
   <button type="button" class="btn btn-primary" @click="updatepassword()">Spremi novu lozinku</button>
     </div>
-  </div>
+  </div>-->
 <hr>
  <!--<mojioglasi :podaci="data" v-for="data in podaci" :key="data.id"/>-->
 <table class="table table-bordered" >
@@ -70,7 +104,7 @@
           </td>
 
           <td class="col-md-2">
-            <b>Status:  Unsolved</b> <!-- div v-if za rjeseno/nerjeseno -->
+            <b>Status:  Unsolved</b> 
           </td>
 
         </tr>

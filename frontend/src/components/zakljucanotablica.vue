@@ -3,6 +3,7 @@
     <thead class="thead-dark">
       <td>#</td>
       <td>Razdoblje</td>
+      <td>Broj sati</td>
       <td>Status</td>
       <td></td>
     </thead>
@@ -11,6 +12,9 @@
       <td class="col-md-7">
         {{ moment(a.datum_obavljanja_pocetak).format("DD.MM.YYYY") }} -
         {{ moment(a.datum_obavljanja_kraj).format("DD.MM.YYYY") }}
+      </td>
+      <td class="col-md-2">
+        {{a.br_sati}}
       </td>
       <td class="col-md-2">
         <b>Zaključano</b>

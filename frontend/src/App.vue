@@ -3,8 +3,10 @@
     <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <router-link to="pocetna" class="nav-link" @click.native="changevalue()"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="30"></router-link>
-                
-  <div class="collapse navbar-collapse" id="navbarResponsive">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive12" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+  <div class="collapse navbar-collapse" id="navbarResponsive12">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><router-link to="pocetna" class="nav-link" @click.native="changevalue()">Home <span class="sr-only"></span></router-link></li>
                         <li class="nav-item"><router-link v-if="store.state==null" to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
@@ -161,7 +163,6 @@ export default {
 
 body {
   font-family: "Poppins", sans-serif;
-  height: 100vh;
 }
 
 /*a {
@@ -228,7 +229,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
-  background-color: #56baed;
+ /* background-color: #56baed; */
   border: none;
   color: white;
   padding: 15px 80px;
