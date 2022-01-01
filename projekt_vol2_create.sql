@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2021-12-28 23:33:30.205
+-- Last modification date: 2022-01-01 15:53:44.171
 
 -- tables
 -- Table: KALENDAR
@@ -18,6 +18,8 @@ CREATE TABLE KALENDAR (
     blagdan int  NULL,
     KORISNIK_id int  NOT NULL,
     zakljucano boolean  NULL,
+    prihvaceno_od_admina boolean  NULL,
+    razlog_admin text  NULL,
     CONSTRAINT KALENDAR_pk PRIMARY KEY (id)
 );
 

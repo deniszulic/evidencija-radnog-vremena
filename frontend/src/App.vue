@@ -2,7 +2,7 @@
   <div id="app">
     <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <router-link to="pocetna" class="nav-link"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="30"></router-link>
+      <router-link to="pocetna" class="nav-link" @click.native="changevalue()"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="30"></router-link>
                 
   <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">

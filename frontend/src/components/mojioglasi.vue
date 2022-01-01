@@ -128,8 +128,8 @@
         Napomena: {{napomena}}<br>
         <br></div>
         <div class="p-3 border bg-light">
-        <p>Potpis:</p><img id="image" class="img-thumbnail" :src="pic"/><br>
-         <input type="file" name="pic" />  
+        <p>Potpis:</p><img id="image1" class="img-thumbnail" :src="pic"/><br>
+         <!-- <input type="file" name="pic" />   -->
         <br><br></div><br>
         <button class="btn btn-success" @click="lock()">Zaključaj</button>
   </div>
@@ -238,6 +238,13 @@ var arrayBuffer = data.img.__ob__.value.data;
       this.nocni_rad = data.nocni_rad;
       this.blagdan = data.blagdan;
       this.napomena = data.napomena;
+      if(data.img!=null){
+        var arrayBuffer = data.img.__ob__.value.data;
+        var bytes = new Uint8Array(arrayBuffer);
+
+        var image = document.getElementById('image1');
+        image.src = 'data:image/png;base64,'+this.encode(bytes);}
+    else{this.pic=""}
     },
     close() {
       this.id = "";

@@ -97,7 +97,22 @@
                 <label class="form-check-label" for="exampleRadios2">
                   Nije zaključano
                 </label>
+              </div> <br/>
+              <p>Prihvati ili odbij unesene podatke</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios3" value="true" v-model="prihvaceno_od_admina">
+                <label class="form-check-label" for="exampleRadios3">
+                  Prihvati
+                </label>
               </div> 
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios4" value="false" v-model="prihvaceno_od_admina">
+                <label class="form-check-label" for="exampleRadios4">
+                  Odbij
+                </label>
+              </div> 
+              <p>Razlog</p>
+              <textarea v-model="razlog_admin"/>
             <img id="image" class="img-thumbnail" :src="pic" />
           </div>
           <div class="modal-footer justify-content-between">
@@ -156,7 +171,9 @@ export default {
       napomena: "",
       id: "",
       pic: "",
-      zakljucano:null
+      zakljucano:null,
+      prihvaceno_od_admina:'',
+      razlog_admin:''
     };
   },
   methods: {
@@ -209,6 +226,8 @@ export default {
       this.nocni_rad = data.nocni_rad;
       this.blagdan = data.blagdan;
       this.napomena = data.napomena;
+      this.prihvaceno_od_admina=data.prihvaceno_od_admina;
+      this.razlog_admin=data.razlog_admin
       if(data.zakljucano==null){
         this.zakljucano=false
       }
@@ -311,7 +330,9 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         nocni_rad: this.nocni_rad,
         napomena: this.napomena,
         blagdan: this.blagdan,
-        zakljucano:this.zakljucano
+        zakljucano:this.zakljucano,
+        prihvaceno_od_admina:this.prihvaceno_od_admina,
+        razlog_admin:this.razlog_admin
       };
       await Podaci.updatemydata(this.id, update)
         .then(() => {
@@ -341,6 +362,8 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
               x.nocni_rad = update.nocni_rad;
               x.napomena = update.napomena;
               x.blagdan = update.blagdan;
+              x.razlog_admin=update.razlog_admin;
+              x.prihvaceno_od_admina=update.prihvaceno_od_admina
               if(update.zakljucano==false){
                 this.data.splice(i,1);
               }

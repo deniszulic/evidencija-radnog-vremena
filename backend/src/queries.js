@@ -141,9 +141,9 @@ const dataById = (request, response) => {
 };
 const updatemydata = async (request, response) => {
   const id = parseInt(request.params.id)
-  const { datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano } = request.body
+  const { datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin } = request.body
   //console.log(br_sati)
-  pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10, zakljucano=$11 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano], (error, results) => {
+  pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10, zakljucano=$11, prihvaceno_od_admina=$12, razlog_admin=$13 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -250,7 +250,7 @@ const getalldatabyemail1 = (request, response) => {
   //console.log(id)
   //console.log(id)
 
-  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1 AND kalendar.zakljucano=true ORDER BY kalendar.postavljeno DESC', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano, kalendar.prihvaceno_od_admina, kalendar.razlog_admin, slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1 AND kalendar.zakljucano=true ORDER BY kalendar.postavljeno DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/

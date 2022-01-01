@@ -121,11 +121,13 @@ export default {
       },
       async updatepassword(){
           //await deletedata.deletepassword(Auth.state.id)
-          console.log("pass:"+this.changepassword)
+         //console.log("pass:"+this.changepassword)
           let update={
               lozinka:this.changepassword
           }
-          await azuriraj.updateadminpass(Auth.state.id, update)
+          await azuriraj.updateadminpass(Auth.state.id, update).then(()=>{
+            this.changepassword=''
+          })
       }
   }
 };
