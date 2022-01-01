@@ -72,6 +72,16 @@ let dohvatpodataka={
     let response = await Service.get(`/getadmindata/${id}`);
     let data=response.data
     return data
+  },
+  async getstatisticdata(id){
+    let response = await Service.get(`/statisticdata/${id}`);
+    let data=response.data
+    return data
+  },
+  async getlockeddatacheck(id){
+    let response = await Service.get(`/lockeddata/${id}`);
+    let data=response.data
+    return data
   }
 }
 let azuriraj={

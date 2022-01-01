@@ -57,7 +57,7 @@ const login = async (request, response) => {
       bcrypt.compare(lozinka, results.rows[0].lozinka).then(function (result) {
         if (result && results.rows[0].lozinka) {
           delete results.rows[0].lozinka;
-          console.log(results.rows);
+          //console.log(results.rows);
           let token = jwt.sign(
             email,
             process.env.JWT_KEY,
@@ -105,7 +105,7 @@ const createImage = async (request, response) => {
   const{name,data}=request.files.image
   let id=Number(name)
   let name1=name+"_"+Date.now()
-  console.log(name)
+  //console.log(name)
   console.log(Buffer.byteLength(data))
   /*if(Buffer.byteLength(data)>512000){
     console.log("sheesh")
@@ -184,7 +184,7 @@ const lock = async (request, response) => {
 }
 const lockeddata = (request, response) => {
   const id = parseInt(request.params.id)
-  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 AND kalendar.zakljucano=true ORDER BY postavljeno DESC', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name, kalendar.prihvaceno_od_admina, kalendar.razlog_admin, slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 AND kalendar.zakljucano=true ORDER BY postavljeno DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -341,6 +341,27 @@ const updateadminpass = async (request, response) => {
     }
   );
 };
+const statisticdata = (request, response) => {
+  const id = request.params.id.toString()
+  pool.query('SELECT SUM(br_sati) AS br_sati, SUM(prekovremeni) AS prekovremeni, SUM(odsutan) AS odsutan, SUM (nocni_rad) AS nocni_rad, SUM (blagdan) AS blagdan FROM kalendar WHERE korisnik_id=$1', [id], (error, results) => {
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
+const lockeduserdata = (request, response) => {
+  const id = request.params.id.toString()
+  pool.query('SELECT zakljucano FROM kalendar WHERE zakljucano IS NOT true AND korisnik_id=$1', [id], (error, results) => {
+    try{
+      console.log(results.rows)
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+};
 module.exports = {
   createUser,
   login,
@@ -358,5 +379,7 @@ module.exports = {
   getadminmydata,
   updateadmindata,
   //deletepass,
-  updateadminpass
+  updateadminpass,
+  statisticdata,
+  lockeduserdata
 };

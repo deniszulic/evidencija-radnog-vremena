@@ -4,18 +4,24 @@
       <td>#</td>
       <td>Razdoblje</td>
       <td>Status</td>
+      <td>Admin prihvatio?</td>
+      <td>Komentar od admina</td>
       <td></td>
     </thead>
     <tr v-for="(a, index) in data" :key="a.id">
-      <td class="">{{ index + 1 }}.</td>
-      <td class="col-md-7">
+      <td class="col-md-1">{{ index + 1 }}.</td>
+      <td class="col-md-2">
         {{ moment(a.datum_obavljanja_pocetak).format("DD.MM.YYYY") }} -
         {{ moment(a.datum_obavljanja_kraj).format("DD.MM.YYYY") }}
       </td>
       <td class="col-md-2">
         <b>Zaključano</b>
       </td>
-      <td class="col-md-1">
+      <td v-if="a.prihvaceno_od_admina==true" class="col-md-2">Prihvaćeno</td>
+      <td v-if="a.prihvaceno_od_admina==false" class="col-md-2">Nije prihvaćeno</td>
+      <td v-if="a.prihvaceno_od_admina==null" class="col-md-2">Čeka potvrdu</td>
+      <td class="col-md-3"><p id="text-admin">{{a.razlog_admin}}</p></td>
+      <td class="col-md-2">
         <button class="btn btn-light" @click="download(a)">
           <img src="https://svgshare.com/i/d3E.svg" width="20%" height="20%" />
         </button>
@@ -148,3 +154,8 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
   },
 };
 </script>
+<style>
+#text-admin{
+  font-size:1.5vw;
+}
+</style>
