@@ -2,6 +2,9 @@
     <div v-if="store.state==true">
         <h1>Podaci koje korisnik je zaključao</h1>
         <!-- <admintablica :data="podaci"/> -->
+        <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
         <table v-if="!store.open">
   <tr>
     <th>Email</th>
@@ -33,7 +36,8 @@ export default {
         return{
             podaci:[],
             data:[],
-            store
+            store,
+            errormsg:''
         }
     },
     created() {
@@ -44,12 +48,20 @@ export default {
   },
   methods:{
     async fetchData(){
+      try{
       this.store.admindata1=await dohvatpodataka.getalldata1()
+      }catch(e){
+        this.errormsg=e.message
+      }
     },
     async details(data){
         //console.log(data)
         //let a=data.email
+        try{
         this.data=await dohvatpodataka.getlockeddatabyemail1(data)
+        }catch(e){
+          this.errormsg=e.message
+        }
         this.store.open=true;
         //console.log(this.data)
     }

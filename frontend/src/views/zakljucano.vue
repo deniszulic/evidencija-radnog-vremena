@@ -1,5 +1,8 @@
 <template>
   <div v-if="store.state==false">
+    <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
     <div class="jumbotron">
   <h1 class="display-4">Zaključano</h1>
   <hr>
@@ -51,7 +54,8 @@ export default {
     return {
       podaci: [],
       moment,
-      store
+      store,
+      errormsg:''
     };
   },
   created() {
@@ -62,7 +66,11 @@ export default {
   },
   methods:{
     async fetchData(){
+      try{
       this.podaci=await dohvatpodataka.getlockeddata(Auth.state.id)
+      }catch(e){
+        this.errormsg=e.message
+      }
     },
     /*generateReport () {
             this.$refs.html2Pdf.generatePdf()

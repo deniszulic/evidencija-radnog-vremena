@@ -1,6 +1,9 @@
 <template>
   <div v-if="admin==false">
     <h3>Dobro došao nazad, {{ime}}</h3>
+    <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
     <div class="jumbotron jumbotron-fluid"> <!-- v-if -->
   <div class="container">
     <div class="alert alert-danger" role="alert" v-if="locked.length!=null">
@@ -54,7 +57,8 @@ export default{
       br_sati:'',
       nocni_rad:'',
       odsutan:'',
-      prekovremeni:''
+      prekovremeni:'',
+      errormsg:''
     }
   },
   created() {
@@ -65,13 +69,21 @@ export default{
   },
   methods: {
     async fetchData(){
+      try{
         this.mydata=await dohvatpodataka.getstatisticdata(Auth.state.id)
+      }catch(e){
+        this.errormsg=e.message
+      }
         this.blagdan=this.mydata[0].blagdan;
         this.br_sati=this.mydata[0].br_sati;
         this.nocni_rad=this.mydata[0].nocni_rad
         this.odsutan=this.mydata[0].odsutan
         this.prekovremeni=this.mydata[0].prekovremeni
+       try{
        this.locked=await dohvatpodataka.getlockeddatacheck(Auth.state.id)
+      }catch(e){
+        this.errormsg=e.message
+      }
     }
 },
 computed:{

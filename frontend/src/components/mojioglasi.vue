@@ -1,5 +1,8 @@
 <template>
 <div>
+  <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
           <div class="container table-bordered">
             <thead class="thead-dark"  v-if="store.open">
         <tr>
@@ -168,8 +171,24 @@ export default {
       blagdan: "",
       napomena: "",
       id: "",
-      pic:""
+      pic:"",
+      errormsg:""
     };
+  },
+  mounted(){
+$('html').click(function(){
+    $('#exampleModal').hide();
+});
+$('#exampleModal').click(function(e){
+  var image = document.getElementById("image");
+        image.src = "";
+    e.stopPropagation();
+});
+var myOffcanvas = document.getElementById('offcanvasRight')
+myOffcanvas.addEventListener('hidden.bs.offcanvas', function () {
+  var image = document.getElementById("image1");
+        image.src = "";
+})
   },
   methods: {
     back() {
@@ -262,6 +281,7 @@ var arrayBuffer = data.img.__ob__.value.data;
           napomena:this.napomena,
           blagdan:this.blagdan
         }
+        try{
         await Podaci.updatemydata(this.id,update).then(()=>{
           //alert("Uspješno")
           for(let [i,x] of this.store.podaci.entries()){
@@ -293,11 +313,16 @@ var arrayBuffer = data.img.__ob__.value.data;
             }
           }
         }).then(()=>$("#exampleModal").modal("hide"))
+
+      }catch(e){
+        this.errormsg=e.message
+      }
     },
     async lock(){
       let data={
         zakljucano:true
       }
+      try{
       await Podaci.lockdata(this.id, data).then(()=>{
         $("#offcanvasRight").offcanvas("hide");
         
@@ -313,6 +338,9 @@ var arrayBuffer = data.img.__ob__.value.data;
    }
       })
       this.$router.push({name:"zakljucano"})
+      }catch(e){
+        this.errormsg=e.message
+      }
     }
   },
 };

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
     <div class="container">
 <br>
 
@@ -85,10 +88,10 @@ export default {
         datumreg:'',
         email:'',
         password:'',
-        errorMessage1:'',
         ime1:'',
         prezime1:'',
-        changepassword:''
+        changepassword:'',
+        errormsg:''
     };
   },
   created() {
@@ -99,7 +102,11 @@ export default {
   },
   methods:{
       async fetchData(){
+        try{
         this.adminmydata=await dohvatpodataka.getadminmydata(Auth.state.id)
+        }catch(e){
+          this.errormsg=e.message
+        }
         this.ime=this.adminmydata[0].ime
         this.prezime=this.adminmydata[0].prezime
         this.datumreg=moment(parseInt(this.adminmydata[0].datumreg)).format("DD.MM.YYYY")
@@ -109,9 +116,12 @@ export default {
               ime:this.ime,
               prezime:this.prezime
           }
+          try{
           await azuriraj.updateadmindata(Auth.state.id, update).then(()=>{
           $("#successmodalic").modal("show");
-          })
+          })}catch(e){
+            this.errormsg=e.message
+          }
       },
       async addadmin(){
           let a={
@@ -132,8 +142,7 @@ export default {
       })
       }
       catch (error) {
-        this.errorMessage1 = error.message;
-        console.log("Greška");
+        this.errormsg = error.message;
       }
       },
       async updatepassword(){
@@ -142,10 +151,13 @@ export default {
           let update={
               lozinka:this.changepassword
           }
+          try{
           await azuriraj.updateadminpass(Auth.state.id, update).then(()=>{
             this.changepassword=''
           $("#successmodalic").modal("show");
-          })
+          })}catch(e){
+            this.errormsg=e.message
+          }
       }
   }
 };

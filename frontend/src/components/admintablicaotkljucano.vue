@@ -1,6 +1,9 @@
 <template>
   <div>
     <!-- <table class="table"> -->
+      <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
     <thead class="thead-dark">
       <td><button @click="back()">Nazad</button></td>
       <td>Razdoblje</td>
@@ -156,12 +159,27 @@ export default {
       napomena: "",
       id: "",
       pic: "",
-      zakljucano:null
+      zakljucano:null,
+      errormsg:''
     };
+  },
+  mounted(){
+$('html').click(function(){
+    $('#exampleModal').hide();
+});
+$('#exampleModal').click(function(e){
+  var image = document.getElementById("image");
+        image.src = "";
+    e.stopPropagation();
+});
   },
   methods: {
     async back() {
+      try{
       this.store.admindata=await dohvatpodataka.getalldata()
+      }catch(e){
+        this.errormsg=e.message
+      }
       
         this.store.open = false;
     },
@@ -226,6 +244,7 @@ export default {
       $("#exampleModal").modal("show");
     },
     async deletedata(){
+      try{
       await Podaci.deletespecificdata(this.id).then(()=>{
         $("#exampleModal").modal("hide");
          for (let i =0; i < this.data.length; i++){
@@ -235,6 +254,9 @@ export default {
    }
    }
       })
+      }catch(e){
+        this.errormsg=e.message
+      }
     },
     close() {
       this.id = "";
@@ -313,23 +335,9 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         blagdan: this.blagdan,
         zakljucano:this.zakljucano
       };
+      try{
       await Podaci.updatemydata(this.id, update)
         .then(() => {
-          //alert("Uspješno")
-          /*for(let [i,x] of this.store.podaci.entries()){
-            if(x.id==this.id){
-              x.datum_obavljanja_pocetak=update.datum_obavljanja_pocetak
-              x.datum_obavljanja_kraj=update.datum_obavljanja_kraj
-              x.br_sati=update.br_sati
-              x.prekovremeni=update.prekovremeni
-              x.odsutan=update.odsutan
-              x.rad_od_kuce=update.rad_od_kuce
-              x.nocni_rad=update.nocni_rad
-              x.napomena=update.napomena
-              x.blagdan=update.blagdan
-              break;
-            }
-          }*/
           for (let [i, x] of this.data.entries()) {
             if (x.id == this.id) {
               x.datum_obavljanja_pocetak = update.datum_obavljanja_pocetak;
@@ -349,6 +357,9 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
           }
         })
         .then(() => $("#exampleModal").modal("hide"));
+      }catch(e){
+        this.errormsg=e.message
+      }
     },
   },
 };

@@ -1,7 +1,9 @@
 <template>
 <div id="app" v-if="store.state==false">
 <div class="container">
-
+<div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
 <div class="jumbotron">
   <h1 class="display-4">Upis radnih sati</h1>
   <hr class="my-4">
@@ -187,14 +189,23 @@ export default {
           korisnik_id:Auth.state.id,
           postavljeno:Date.now()
         }
-        let id=await Podaci.datumi(podaci);
+        let id
+        try{
+        id=await Podaci.datumi(podaci);
+        }catch(e){
+          this.errormsg=e.message
+        }
         if(id.data!=null){
           console.log("treci")
           console.log(id)
           fd.append('image',this.img,id.data)
+          try{
           await Podaci.slika(fd).then(()=>{
             $("#offcanvasBottom").offcanvas("hide");
-          this.$router.push({path: "/profile"})})
+          this.$router.push({path: "/korisnik"})})
+        }catch(e){
+          this.errormsg=e.message
+        }
         }
       }
       else{
@@ -213,10 +224,14 @@ export default {
           korisnik_id:Auth.state.id,
           postavljeno:Date.now()
         }
+        try{
         await Podaci.datumi(podaci).then(()=>{
           $("#offcanvasBottom").offcanvas("hide");
-        this.$router.push({path: "/profile"})})
+        this.$router.push({path: "/korisnik"})})
+      }catch(e){
+        this.errormsg=e.message
       }
+    }
     }
   },
   data() {
@@ -231,6 +246,7 @@ export default {
     napomena:null,
     img:null,
     image:null,
+    errormsg:'',
     //suma:null,
     range: {
       //start:this.currentDate() /*this.currentDate()*/,

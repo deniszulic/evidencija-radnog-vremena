@@ -1,5 +1,8 @@
 <template>
 <div id="app" v-if="store.state==false">
+  <div v-if="errormsg" class="alert alert-danger">
+{{errormsg}}
+</div>
 <div class="container">
 
 <div class="jumbotron">
@@ -151,7 +154,8 @@ export default {
     mydata:[],
     ime:'',
     prezime:'',
-    changepassword:''
+    changepassword:'',
+    errormsg:''
   }
 },
 /*async mounted(){
@@ -168,11 +172,19 @@ watch: {
   },
   methods:{
     async fetchData(){
+      try{
       this.store.podaci=await dohvatpodataka.getdatauser(Auth.state.id)
+      }catch(e){
+        this.errormsg=e.message
+      }
       //console.log(this.podaci)
     },
     async fetchmydata(){
+      try{
       this.mydata=await dohvatpodataka.getadminmydata(Auth.state.id)
+      }catch(e){
+        this.errormsg=e.message
+      }
       this.ime=this.mydata[0].ime
         this.prezime=this.mydata[0].prezime
         this.datumreg=moment(parseInt(this.mydata[0].datumreg)).format("DD.MM.YYYY")
@@ -182,7 +194,11 @@ watch: {
               ime:this.ime,
               prezime:this.prezime
           }
+          try{
           await azuriraj.updateadmindata(Auth.state.id, update)
+          }catch(e){
+        this.errormsg=e.message
+      }
       },
     onFileChange(e){
       const selected=e.target.files[0];
@@ -205,9 +221,13 @@ watch: {
           let update={
               lozinka:this.changepassword
           }
+          try{
           await azuriraj.updateadminpass(Auth.state.id, update).then(()=>{
             this.changepassword=''
           })
+          }catch(e){
+        this.errormsg=e.message
+      }
       }
   },
   computed:{
