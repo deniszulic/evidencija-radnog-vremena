@@ -152,6 +152,18 @@ export default {
       if (data.odsutan != null) {
         doc.text("Odsutan: " + data.odsutan.toString(), 10, 140);
       }
+      if(data.prihvaceno_od_admina == null){
+        doc.text("Prihvaceno od admina: Ceka potvrdu" , 10, 150);
+      }
+      if (data.prihvaceno_od_admina == false) {
+        doc.text("Prihvaceno od admina: Nije prihvaceno", 10, 150);
+      }
+      if (data.prihvaceno_od_admina == true) {
+        doc.text("Prihvaceno od admina: Prihvaceno", 10, 150);
+      }
+      if(data.razlog_admin!=null){
+        doc.text("Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(), 10, 160);
+      }
       if (data.img != null) {
         /*var imgData = 'data:image/jpeg;base64,'+ Base64.encode(data.img);
 doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
