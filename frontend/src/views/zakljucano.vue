@@ -5,6 +5,7 @@
 </div>
     <div class="jumbotron">
   <h1 class="display-4">Zaključano</h1>
+  <input type="text" v-model="search" placeholder="Pretraži po datumu početka"/>
   <hr>
 </div>
     <!-- {{podaci}} -->
@@ -28,7 +29,7 @@
            <button class="btn btn-light" @click="generateReport()"><img src='https://svgshare.com/i/d3E.svg' width=20% height=20% /></button>
           </td>
         </tr>   -->
-       <zakljucanotablica :data="podaci"/>
+       <zakljucanotablica :data="podaci" :search="search"/>
   </tbody>
 </table>
 
@@ -55,7 +56,8 @@ export default {
       podaci: [],
       moment,
       store,
-      errormsg:''
+      errormsg:'',
+      search:''
     };
   },
   created() {

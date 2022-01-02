@@ -9,7 +9,7 @@
       <td>Komentar od admina</td>
       <td></td>
     </thead>
-    <tr v-for="(a, index) in data" :key="a.id">
+    <tr v-for="(a, index) in filtrirano" :key="a.id">
       <td class="col-md-1">{{ index + 1 }}.</td>
       <td class="col-md-2">
         {{ moment(a.datum_obavljanja_pocetak).format("DD.MM.YYYY") }} -
@@ -55,17 +55,26 @@
 import moment from "moment";
 import jsPDF from "jspdf";
 import image from '@/image.js'
+import store from '@/store.js'
 //import NotoSans-Regular-normal from 'NotoSans-Regular-normal.js';
 //import VueHtml2pdf from 'vue-html2pdf'
 export default {
-  props: ["data"],
+  props: ["data", "search"],
   components: {
     //VueHtml2pdf
   },
   data() {
     return {
       moment,
+      store
     };
+  },
+  computed:{
+    filtrirano() {
+      return this.data.filter(post => {
+        return moment(post.datum_obavljanja_pocetak).format("DD.MM.YYYY").toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
   methods: {
     /* generateReport () {

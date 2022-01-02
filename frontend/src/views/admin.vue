@@ -4,12 +4,13 @@
 {{errormsg}}
 </div>
         <h1>Podaci koje korisnik nije zaključao</h1>
+        <input type="text" v-model="search" placeholder="Pretraži po emailu"/>
         <!-- <admintablica :data="podaci"/> -->
         <table v-if="!store.open">
   <tr>
     <th>Email</th>
   </tr>
-  <tr v-for="a in store.admindata" :key="a.email"  >
+  <tr v-for="a in filtrirano" :key="a.email"  >
     <td>{{a.email}}</td>
     <td><button type="button"
               class="btn btn-primary"
@@ -37,11 +38,19 @@ export default {
             podaci:[],
             data:[],
             store,
-            errormsg:''
+            errormsg:'',
+            search:''
         }
     },
     created() {
     this.fetchData();
+  },
+  computed:{
+    filtrirano() {
+      return this.store.admindata.filter(post => {
+        return post.email.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
   watch: {
     $route: "fetchData",
