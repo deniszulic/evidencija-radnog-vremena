@@ -164,14 +164,21 @@ export default {
     };
   },
   mounted(){
-$('html').click(function(){
+/*$('html').click(function(){
     $('#exampleModal').hide();
 });
 $('#exampleModal').click(function(e){
   var image = document.getElementById("image");
         image.src = "";
     e.stopPropagation();
-});
+});*/
+var image = document.getElementById("image");
+if(image!=null){
+  var modal= document.getElementById('exampleModal')
+  modal.addEventListener('hidden.bs.modal', function () {
+        image.src = "";
+})
+}
   },
   methods: {
     async back() {

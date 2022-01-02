@@ -7,6 +7,7 @@
 
 <div class="jumbotron">
   <h1 class="display-4">Profil</h1>
+  <input type="text" v-model="search" placeholder="Pretraži po datumu"/>
   <hr>
 </div>
 <div class="container">
@@ -91,7 +92,7 @@
         <mojioglasi :podaci="filtered" />        
       </tbody>     
       <tbody v-if="!store.open">
-        <tr v-for="(data,index) in month" :key="data.id" >
+        <tr v-for="(data,index) in filtrirano" :key="data.id" >
           
          <td class="col-md-1">{{index+1}}. </td>
          <td>{{data}}</td>
@@ -155,7 +156,8 @@ export default {
     ime:'',
     prezime:'',
     changepassword:'',
-    errormsg:''
+    errormsg:'',
+    search:''
   }
 },
 /*async mounted(){
@@ -234,7 +236,12 @@ watch: {
     month:function(){
     moment.locale("hr")
    return [...new Set(this.store.podaci.map(data=>moment(data.datum_obavljanja_pocetak).format('MMMM YYYY')))]
-  }
+  },
+  filtrirano() {
+      return this.month.filter(post => {
+        return post.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
 }}
 
 </script>

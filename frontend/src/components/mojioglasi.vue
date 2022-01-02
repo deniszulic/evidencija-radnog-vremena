@@ -176,19 +176,30 @@ export default {
     };
   },
   mounted(){
-$('html').click(function(){
+/*$('html').click(function(){
     $('#exampleModal').hide();
 });
+
 $('#exampleModal').click(function(e){
   var image = document.getElementById("image");
         image.src = "";
+        console.log("image:"+image.src)
     e.stopPropagation();
-});
-var myOffcanvas = document.getElementById('offcanvasRight')
-myOffcanvas.addEventListener('hidden.bs.offcanvas', function () {
-  var image = document.getElementById("image1");
+});*/
+var image = document.getElementById("image");
+if(image!=null){
+  var modal= document.getElementById('exampleModal')
+  modal.addEventListener('hidden.bs.modal', function () {
         image.src = "";
 })
+}
+  var image1 = document.getElementById("image1");
+  if(image1!=null){
+var myOffcanvas = document.getElementById('offcanvasRight')
+myOffcanvas.addEventListener('hidden.bs.offcanvas', function () {
+        image1.src = "";
+})
+  }
   },
   methods: {
     back() {
