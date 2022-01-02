@@ -107,15 +107,18 @@ const createImage = async (request, response) => {
   let name1=name+"_"+Date.now()
   //console.log(name)
   console.log(Buffer.byteLength(data))
-  /*if(Buffer.byteLength(data)>512000){
-    console.log("sheesh")
+  if(Buffer.byteLength(data)>512000){
+    //console.log("sheesh")
+    response.status(500)
+    //response.status(200).send("Prevelik file").toString()
   }
-  else{*/
+  else{
   pool.query(
     "INSERT INTO slika (name,img,kalendar_id) VALUES ($1, $2, $3) RETURNING id",
     [name1,data,id],
     (error, results) => {
       try {
+        //console.log(results.rows)
         response.status(200).send((results.rows[0].id).toString());
        //response.sendStatus(200);
       } catch (e) {
@@ -123,12 +126,13 @@ const createImage = async (request, response) => {
       }
     }
   );
+  }
 };
 const dataById = (request, response) => {
   const id = parseInt(request.params.id)
   //console.log(id)
 
-  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 AND kalendar.zakljucano IS NOT true ORDER BY postavljeno DESC', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano,slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.korisnik_id=$1 AND kalendar.zakljucano IS NOT true ORDER BY kalendar.datum_obavljanja_pocetak DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/

@@ -78,8 +78,9 @@
       <p>Odabrani datumi:</p>
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
-      <h2>upload Potpisa (neobavezno):</h2>
+      <h2>Upload potpisa (neobavezno):</h2>
       <input type="file" name="pic" accept="image/png, image/jpeg" @change="onFileChange"/>
+      <p>Maksimalna veličina do 500 KB!</p>
     <!--<button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button> -->
     <br><hr>
     <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasWithBothOptions">Pošalji</button>
@@ -195,17 +196,34 @@ export default {
         }catch(e){
           this.errormsg=e.message
         }
+          let slikaa;
         if(id.data!=null){
           console.log("treci")
           console.log(id)
           fd.append('image',this.img,id.data)
           try{
-          await Podaci.slika(fd).then(()=>{
-            $("#offcanvasBottom").offcanvas("hide");
-          this.$router.push({path: "/korisnik"})})
+          slikaa= await Podaci.slika(fd)
+          //console.log("slika:"+JSON.stringify(slikaa.data))
+          $("#offcanvasBottom").offcanvas("hide");
+          this.$router.push({path: "/korisnik"})
         }catch(e){
           this.errormsg=e.message
+          await Podaci.deletespecificdata(id.data)
+          this.brsati=''
+          this.prekovremeni=''
+          this.blagdan=''
+          this.nocni=''
+          this.odsutan=''
+          this.posaoodkuce=''
+          this.napomena=''
         }
+        /*console.log("slika:"+slikaa.data)
+        if(slikaa.data=="Prevelik file"){
+          console.log("aaaa")
+          await Podaci.deletespecificdata(id.data)
+        }*/
+           /* $("#offcanvasBottom").offcanvas("hide");
+          this.$router.push({path: "/korisnik"})*/
         }
       }
       else{
