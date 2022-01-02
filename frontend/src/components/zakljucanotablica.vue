@@ -3,6 +3,7 @@
     <thead class="thead-dark">
       <td>#</td>
       <td>Razdoblje</td>
+      <td>Broj sati</td>
       <td>Status</td>
       <td>Admin prihvatio?</td>
       <td>Komentar od admina</td>
@@ -14,7 +15,10 @@
         {{ moment(a.datum_obavljanja_pocetak).format("DD.MM.YYYY") }} -
         {{ moment(a.datum_obavljanja_kraj).format("DD.MM.YYYY") }}
       </td>
-      <td class="col-md-2">
+      <td class="col-md-1">
+        {{a.br_sati}}
+      </td>
+      <td class="col-md-1">
         <b>Zaključano</b>
       </td>
       <td v-if="a.prihvaceno_od_admina==true" class="col-md-2">Prihvaćeno</td>

@@ -3933,7 +3933,7 @@ textarea.form-control-lg {
   border-top-right-radius: 0;
 }
 
-.nav {
+/*.nav {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -4507,7 +4507,7 @@ textarea.form-control-lg {
 .navbar-dark .navbar-text a:hover,
 .navbar-dark .navbar-text a:focus {
   color: #fff;
-}
+}*/
 
 .card {
   position: relative;
@@ -11327,7 +11327,7 @@ hr.divider-light {
   background-color: #fff;
 }
 
-#mainNav {
+/*#mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   background-color: #fff;
   transition: background-color 0.2s ease;
@@ -11387,7 +11387,7 @@ hr.divider-light {
   #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
     color: #f4623a;
   }
-}
+}*/
 
 header.masthead {
   padding-top: 10rem;

@@ -193,7 +193,8 @@ export default {
           console.log(id)
           fd.append('image',this.img,id.data)
           await Podaci.slika(fd).then(()=>{
-          this.$router.push({name:"korisnik"})})
+            $("#offcanvasBottom").offcanvas("hide");
+          this.$router.push({path: "/profile"})})
         }
       }
       else{
@@ -213,7 +214,8 @@ export default {
           postavljeno:Date.now()
         }
         await Podaci.datumi(podaci).then(()=>{
-        this.$router.push({name:"korisnik"})})
+          $("#offcanvasBottom").offcanvas("hide");
+        this.$router.push({path: "/profile"})})
       }
     }
   },
