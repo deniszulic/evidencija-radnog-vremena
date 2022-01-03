@@ -9,6 +9,7 @@ const port = 3000;
 const db = require('./queries')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload');
+//const nodemailer = require('nodemailer')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(
@@ -17,6 +18,7 @@ app.use(
   })
 )
 app.use(fileUpload());
+//app.use(nodemailer())
 
 app.post('/register', db.createUser)
 app.post('/login', db.login)
@@ -25,6 +27,7 @@ app.post('/slika', db.createImage)
 app.get('/getdata/:id', db.dataById)
 app.get('/locked/:id', db.lockeddata)
 app.patch('/mydata/:id',db.updatemydata)
+app.patch('/mydata1/:id',db.updatemydata1)
 app.patch('/lock/:id', db.lock)
 app.get('/alldata', db.getalldata)
 app.get('/alldata1', db.getalldata1)

@@ -1,6 +1,7 @@
 require("dotenv").config();
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from 'nodemailer';
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
@@ -100,13 +101,49 @@ const createData = async (request, response) => {
       }
     }
   );
+  const output = `
+        <h1>Postavili ste</h1>
+        <p>Broj sati:${br_sati}</p>
+        <p>Broj prekovremenih sati:${prekovremeni}</p>
+        <p>Sati za vrijeme blagdana:${blagdan}</p>
+        <p>Nocni rad:${nocni_rad}</p>
+        <p>Broj odsutnih sati:${odsutan}</p>
+        <p>Rad ok duće? ${rad_od_kuce}</p>
+        <p>Datum početka:${datum_obavljanja_pocetak}</p>
+        <p>Datum kraja:${datum_obavljanja_kraj}</p>
+        <p>Napomena:${napomena}</p>`
+
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'fe059285@gmail.com',
+                pass: 'fakepass666',
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        try{
+        await transporter.sendMail({
+            from: '"wHours" <fe059285@gmail.com>',
+            to: `${email}`,
+            subject: "Potvrda podataka ✔",
+            text: "Automatski generirano",
+            html: output,
+        })}catch(e){
+          console.log(e)
+        }
+
 };
 const createImage = async (request, response) => {
   const{name,data}=request.files.image
   let id=Number(name)
   let name1=name+"_"+Date.now()
   //console.log(name)
-  console.log(Buffer.byteLength(data))
+  //console.log(Buffer.byteLength(data))
   if(Buffer.byteLength(data)>512000){
     //console.log("sheesh")
     response.status(500)
@@ -145,7 +182,7 @@ const dataById = (request, response) => {
 };
 const updatemydata = async (request, response) => {
   const id = parseInt(request.params.id)
-  const { datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin } = request.body
+  const { email, datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin } = request.body
   //console.log(br_sati)
   pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10, zakljucano=$11, prihvaceno_od_admina=$12, razlog_admin=$13 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin], (error, results) => {
     /*if (error) {
@@ -157,6 +194,48 @@ const updatemydata = async (request, response) => {
       console.log(e)
     }
   })
+}
+const updatemydata1 = async (request, response) => {
+  const id = parseInt(request.params.id)
+  const { email, datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin } = request.body
+  //console.log(br_sati)
+  pool.query('UPDATE kalendar SET datum_obavljanja_pocetak=$2,datum_obavljanja_kraj=$3,br_sati=$4,prekovremeni=$5,odsutan=$6,rad_od_kuce=$7,nocni_rad=$8,napomena=$9,blagdan=$10, zakljucano=$11, prihvaceno_od_admina=$12, razlog_admin=$13 WHERE id=$1',[id,datum_obavljanja_pocetak,datum_obavljanja_kraj,br_sati,prekovremeni,odsutan,rad_od_kuce,nocni_rad,napomena,blagdan, zakljucano, prihvaceno_od_admina, razlog_admin], (error, results) => {
+    /*if (error) {
+      throw error
+    }*/
+    try{
+      response.status(200).json(results.rows)
+    }catch(e){
+      console.log(e)
+    }
+  })
+  const output = `
+        <h1>Obavijest!</h1>
+        <p>Admin je upravo ažurirao vaše podatke</p>`
+
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'fe059285@gmail.com',
+                pass: 'fakepass666',
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        try{
+        await transporter.sendMail({
+            from: '"wHours" <fe059285@gmail.com>',
+            to: `${email}`,
+            subject: "Admin update",
+            text: "Automatski generirano",
+            html: output,
+        })}catch(e){
+          console.log(e)
+        }
 }
 /*const getimg=async(req,res)=>{
   pool.query('SELECT slika.img FROM slika WHERE slika.name=$1',["1"], (error, results) => {
@@ -254,7 +333,7 @@ const getalldatabyemail1 = (request, response) => {
   //console.log(id)
   //console.log(id)
 
-  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano, kalendar.prihvaceno_od_admina, kalendar.razlog_admin, slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1 AND kalendar.zakljucano=true ORDER BY kalendar.postavljeno DESC', [id], (error, results) => {
+  pool.query('SELECT kalendar.id, kalendar.datum_obavljanja_pocetak, kalendar.datum_obavljanja_kraj, kalendar.br_sati, kalendar.prekovremeni, kalendar.rad_od_kuce, kalendar.odsutan, kalendar.nocni_rad, kalendar.postavljeno, kalendar.blagdan, kalendar.napomena, kalendar.zakljucano, kalendar.prihvaceno_od_admina, kalendar.razlog_admin, kalendar.email, slika.name,slika.img FROM kalendar LEFT JOIN slika ON kalendar.id=slika.kalendar_id WHERE kalendar.email=$1 AND kalendar.zakljucano=true ORDER BY kalendar.postavljeno DESC', [id], (error, results) => {
     /*if (error) {
       throw error
     }*/
@@ -359,7 +438,7 @@ const lockeduserdata = (request, response) => {
   const id = request.params.id.toString()
   pool.query('SELECT zakljucano FROM kalendar WHERE zakljucano IS NOT true AND korisnik_id=$1', [id], (error, results) => {
     try{
-      console.log(results.rows)
+      //console.log(results.rows)
       response.status(200).json(results.rows)
     }catch(e){
       console.log(e)
@@ -385,5 +464,6 @@ module.exports = {
   //deletepass,
   updateadminpass,
   statisticdata,
-  lockeduserdata
+  lockeduserdata,
+  updatemydata1
 };

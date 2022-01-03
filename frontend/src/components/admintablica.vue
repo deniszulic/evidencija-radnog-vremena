@@ -186,7 +186,8 @@ export default {
       zakljucano:null,
       prihvaceno_od_admina:'',
       razlog_admin:'',
-      errormsg:''
+      errormsg:'',
+      email:''
     };
   },
   mounted(){
@@ -261,6 +262,7 @@ this.store.admindata1=await dohvatpodataka.getalldata1()
       this.napomena = data.napomena;
       this.prihvaceno_od_admina=data.prihvaceno_od_admina;
       this.razlog_admin=data.razlog_admin
+      this.email=data.email
       if(data.zakljucano==null){
         this.zakljucano=false
       }
@@ -382,10 +384,11 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         blagdan: this.blagdan,
         zakljucano:this.zakljucano,
         prihvaceno_od_admina:this.prihvaceno_od_admina,
-        razlog_admin:this.razlog_admin
+        razlog_admin:this.razlog_admin,
+        email:this.email
       };
       try{
-      await Podaci.updatemydata(this.id, update)
+      await Podaci.updatemydata1(this.id, update)
         .then(() => {
           for (let [i, x] of this.data.entries()) {
             if (x.id == this.id) {

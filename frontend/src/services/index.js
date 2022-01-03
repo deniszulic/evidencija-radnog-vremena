@@ -29,6 +29,9 @@ let Podaci={
   async updatemydata(id,data){
     return await Service.patch(`/mydata/${id}`,data)
   },
+  async updatemydata1(id,data){
+    return await Service.patch(`/mydata1/${id}`,data)
+  },
   async lockdata(id,data){
     return await Service.patch(`/lock/${id}`,data)
   },
