@@ -8,7 +8,7 @@
           Podaci nisu ispravno upisani ili ne postoje
         </div>
     <form @submit.prevent="login">
-      <input type="text" id="login" class="fadeIn first" name="login" placeholder="Email" v-model="email_login">
+      <input type="email" id="login" class="fadeIn first" name="login" placeholder="Email" v-model="email_login">
       <input type="password" id="password" class="fadeIn second" name="login" placeholder="lozinka" v-model="password_login">
       <input type="submit" class="fadeIn fourth" value="Login">
     </form>
@@ -179,7 +179,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;

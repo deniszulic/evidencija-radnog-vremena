@@ -11,7 +11,7 @@
     <form @submit.prevent="register">
       <input required type="text" id="register" class="fadeIn first" name="register" placeholder="ime" v-model="ime">
       <input required type="text" id="register2" class="fadeIn first" name="register" placeholder="prezime" v-model="prezime">
-      <input required type="text" id="register3" class="fadeIn first" name="register" placeholder="Email" v-model="email">
+      <input required type="email" id="register3" class="fadeIn first" name="register" placeholder="Email" v-model="email">
       <input required type="password" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
       <input required type="password" id="password2" class="fadeIn second" name="register" placeholder="ponovljena lozinka" v-model="password2">
       <!--<center><hr><div class="form-group col-md-5 ">
@@ -190,7 +190,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
