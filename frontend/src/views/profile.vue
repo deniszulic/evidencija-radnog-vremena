@@ -7,7 +7,6 @@
 
 <div class="jumbotron">
   <h1 class="display-4">Profil</h1>
-  <input type="text" v-model="search" placeholder="Pretraži po datumu"/>
   <hr>
 </div>
 <div class="container">
@@ -45,47 +44,12 @@
   </div>
 </div>
 
-
-
-
-  <!--<div class="row">
-    <div class="col-sm">
-      <br>
-      <img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="350" height="100">
-      <br><br>
-      <h1>Promijeni svoje podatke</h1>
-
-  <div class="form-group">
-    <label for="exampleInputname">Ime</label><br>
-    <input type="text" class="form-control" id="exampleInputname" aria-describedby="name" placeholder="Ime" v-model="ime">
-  </div>
-  <div class="form-group">
-    <label for="surname">Prezime</label><br>
-    <input type="text" class="form-control" id="surname" aria-describedby="surname" placeholder="Prezime" v-model="prezime">
-  </div>
-  <div class="form-group">
-    <label for="dateregistration">Datum registracije</label><br>
-    <input type="text" class="form-control" id="dateregistration" aria-describedby="dateregistration" placeholder="Datum registracije" v-model="datumreg" disabled>
-  </div>
-  <button type="button" class="btn btn-primary" @click="updatedata()">Spremi promjene</button>
-    </div>
-    
-    <div class="col-sm">
-      <h2>Status:</h2>
-      <p>Ukupno mjeseci: {{month.length}}</p>
-      <div class="form-group">
-    <label for="changepass">Promijeni šifru</label><br>
-    <input type="password" class="form-control" id="changepass" aria-describedby="changepass" placeholder="Nova lozinka" v-model="changepassword" >
-  </div>
-  <button type="button" class="btn btn-primary" @click="updatepassword()">Spremi novu lozinku</button>
-    </div>
-  </div>-->
 <hr>
- <!--<mojioglasi :podaci="data" v-for="data in podaci" :key="data.id"/>-->
 <table class="table table-bordered" >
   <thead v-if="!store.open">
         <tr>
           <th scope="col">Kalendar</th>
+          <th> <center><input type="text" v-model="search" placeholder="Pretraži po datumu"/></center> </th>
         </tr>
       </thead> 
       <tbody v-if="store.open">

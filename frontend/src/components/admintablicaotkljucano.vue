@@ -5,7 +5,7 @@
 {{errormsg}}
 </div>
     <thead class="thead-dark">
-      <td><button @click="back()">Nazad</button></td>
+      <td><button class="btn btn-dark" @click="back()">Nazad</button></td>
       <td>Razdoblje</td>
       <td>Status</td>
       <td></td>
@@ -18,9 +18,9 @@
           {{ moment(a.datum_obavljanja_kraj).format("DD.MM.YYYY") }}
         </td>
         <td class="col-md-2">
-          <b v-if="a.zakljucano==false">Nije zaključano</b>
-          <b v-else-if="a.zakljucano==null">Nije zaključano</b>
-          <b v-else>Zaključano</b>
+          <b v-if="a.zakljucano==false" style="color:red;">Nije zaključano</b>
+          <b v-else-if="a.zakljucano==null" style="color:red;">Nije zaključano</b>
+          <b v-else style="color:green;">Zaključano</b>
         </td>
         <td class="col-md-2">
           <button class="btn btn-light" @click="download(a)">

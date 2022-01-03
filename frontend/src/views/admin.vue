@@ -1,26 +1,52 @@
 <template>
     <div v-if="store.state==true">  
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Admin</li>
+    <li class="breadcrumb-item active" aria-current="page">Upisani sati</li>
+  </ol>
+</nav>
 <div v-if="errormsg" class="alert alert-danger">
 {{errormsg}}
 </div>
-        <h1>Podaci koje korisnik nije zaključao</h1>
-        <input type="text" v-model="search" placeholder="Pretraži po emailu"/>
-        <!-- <admintablica :data="podaci"/> -->
-        <table v-if="!store.open">
-  <tr>
-    <th>Email</th>
-  </tr>
-  <tr v-for="a in filtrirano" :key="a.email"  >
-    <td>{{a.email}}</td>
-    <td><button type="button"
-              class="btn btn-primary"
+<div class="row">
+
+<div class="card col-4">
+  <h5 class="card-header"><input type="text" v-model="search" placeholder="Pretraži po emailu" style="background:white;" /></h5>
+  <div class="card-body" v-for="a in filtrirano" :key="a.email">
+    
+<button type="button"
+              class="btn btn-light"
               data-toggle="modal"
-              data-target="#exampleModal" @click="details(a.email)">Detalji</button></td>
-  </tr>
-</table>
-<table v-if="store.open">
+              data-target="#exampleModal" @click="details(a.email)">{{a.email}}</button>
+  </div>
+
+</div>
+
+<div class="card col-sm">
+  <div class="card-body">
+    <table v-if="store.open">
 <admintablicaotkljucano :data="data"/>
 </table>
+  </div>
+</div>
+
+</div>
+        <!--<table v-if="!store.open">
+  <tr>
+    <th>Email </th>
+  </tr>
+  <tr v-for="a in filtrirano" :key="a.email"  >
+    <td><button type="button"
+              class="btn btn-light"
+              data-toggle="modal"
+              data-target="#exampleModal" @click="details(a.email)">{{a.email}}</button></td>
+  </tr>
+</table>-->
+<!--<table v-if="store.open">
+<admintablicaotkljucano :data="data"/>
+</table>-->
     </div>
 </template>
 <script>

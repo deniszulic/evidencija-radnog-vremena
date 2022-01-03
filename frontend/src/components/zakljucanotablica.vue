@@ -21,33 +21,15 @@
       <td class="col-md-1">
         <b>Zaključano</b>
       </td>
-      <td v-if="a.prihvaceno_od_admina==true" class="col-md-2">Prihvaćeno</td>
-      <td v-if="a.prihvaceno_od_admina==false" class="col-md-2">Nije prihvaćeno</td>
-      <td v-if="a.prihvaceno_od_admina==null" class="col-md-2">Čeka potvrdu</td>
+      <td v-if="a.prihvaceno_od_admina==true" class="col-md-2"><img src="https://i.ibb.co/pnx1gTR/check-mark.png"></td>
+      <td v-if="a.prihvaceno_od_admina==false" class="col-md-2"><img src="https://i.ibb.co/6Zf3p1W/delete.png"></td>
+      <td v-if="a.prihvaceno_od_admina==null" class="col-md-2"><img src="https://i.ibb.co/h1wtBDf/sand-clock.png"></td>
       <td class="col-md-3"><p id="text-admin">{{a.razlog_admin}}</p></td>
       <td class="col-md-2">
         <button class="btn btn-light" @click="download(a)">
           <img src="https://svgshare.com/i/d3E.svg" width="20%" height="20%" />
         </button>
       </td>
-      <!-- <VueHtml2pdf
-        :show-layout="false"
-        :float-layout="true"
-        :enable-download="true"
-        :preview-modal="true"
-        :paginate-elements-by-height="1400"
-        filename="myPDF"
-        :pdf-quality="2"
-        :manual-pagination="false"
-        pdf-format="a4"
-        pdf-orientation="landscape"
-        pdf-content-width="800px"
-        ref="html2Pdf"
-    >
-        <section slot="pdf-content">
-            {{a.datum_obavljanja_pocetak}}
-        </section>
-    </VueHtml2pdf> -->
     </tr>
   </div>
 </template>
@@ -56,12 +38,9 @@ import moment from "moment";
 import jsPDF from "jspdf";
 import image from '@/image.js'
 import store from '@/store.js'
-//import NotoSans-Regular-normal from 'NotoSans-Regular-normal.js';
-//import VueHtml2pdf from 'vue-html2pdf'
 export default {
   props: ["data", "search"],
   components: {
-    //VueHtml2pdf
   },
   data() {
     return {
@@ -77,9 +56,6 @@ export default {
     }
   },
   methods: {
-    /* generateReport () {
-            this.$refs.html2Pdf.generatePdf()
-        }*/
     encode(input) {
       var keyStr =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -165,8 +141,6 @@ export default {
         doc.text("Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(), 10, 160);
       }
       if (data.img != null) {
-        /*var imgData = 'data:image/jpeg;base64,'+ Base64.encode(data.img);
-doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         var arrayBuffer = data.img.__ob__.value.data;
         var bytes = new Uint8Array(arrayBuffer);
         let image = "data:image/png;base64," + this.encode(bytes);
@@ -181,6 +155,6 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
 </script>
 <style>
 #text-admin{
-  font-size:1.5vw;
+  font-size:0.82vw;
 }
 </style>

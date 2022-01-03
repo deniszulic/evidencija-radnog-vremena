@@ -5,7 +5,7 @@
 {{errormsg}}
 </div>
     <thead class="thead-dark">
-      <td><button @click="back()">Nazad</button></td>
+      <td><button class="btn btn-dark" @click="back()">Nazad</button></td>
       <td>Razdoblje</td>
       <td>Status</td>
       <td>Admin potvrda</td>
@@ -124,7 +124,7 @@
                 </label>
               </div> 
               <p>Razlog</p>
-              <textarea v-model="razlog_admin"/>
+              <textarea class="form-control" v-model="razlog_admin"/>
             <img id="image" class="img-thumbnail" :src="pic" />
           </div>
           <div class="modal-footer justify-content-between">
