@@ -5,7 +5,7 @@
 {{errormsg}}
 </div>
     <thead class="thead-dark">
-      <td><button class="btn btn-dark" @click="back()">Nazad</button></td>
+      <td><button class="btn btn-dark" @click="back()">Reset</button></td>
       <td>Razdoblje</td>
       <td>Status</td>
       <td></td>

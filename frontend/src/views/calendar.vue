@@ -1,6 +1,6 @@
 <template>
-<div id="app" v-if="store.state==false">
-<div class="container">
+<div id="calendar">
+<div class="container"  v-if="store.state==false">
 <div v-if="errormsg" class="alert alert-danger">
 {{errormsg}}
 </div>
@@ -134,8 +134,7 @@
 </form>
 
   </div>
-
-
+<br><br>
   </div>
 
 
@@ -161,17 +160,8 @@ export default {
     },
     currentDate() {
       const current = new Date();
-      /*const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
-      const time = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
-      const dateTime = date +' '+ time;
-      
-      return dateTime;*/
       return current.getMonth;
     },
-    /*async slika(){
-      const fd=new FormData();
-      return await fd.append('image',this.img,this.img.name)
-    },*/
     async kalendar(){
       const fd=new FormData();
       if(this.img!=null){
@@ -203,7 +193,6 @@ export default {
           fd.append('image',this.img,id.data)
           try{
           slikaa= await Podaci.slika(fd)
-          //console.log("slika:"+JSON.stringify(slikaa.data))
           $("#offcanvasBottom").offcanvas("hide");
           this.$router.push({path: "/korisnik"})
         }catch(e){
@@ -217,13 +206,6 @@ export default {
           this.posaoodkuce=''
           this.napomena=''
         }
-        /*console.log("slika:"+slikaa.data)
-        if(slikaa.data=="Prevelik file"){
-          console.log("aaaa")
-          await Podaci.deletespecificdata(id.data)
-        }*/
-           /* $("#offcanvasBottom").offcanvas("hide");
-          this.$router.push({path: "/korisnik"})*/
         }
       }
       else{
@@ -312,5 +294,6 @@ h2 {
   margin: 40px 8px 10px 8px; 
   color: #cccccc;
 }
+
 
 </style>

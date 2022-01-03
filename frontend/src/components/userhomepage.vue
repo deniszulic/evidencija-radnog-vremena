@@ -1,48 +1,18 @@
+
 <template>
-  <div id="app" v-if="admin==false">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<div>
+
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
 <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-
-    <div v-if="errormsg" class="alert alert-danger">
-{{errormsg}}
-</div>
-    <div class="jumbotron jumbotron-fluid"> <!-- v-if -->
-  <div class="container">
-    
-<!-- <div class="alert alert-success" role="alert" v-if="locked.length==null">
-  Svi sati su potpisani !
-  </div> kaj ce ovo ? -->
-
-        <div class="py-5 bg-image-full" style="object-fit: contain; background-image: url('https://images.unsplash.com/photo-1490724500206-cd5482e02b9e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')">
-            <div style="height: 20rem"></div>
-        </div>
-        
-        <section class="py-5">
-            <div class="container my-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <p class="lead">Take control of your working time. </p>
-                        <p class="mb-0">wHours is a time tracking software that allows you to check all key operations on time and on budget. Therefore, you can focus on growing your business.</p>
-                   <p class="mb-0"> Easily track your work hours - organize, analyze and export them</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-</div>
-  </div>
-  <hr>
 
 <div class="grey-bg container-fluid">
   <section id="minimal-statistics">
     <div class="row">
       <div class="col-12 mt-3 mb-1">
-        <h4 class="text-uppercase">Statistika rada [ {{ime}} ] </h4>
-        <p>Statistika profila <div class="col-4 alert alert-danger" role="alert" v-if="locked.length!=null">
-  Imate nepotpisanih sati !
-</div></p>
-        
+        <h4 class="text-uppercase">Minimal Statistics Cards</h4>
+        <p>Statistics on minimal cards.</p>
       </div>
     </div>
     <div class="row">
@@ -55,7 +25,7 @@
                   <i class="icon-clock primary font-large-2 float-left"></i>
                 </div>
                 <div class="media-body" style="margin-left:50px;">
-                  <h3>{{prekovremeni}} h</h3>
+                  <h3>278</h3>
                   <span>Prekovremeni</span>
                 </div>
               </div>
@@ -72,7 +42,7 @@
                   <i class="icon-calendar warning font-large-2 float-left"></i>
                 </div>
                 <div class="media-body" style="margin-left:50px;">
-                  <h3>{{blagdan}} h</h3>
+                  <h3>156</h3>
                   <span>Rad blagdanom</span>
                 </div>
               </div>
@@ -89,7 +59,7 @@
                   <i class="icon-cup success font-large-2" style="float:left;"></i>
                 </div>
                 <div class="media-body" style="float:right; margin-left:50px;">
-                  <h3>{{nocni_rad}} h</h3>
+                  <h3>64.89 %</h3>
                   <span>Noćni rad</span>
                 </div>
               </div>
@@ -106,7 +76,7 @@
                   <i class="icon-calendar danger font-large-2 float-left"></i>
                 </div>
                 <div class="media-body" style="margin-left:50px;">
-                  <h3>{{odsutan}} h</h3>
+                  <h3>423</h3>
                   <span>Odsutnost</span>
                 </div>
               </div>
@@ -127,14 +97,14 @@
           <div class="card-body cleartfix">
             <div class="media align-items-stretch">
               <div class="align-self-center">
-                <i class="icon-pencil primary font-large-2 mr-2 "></i>
+                <i class="icon-graph primary font-large-2 mr-2 "></i>
               </div>
               <div class="media-body">
                 <h4>Ukupno sati</h4>
                 <span>Ukupan broj upisanih sati</span>
               </div>
               <div class="align-self-center">
-                <h1>{{br_sati}} h</h1>
+                <h1>18,000</h1>
               </div>
             </div>
           </div>
@@ -148,14 +118,14 @@
           <div class="card-body cleartfix">
             <div class="media align-items-stretch">
               <div class="align-self-center">
-                <i class="icon-graph warning font-large-2 mr-2"></i>
+                <i class="icon-pencil warning font-large-2 mr-2"></i>
               </div>
               <div class="media-body">
                 <h4>Ukupano rada</h4>
                 <span>Ukupan broj radnih sati</span>
               </div>
               <div class="align-self-center"> 
-                <h1>{{suma}} h</h1>
+                <h1>84,695</h1>
               </div>
             </div>
           </div>
@@ -171,62 +141,12 @@
 </div>
 
 </template>
-<script>
-import {dohvatpodataka} from '@/services'
-import { Auth } from "@/services";
-import userhomepage from '../components/userhomepage.vue';
 
-export default{
-  components: { userhomepage },
-  name:'korisnik',
-  data(){
-    return{
-      admin:Auth.state.admin,
-      ime:Auth.state.name,
-      mydata:[],
-      locked:[],
-      blagdan:'',
-      br_sati:'',
-      nocni_rad:'',
-      odsutan:'',
-      prekovremeni:'',
-      errormsg:''
-    }
-  },
-  created() {
-    this.fetchData();
-  },
-  watch: {
-    $route: "fetchData"
-  },
-  methods: {
-    async fetchData(){
-      try{
-        this.mydata=await dohvatpodataka.getstatisticdata(Auth.state.id)
-      }catch(e){
-        this.errormsg=e.message
-      }
-        this.blagdan=this.mydata[0].blagdan;
-        this.br_sati=this.mydata[0].br_sati;
-        this.nocni_rad=this.mydata[0].nocni_rad
-        this.odsutan=this.mydata[0].odsutan
-        this.prekovremeni=this.mydata[0].prekovremeni
-       try{
-       this.locked=await dohvatpodataka.getlockeddatacheck(Auth.state.id)
-      }catch(e){
-        this.errormsg=e.message
-      }
-    }
-},
-computed:{
-  suma:function(){
-    return parseInt(this.blagdan)+parseInt(this.br_sati)+parseInt(this.nocni_rad)+parseInt(this.prekovremeni)
+<script>
+export default {
+  name: 'userhomepage',
+  props: {
+    msg: String
   }
 }
-}
 </script>
-
-
-<style>
-
-</style>

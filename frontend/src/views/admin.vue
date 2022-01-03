@@ -1,12 +1,5 @@
 <template>
-    <div v-if="store.state==true">  
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">Admin</li>
-    <li class="breadcrumb-item active" aria-current="page">Upisani sati</li>
-  </ol>
-</nav>
+    <div v-if="store.state==true">  <br>
 <div v-if="errormsg" class="alert alert-danger">
 {{errormsg}}
 </div>
@@ -33,20 +26,6 @@
 </div>
 
 </div>
-        <!--<table v-if="!store.open">
-  <tr>
-    <th>Email </th>
-  </tr>
-  <tr v-for="a in filtrirano" :key="a.email"  >
-    <td><button type="button"
-              class="btn btn-light"
-              data-toggle="modal"
-              data-target="#exampleModal" @click="details(a.email)">{{a.email}}</button></td>
-  </tr>
-</table>-->
-<!--<table v-if="store.open">
-<admintablicaotkljucano :data="data"/>
-</table>-->
     </div>
 </template>
 <script>

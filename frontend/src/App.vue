@@ -40,69 +40,27 @@
                 </div>
 
 </nav>
-
-<!-- Navigation
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <div class="container px-4">
-                <a class="navbar-brand" href="#page-top"><img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="200" height="50"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><router-link to="pocetna" class="nav-link">Home <span class="sr-only"></span></router-link></li>
-                        <li class="nav-item"><router-link to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
-                        <li class="nav-item"><router-link to="register" class="nav-link"> Register <span class="sr-only"></span></router-link></li>
-                    
-                    <li class="nav-item active" >
-        <a v-if="state==false"
-                    @click.prevent="logout"
-                    class="btn btn-danger my-2 my-sm-0 mr-2"
-                    href="#"
-                  >Logout</a>
-      </li>
-                    
-                    </ul>
-                </div>
-            </div>
-        </nav>-->
-
 </div>
-<!--
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <br>
 
-    <form @submit.prevent="register">
-      <input type="text" id="register" class="fadeIn first" name="register" placeholder="Email" v-model="email">
-      <input type="text" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
-      <input type="submit" class="fadeIn fourth" value="Registracija">
-    </form>
 
-    <div id="formFooter">
-      <a class="underlineHover" href="/login">Već ste korisnik?</a>
-    </div>
 
-  </div>
-</div>
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <br>
-
-    <form @submit.prevent="login">
-      <input type="text" id="login" class="fadeIn first" name="login" placeholder="Email" v-model="email_login">
-      <input type="text" id="password" class="fadeIn second" name="login" placeholder="lozinka" v-model="password_login">
-      <input type="submit" class="fadeIn fourth" value="Login">
-    </form>
-
-    <div id="formFooter">
-      <a class="underlineHover" href="/login">Već ste korisnik?</a>
-    </div>
-{{usao}}
-  </div>
-</div>-->
 <div class="container">
 <router-view/>
 </div>
 
+  
+
+<!-- footer -->
+<footer class="bg-light text-center text-lg-start footer">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);"><div style="float:left;">
+{{ date }}
+</div><div style="float:right;">
+{{ time }}
+</div>
+    © {{new Date().getFullYear()}} Copyright:
+    <a class="text-dark" href="https://github.com/deniszulic/evidencija-radnog-vremena" target="_blank">wHours</a>
+  </div>
+</footer>
 
   </div><!-- app -->
 </template>
@@ -115,9 +73,15 @@ export default {
   name: 'App',
   data(){
     return{
-      store
+      store,
+      timestamp:"",
+      time:"",
+      date:""
     }
   },
+  created() {
+                setInterval(this.getNow, 1000);
+            },
   methods: {
     logout() {
       Auth.logout();
@@ -126,67 +90,34 @@ export default {
     },
     changevalue(){
       this.store.open=false
-    }
-  }
-  /*methods:{
-    async register(){
-      let a={
-        email:this.email,
-        lozinka:this.password.toString(),
-        admin:false
-      }
-      await Registracija.register(a);
     },
-    async login(){
-      let a={
-        email:this.email_login,
-        lozinka:this.password_login.toString()
-      }
-      await Registracija.log(a);
-      if(/*log==true &&*/ /*Auth.state.admin==false){
-        this.usao="jesam";
-        this.$router.push({name:"korisnik"})
-      }
-      else{this.usao=Auth.state.admin}
-    }
-  }*/
+    getNow: function() {
+                    const dan = new Date();
+                    const date = dan.getDate()+'/'+(dan.getMonth()+1)+'/'+dan.getFullYear();
+                    const time = dan.getHours() + ":" + dan.getMinutes() + ":" + dan.getSeconds();
+                    const dateTime = date +' '+ time;
+                    this.timestamp = dateTime; /* jedno i drugo */
+                    this.time = time;
+                    this.date = date;
+                    }
+  },
 }
 </script>
 
 <style>
-
-/* BASIC */
-
-/*html {
-  background-color: #56baed;
-}*/
-
 body {
   font-family: "Poppins", sans-serif;
+  min-height: 400px;
+   margin-bottom: 100px;
+   clear: both;
 }
 
-/*a {
-  color: #92badd;
-  display:inline-block;
-  text-decoration: none;
-  font-weight: 400;
-}*/
-
-
-
-
-
-/* STRUCTURE */
-
-/*.wrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: column; 
-  justify-content: center;
+.footer {
+  position: fixed;
+  bottom: 0;
   width: 100%;
-  min-height: 100%;
-  padding: 20px;
-}*/
+  line-height: 20px;
+}
 
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;

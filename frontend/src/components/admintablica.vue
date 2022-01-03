@@ -5,7 +5,7 @@
 {{errormsg}}
 </div>
     <thead class="thead-dark">
-      <td><button class="btn btn-dark" @click="back()">Nazad</button></td>
+      <td><button class="btn btn-dark" @click="back()">Reset</button></td>
       <td>Razdoblje</td>
       <td>Status</td>
       <td>Admin potvrda</td>
@@ -24,12 +24,12 @@
           <b v-else>Zaključano</b>
         </td>
         <td class="col-md-2">
-          <b v-if="a.prihvaceno_od_admina==false">Odbijeno</b>
-          <b v-if="a.prihvaceno_od_admina==true">Potvrđeno</b>
-          <b v-if="a.prihvaceno_od_admina==null">Čeka potvrdu</b>
-          <b v-if="a.prihvaceno_od_admina=='false'">Odbijeno</b>
-          <b v-if="a.prihvaceno_od_admina=='true'">Potvrđeno</b>
-          <b v-if="a.prihvaceno_od_admina=='null'">Čeka potvrdu</b>
+          <b v-if="a.prihvaceno_od_admina==false" style="color:red;">Odbijeno</b>
+          <b v-if="a.prihvaceno_od_admina==true" style="color:green;">Potvrđeno</b>
+          <b v-if="a.prihvaceno_od_admina==null" style="color:#ff9900;">Čeka potvrdu</b>
+          <b v-if="a.prihvaceno_od_admina=='false'" style="color:red;">Odbijeno</b>
+          <b v-if="a.prihvaceno_od_admina=='true'" style="color:green;">Potvrđeno</b>
+          <b v-if="a.prihvaceno_od_admina=='null'" style="color:#ff9900;">Čeka potvrdu</b>
         </td>
         <td class="col-md-2">
           <button class="btn btn-light" @click="download(a)">
@@ -70,22 +70,35 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" >
+            <p>Prihvati ili odbij unesene podatke</p>
+              <div class="btn btn-success p-3 border">
+                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios3" value="true" v-model="prihvaceno_od_admina">
+                <label class="form-check-label" for="exampleRadios3">
+                  Prihvati
+                </label>
+              </div> 
+              <div class="btn btn-danger p-3 border">
+                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios4" value="false" v-model="prihvaceno_od_admina">
+                <label class="form-check-label" for="exampleRadios4">
+                  Odbij
+                </label>
+              </div> 
+              <br>
+              <textarea class="form-control" v-model="razlog_admin" placeholder="Razlog/napomena"/>
+              <hr>
             Datum obavljanja početak:<br />
             <input type="date" v-model="datump" /><br /><br />Datum obavljanja
-            kraj:<br /><input type="date" v-model="datumk" /><br />Broj
-            sati:<input type="text" v-model="brsati" /><br />Prekovremeni:<input
+            kraj:<br /><input type="date" v-model="datumk" /><br /><br />
+            Broj sati:<input type="text" v-model="brsati" />
+            <br />Prekovremeni:<input
               type="text"
               v-model="prekovremeni"
             /><br />Rad od kuće:
             <select v-model="rad_od_kuce" id="inputState" class="form-control">
               <option>DA</option>
               <option>NE</option>
-            </select>
-            <!-- <input
-              type="text"
-              v-model="rad_od_kuce"
-            />--><br />Odsutan:<input
+            </select><br />Odsutan:<input
               type="text"
               v-model="odsutan"
             /><br />Noćni rad:<input
@@ -110,22 +123,7 @@
                   Nije zaključano
                 </label>
               </div> <br/>
-              <p>Prihvati ili odbij unesene podatke</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios3" value="true" v-model="prihvaceno_od_admina">
-                <label class="form-check-label" for="exampleRadios3">
-                  Prihvati
-                </label>
-              </div> 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios4" value="false" v-model="prihvaceno_od_admina">
-                <label class="form-check-label" for="exampleRadios4">
-                  Odbij
-                </label>
-              </div> 
-              <p>Razlog</p>
-              <textarea class="form-control" v-model="razlog_admin"/>
-            <img id="image" class="img-thumbnail" :src="pic" />
+                <img id="image" class="img-thumbnail" :src="pic" />
           </div>
           <div class="modal-footer justify-content-between">
              <button
@@ -191,14 +189,6 @@ export default {
     };
   },
   mounted(){
-/*$('html').click(function(){
-    $('#exampleModal').hide();
-});
-$('#exampleModal').click(function(e){
-  var image = document.getElementById("image");
-        image.src = "";
-    e.stopPropagation();
-});*/
 var image = document.getElementById("image");
 if(image!=null){
   var modal= document.getElementById('exampleModal')
@@ -354,12 +344,9 @@ await Podaci.deletespecificdata(this.id).then(()=>{
         doc.text("Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(), 10, 160);
       }
       if (data.img != null) {
-        /*var imgData = 'data:image/jpeg;base64,'+ Base64.encode(data.img);
-doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         var arrayBuffer = data.img.__ob__.value.data;
         var bytes = new Uint8Array(arrayBuffer);
         let image = "data:image/png;base64," + this.encode(bytes);
-        //console.log(this.encode(bytes));
         doc.addImage(image, "PNG", 50, 245, 100, 50);
       }
       doc.setLanguage("hr-HR");
