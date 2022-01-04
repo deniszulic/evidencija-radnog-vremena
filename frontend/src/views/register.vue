@@ -1,6 +1,5 @@
 <template>
   <div>
-
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <br>
@@ -14,12 +13,7 @@
       <input required type="email" id="register3" class="fadeIn first" name="register" placeholder="Email" v-model="email">
       <input required type="password" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
       <input required type="password" id="password2" class="fadeIn second" name="register" placeholder="ponovljena lozinka" v-model="password2">
-      <!--<center><hr><div class="form-group col-md-5 ">
-      <select required v-model="posaoodkuce" id="inputState22" class="form-control fadeIn second" >
-        <option selected>PROFESOR</option>
-        <option>ASISTENT</option>
-      </select>
-    </div></center><br>-->
+      
       <input type="submit" class="fadeIn fourth" value="Registracija">
     </form>
 
@@ -28,6 +22,7 @@
     </div>
   </div>
 </div>
+
   </div>
 </template>
 

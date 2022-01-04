@@ -7,9 +7,8 @@
 
 <div class="card col-4">
   <h5 class="card-header"><input type="text" v-model="search" placeholder="Pretraži po emailu" style="background:white;" /></h5>
-  <div class="card-body" v-for="a in filtrirano" :key="a.email">
-    
-<button type="button"
+  <div class="" v-for="a in filtrirano" :key="a.email">
+<br><button type="button"
               class="btn btn-light"
               data-toggle="modal"
               data-target="#exampleModal" @click="details(a.email)">{{a.email}}</button>

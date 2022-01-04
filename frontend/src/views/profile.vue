@@ -108,11 +108,7 @@ export default {
   },
   data() {
   return {
-    // ime:Auth.state.name,
-    // prezime:Auth.state.surname,
-    // email:Auth.state.email,
     store,
-    //totalmonths:null,
     filtered:[],
     datumreg:'',
     open:false,
@@ -124,9 +120,7 @@ export default {
     search:''
   }
 },
-/*async mounted(){
-  this.podaci=await dohvatpodataka.getdatauser(Auth.state.id)
-}*/
+
 created(){
   this.fetchData(),
   this.fetchmydata()

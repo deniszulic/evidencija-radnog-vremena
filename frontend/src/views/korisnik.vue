@@ -1,8 +1,5 @@
 <template>
   <div id="app" v-if="admin==false">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
-<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
     <div v-if="errormsg" class="alert alert-danger">
 {{errormsg}}
@@ -17,19 +14,7 @@
         <div class="py-5 bg-image-full" style="object-fit: contain; background-image: url('https://images.unsplash.com/photo-1490724500206-cd5482e02b9e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')">
             <div style="height: 20rem"></div>
         </div>
-        
-        <section class="py-5">
-            <div class="container my-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <p class="lead">Take control of your working time. </p>
-                        <p class="mb-0">wHours is a time tracking software that allows you to check all key operations on time and on budget. Therefore, you can focus on growing your business.</p>
-                   <p class="mb-0"> Easily track your work hours - organize, analyze and export them</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+      
 </div>
   </div>
   <hr>
@@ -39,9 +24,9 @@
     <div class="row">
       <div class="col-12 mt-3 mb-1">
         <h4 class="text-uppercase">Statistika rada [ {{ime}} ] </h4>
-        <p>Statistika profila <div class="col-4 alert alert-danger" role="alert" v-if="locked.length!=null">
+        <p>Statistika profila </p><div class="col-4 alert alert-danger" role="alert" v-if="locked.length!=null">
   Imate nepotpisanih sati !
-</div></p>
+</div>
         
       </div>
     </div>
