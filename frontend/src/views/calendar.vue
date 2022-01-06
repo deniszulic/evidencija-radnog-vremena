@@ -78,7 +78,7 @@
       <p>Odabrani datumi:</p>
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
-      <h2>Upload potpisa (neobavezno):</h2>
+      <h2>Upload potpisa:</h2>
       <input type="file" name="pic" accept="image/png, image/jpeg" @change="onFileChange"/>
       <p>Maksimalna veličina do 500 KB!</p>
     <!--<button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button> -->

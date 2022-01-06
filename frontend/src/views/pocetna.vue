@@ -8,21 +8,15 @@
                       <img src="https://i.ibb.co/zmBCGtv/logo.png" alt="logo" width="350" height="100">
                         <hr class="divider" />
                     </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5">
-                          Track your working time
-                    
-                        </p>
-                    </div>
                 </div>
                 
         <section class="py-5">
             <div class="container my-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <p class="lead">Take control of your working time. </p>
-                        <p class="mb-0">wHours is a time tracking software that allows you to check all key operations on time and on budget. Therefore, you can focus on growing your business.</p>
-                   <p class="mb-0"> Easily track your work hours - organize, analyze and export them</p>
+                        <p class="lead">Preuzmite kontrolu nad svojim radnim vremenom. </p>
+                        <p class="mb-0">wHours je softver za praćenje vremena koji vam omogućuje provjeru svih ključnih operacija na vrijeme i proračun. Stoga se možete usredotočiti na razvoj vašeg poslovanja.</p>
+                   <p class="mb-0"> Jednostavno pratite svoje radno vrijeme - organizirajte ih, analizirajte i izvezite ih</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +27,7 @@
 
 <div class="jumbotron">
   <hr class="my-4">
-  <p>Designed for both employees and business managers to track time and work efficiency and make improvements.</p>
+  <p>Dizajniran za zaposlenike i poslovne menadžere kako bi pratili vrijeme i radnu učinkovitost te ih poboljšali.</p>
 </div>
    
 
@@ -49,11 +43,11 @@
                 <i class="icon-user primary font-large-2 mr-2 "></i>
               </div>
               <div class="media-body">
-                <h4>Employee</h4>
-                <span >- Import work hours</span><br>
-                <span>- Edit data</span><br>
-                <span>- download signed pdf</span><br>
-                <span>- Get paid for worked hours</span>
+                <h4>Zaposlenik</h4>
+                <span >- Zapisivanje radnog vremena</span><br>
+                <span>- Uređivanje i ažuriranje</span><br>
+                <span>- Preuzimanje PDF-a</span><br>
+                <span>- Potpisivanje sati</span>
               </div>
             </div>
           </div>
@@ -70,11 +64,11 @@
                 <i class="icon-graph warning font-large-2 mr-2"></i>
               </div>
               <div class="media-body" style="text-align:right;">
-                <h4>Bussiness manager</h4>
-                <span >- Track employees</span><br>
-                <span>- Track worked hours</span><br>
-                <span>- Edit data</span><br>
-                <span>- Sign hours and export pdf </span>
+                <h4>Poslovni menadžer</h4>
+                <span >- Praćenje zaposlenika</span><br>
+                <span>- Praćenje radnih sati</span><br>
+                <span>- Uređivanje i ažuriranje</span><br>
+                <span>- Potvrda i PDF preuzimanje </span>
               </div>
             </div>
           </div>

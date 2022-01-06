@@ -8,9 +8,9 @@
     </button>    
   <div class="collapse navbar-collapse" id="navbarResponsive12">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><router-link to="pocetna" class="nav-link" @click.native="changevalue()">Home <span class="sr-only"></span></router-link></li>
-                        <li class="nav-item"><router-link v-if="store.state==null" to="login" class="nav-link">Login <span class="sr-only"></span></router-link></li>
-                        <li class="nav-item"><router-link v-if="store.state==null" to="register"  class="nav-link"> Register <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link to="pocetna" class="nav-link" @click.native="changevalue()">Naslovna <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link v-if="store.state==null" to="login" class="nav-link">Prijava <span class="sr-only"></span></router-link></li>
+                        <li class="nav-item"><router-link v-if="store.state==null" to="register"  class="nav-link"> Registracija <span class="sr-only"></span></router-link></li>
                     
                     <li class="nav-item active" >
                     <router-link to="calendar" v-if="store.state==false" class="nav-link"><!--{{state}}--> Upiši sate <span class="sr-only"></span></router-link>
@@ -33,7 +33,7 @@
                     @click.prevent="logout"
                     class="btn btn-danger my-2 my-sm-0 mr-2"
                     href="#"
-                  >Logout</a>
+                  >Odjava</a>
       </li>
                     
                     </ul>

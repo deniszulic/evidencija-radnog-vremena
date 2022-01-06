@@ -72,7 +72,7 @@
           </td>
 
           <td class="col-md-2">
-            <b>Status:  Unsolved</b> 
+            <b>Status:  Nerješeno</b> 
           </td>
 
         </tr>

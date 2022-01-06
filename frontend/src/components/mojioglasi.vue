@@ -176,16 +176,6 @@ export default {
     };
   },
   mounted(){
-/*$('html').click(function(){
-    $('#exampleModal').hide();
-});
-
-$('#exampleModal').click(function(e){
-  var image = document.getElementById("image");
-        image.src = "";
-        console.log("image:"+image.src)
-    e.stopPropagation();
-});*/
 var image = document.getElementById("image");
 if(image!=null){
   var modal= document.getElementById('exampleModal')
@@ -359,4 +349,11 @@ var arrayBuffer = data.img.__ob__.value.data;
 
 <style scoped>
 
+.table td, .table th{
+padding: 0 rem;
+
+}
+.table-bordered, .table-bordered td, .table-bordered th {
+    border: 1px solid #E3EBF3;
+}
 </style>
