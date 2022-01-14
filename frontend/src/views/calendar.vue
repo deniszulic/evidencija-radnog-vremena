@@ -79,7 +79,7 @@
       <p><b>od {{formattedDateStart}} do {{formattedDateEnd}}</b></p>
       <br>
       <h2>Upload potpisa:</h2>
-      <input type="file" name="pic" accept="image/png, image/jpeg" @change="onFileChange"/>
+      <input type="file" name="pic" accept="image/png, image/jpeg" @change="onFileChange" required/>
       <p>Maksimalna veličina do 500 KB!</p>
     <!--<button type="submit" class="btn btn-success btn-lg" style="float:right">Pošalji</button> -->
     <br><hr>
@@ -208,7 +208,7 @@ export default {
         }
         }
       }
-      else{
+      /*else{
         console.log("drugi")
         let podaci={
           br_sati:this.brsati,
@@ -231,7 +231,7 @@ export default {
       }catch(e){
         this.errormsg=e.message
       }
-    }
+    }*/
     }
   },
   data() {

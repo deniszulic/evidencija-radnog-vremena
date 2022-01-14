@@ -3,7 +3,7 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <br>
-    <div v-if="errorMessage1" class="alert alert-danger">
+    <div v-if="errorMessage" class="alert alert-danger">
           <strong>Greška! </strong>
           <strong v-if="errorMessage">(Lozinke se ne podudaraju!)</strong>
         </div>
@@ -38,8 +38,7 @@ export default {
       email:'',
       password:'',
       password2: '',
-      errorMessage: '',
-      errorMessage1:''
+      errorMessage: ''
     }
   },
   methods:{
@@ -47,6 +46,7 @@ export default {
       if(this.password !== this.password2 || this.password2 !== this.password){
         this.errorMessage = "Lozinke se ne podudaraju !";
       }
+      else{
       let a={
         ime:this.ime,
         prezime:this.prezime,
@@ -60,9 +60,9 @@ export default {
       this.$router.push({name:"login"})
       }
       catch (error) {
-        this.errorMessage1 = error.message;
-        console.log("Greška");
+        this.errorMessage = error.message;
       }
+    }
     }
   }
 }
