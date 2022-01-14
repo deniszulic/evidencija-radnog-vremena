@@ -14,9 +14,6 @@ let Registracija = {
     let response= await Service.post("/login", data);
     let user=response.data
     localStorage.setItem("user",JSON.stringify(user))
-    /*let user=response.data
-        localStorage.setItem("user",JSON.stringify(user));
-        return true*/
   },
 };
 let Podaci={
@@ -43,7 +40,6 @@ let dohvatpodataka={
   async getdatauser(id){
     let response = await Service.get(`/getdata/${id}`);
     let data=response.data
-    //console.log(data)
     return data
   },
   async getlockeddata(id){
@@ -95,11 +91,6 @@ let azuriraj={
     return await Service.patch(`/updatemyadminpass/${id}`,data)
   }
 }
-/*let deletedata={
-  async deletepassword(id){
-    return await Service.delete(`deletepassword/${id}`)
-  }
-}*/
 let Auth={
     getUser(){
         return JSON.parse(localStorage.getItem("user"))

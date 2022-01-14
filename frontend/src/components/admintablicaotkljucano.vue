@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- <table class="table"> -->
-      <div v-if="errormsg" class="alert alert-danger">
-{{errormsg}}
-</div>
+    <div v-if="errormsg" class="alert alert-danger">
+      {{ errormsg }}
+    </div>
     <thead class="thead-dark">
       <td><button class="btn btn-dark" @click="back()">Reset</button></td>
       <td>Razdoblje</td>
@@ -18,14 +17,16 @@
           {{ moment(a.datum_obavljanja_kraj).format("DD.MM.YYYY") }}
         </td>
         <td class="col-md-2">
-          <b v-if="a.zakljucano==false" style="color:red;">Nije zaključano</b>
-          <b v-else-if="a.zakljucano==null" style="color:red;">Nije zaključano</b>
-          <b v-else style="color:green;">Zaključano</b>
+          <b v-if="a.zakljucano == false" style="color: red">Nije zaključano</b>
+          <b v-else-if="a.zakljucano == null" style="color: red"
+            >Nije zaključano</b
+          >
+          <b v-else style="color: green">Zaključano</b>
         </td>
         <td class="col-md-2">
           <button class="btn btn-light" @click="download(a)">
             <img
-              src="https://svgshare.com/i/d3E.svg"
+              src="../../assets/pdficon.svg"
               width="20%"
               height="20%"
             />
@@ -38,7 +39,6 @@
         </td>
       </tr>
     </tbody>
-    <!--</table>  -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -71,40 +71,45 @@
             /><br />Rad od kuće:
             <select v-model="rad_od_kuce" id="inputState" class="form-control">
               <option>DA</option>
-              <option>NE</option>
-            </select>
-            <!-- <input
-              type="text"
-              v-model="rad_od_kuce"
-            />--><br />Odsutan:<input
-              type="text"
-              v-model="odsutan"
-            /><br />Noćni rad:<input
-              type="text"
-              v-model="nocni_rad"
-            /><br />Blagdan:<input
+              <option>NE</option></select
+            ><br />Odsutan:<input type="text" v-model="odsutan" /><br />Noćni
+            rad:<input type="text" v-model="nocni_rad" /><br />Blagdan:<input
               type="text"
               v-model="blagdan"
             /><br />Napomena:<textarea
               class="form-control"
               v-model="napomena"
-            /><br/>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="true" v-model="zakljucano">
-                <label class="form-check-label" for="exampleRadios2">
-                  Zaključano
-                </label>
-              </div> 
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="false" v-model="zakljucano">
-                <label class="form-check-label" for="exampleRadios2">
-                  Nije zaključano
-                </label>
-              </div> 
+            /><br />
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="exampleRadios"
+                id="exampleRadios2"
+                value="true"
+                v-model="zakljucano"
+              />
+              <label class="form-check-label" for="exampleRadios2">
+                Zaključano
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="exampleRadios"
+                id="exampleRadios2"
+                value="false"
+                v-model="zakljucano"
+              />
+              <label class="form-check-label" for="exampleRadios2">
+                Nije zaključano
+              </label>
+            </div>
             <img id="image" class="img-thumbnail" :src="pic" />
           </div>
           <div class="modal-footer justify-content-between">
-             <button
+            <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
@@ -113,21 +118,21 @@
               Obriši
             </button>
             <div>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="close()"
-            >
-              Zatvori
-            </button>
-            <button
-              type="submit"
-              class="btn btn-success"
-              @click="savechanges()"
-            >
-              Spremi
-            </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                @click="close()"
+              >
+                Zatvori
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success"
+                @click="savechanges()"
+              >
+                Spremi
+              </button>
             </div>
           </div>
         </div>
@@ -136,12 +141,12 @@
   </div>
 </template>
 <script>
-import {dohvatpodataka} from '@/services'
+import { dohvatpodataka } from "@/services";
 import moment from "moment";
 import store from "@/store.js";
 import { Podaci } from "@/services";
 import jsPDF from "jspdf";
-import image from '../image'
+import image from "../image";
 export default {
   props: ["data"],
   data() {
@@ -159,36 +164,28 @@ export default {
       napomena: "",
       id: "",
       pic: "",
-      zakljucano:null,
-      errormsg:''
+      zakljucano: null,
+      errormsg: "",
     };
   },
-  mounted(){
-/*$('html').click(function(){
-    $('#exampleModal').hide();
-});
-$('#exampleModal').click(function(e){
-  var image = document.getElementById("image");
+  mounted() {
+    var image = document.getElementById("image");
+    if (image != null) {
+      var modal = document.getElementById("exampleModal");
+      modal.addEventListener("hidden.bs.modal", function () {
         image.src = "";
-    e.stopPropagation();
-});*/
-var image = document.getElementById("image");
-if(image!=null){
-  var modal= document.getElementById('exampleModal')
-  modal.addEventListener('hidden.bs.modal', function () {
-        image.src = "";
-})
-}
+      });
+    }
   },
   methods: {
     async back() {
-      try{
-      this.store.admindata=await dohvatpodataka.getalldata()
-      }catch(e){
-        this.errormsg=e.message
+      try {
+        this.store.admindata = await dohvatpodataka.getalldata();
+      } catch (e) {
+        this.errormsg = e.message;
       }
-      
-        this.store.open = false;
+
+      this.store.open = false;
     },
     encode(input) {
       var keyStr =
@@ -199,8 +196,8 @@ if(image!=null){
 
       while (i < input.length) {
         chr1 = input[i++];
-        chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index
-        chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
+        chr2 = i < input.length ? input[i++] : Number.NaN;
+        chr3 = i < input.length ? input[i++] : Number.NaN;
 
         enc1 = chr1 >> 2;
         enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
@@ -234,11 +231,12 @@ if(image!=null){
       this.nocni_rad = data.nocni_rad;
       this.blagdan = data.blagdan;
       this.napomena = data.napomena;
-      if(data.zakljucano==null){
-        this.zakljucano=false
+      if (data.zakljucano == null) {
+        this.zakljucano = false;
       }
-      if(data.zakljucano!=null){
-      this.zakljucano=data.zakljucano;}
+      if (data.zakljucano != null) {
+        this.zakljucano = data.zakljucano;
+      }
       if (data.img != null) {
         var arrayBuffer = data.img.__ob__.value.data;
         var bytes = new Uint8Array(arrayBuffer);
@@ -250,19 +248,19 @@ if(image!=null){
       }
       $("#exampleModal").modal("show");
     },
-    async deletedata(){
-      try{
-      await Podaci.deletespecificdata(this.id).then(()=>{
-        $("#exampleModal").modal("hide");
-         for (let i =0; i < this.data.length; i++){
-   if (this.data[i].id == this.id) {
-      this.data.splice(i,1);
-      break;
-   }
-   }
-      })
-      }catch(e){
-        this.errormsg=e.message
+    async deletedata() {
+      try {
+        await Podaci.deletespecificdata(this.id).then(() => {
+          $("#exampleModal").modal("hide");
+          for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].id == this.id) {
+              this.data.splice(i, 1);
+              break;
+            }
+          }
+        });
+      } catch (e) {
+        this.errormsg = e.message;
       }
     },
     close() {
@@ -311,8 +309,8 @@ if(image!=null){
       if (data.odsutan != null) {
         doc.text("Odsutan: " + data.odsutan.toString(), 10, 140);
       }
-      if(data.prihvaceno_od_admina == null){
-        doc.text("Prihvaceno od admina: Ceka potvrdu" , 10, 150);
+      if (data.prihvaceno_od_admina == null) {
+        doc.text("Prihvaceno od admina: Ceka potvrdu", 10, 150);
       }
       if (data.prihvaceno_od_admina == false) {
         doc.text("Prihvaceno od admina: Nije prihvaceno", 10, 150);
@@ -320,27 +318,28 @@ if(image!=null){
       if (data.prihvaceno_od_admina == true) {
         doc.text("Prihvaceno od admina: Prihvaceno", 10, 150);
       }
-      if(data.razlog_admin!=null){
-        doc.text("Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(), 10, 160);
+      if (data.razlog_admin != null) {
+        doc.text(
+          "Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(),
+          10,
+          160
+        );
       }
       if (data.img != null) {
-        /*var imgData = 'data:image/jpeg;base64,'+ Base64.encode(data.img);
-doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         var arrayBuffer = data.img.__ob__.value.data;
         var bytes = new Uint8Array(arrayBuffer);
         let image = "data:image/png;base64," + this.encode(bytes);
-        //console.log(this.encode(bytes));
         doc.addImage(image, "PNG", 50, 245, 100, 50);
       }
       doc.setLanguage("hr-HR");
       doc.save(Date.now() + ".pdf");
     },
     async savechanges() {
-      if(this.zakljucano==='true'){
-        this.zakljucano=true;
+      if (this.zakljucano === "true") {
+        this.zakljucano = true;
       }
-      if(this.zakljucano==='false'){
-        this.zakljucano=false;
+      if (this.zakljucano === "false") {
+        this.zakljucano = false;
       }
       let update = {
         datum_obavljanja_pocetak: this.datump,
@@ -352,32 +351,32 @@ doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)*/
         nocni_rad: this.nocni_rad,
         napomena: this.napomena,
         blagdan: this.blagdan,
-        zakljucano:this.zakljucano
+        zakljucano: this.zakljucano,
       };
-      try{
-      await Podaci.updatemydata(this.id, update)
-        .then(() => {
-          for (let [i, x] of this.data.entries()) {
-            if (x.id == this.id) {
-              x.datum_obavljanja_pocetak = update.datum_obavljanja_pocetak;
-              x.datum_obavljanja_kraj = update.datum_obavljanja_kraj;
-              x.br_sati = update.br_sati;
-              x.prekovremeni = update.prekovremeni;
-              x.odsutan = update.odsutan;
-              x.rad_od_kuce = update.rad_od_kuce;
-              x.nocni_rad = update.nocni_rad;
-              x.napomena = update.napomena;
-              x.blagdan = update.blagdan;
-              if(update.zakljucano==true){
-                this.data.splice(i,1);
+      try {
+        await Podaci.updatemydata(this.id, update)
+          .then(() => {
+            for (let [i, x] of this.data.entries()) {
+              if (x.id == this.id) {
+                x.datum_obavljanja_pocetak = update.datum_obavljanja_pocetak;
+                x.datum_obavljanja_kraj = update.datum_obavljanja_kraj;
+                x.br_sati = update.br_sati;
+                x.prekovremeni = update.prekovremeni;
+                x.odsutan = update.odsutan;
+                x.rad_od_kuce = update.rad_od_kuce;
+                x.nocni_rad = update.nocni_rad;
+                x.napomena = update.napomena;
+                x.blagdan = update.blagdan;
+                if (update.zakljucano == true) {
+                  this.data.splice(i, 1);
+                }
+                break;
               }
-              break;
             }
-          }
-        })
-        .then(() => $("#exampleModal").modal("hide"));
-      }catch(e){
-        this.errormsg=e.message
+          })
+          .then(() => $("#exampleModal").modal("hide"));
+      } catch (e) {
+        this.errormsg = e.message;
       }
     },
   },

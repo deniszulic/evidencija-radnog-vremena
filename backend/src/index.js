@@ -9,7 +9,6 @@ const port = 3000;
 const db = require('./queries')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload');
-//const nodemailer = require('nodemailer')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(
@@ -18,7 +17,6 @@ app.use(
   })
 )
 app.use(fileUpload());
-//app.use(nodemailer())
 
 app.post('/register', db.createUser)
 app.post('/login', db.login)
@@ -39,9 +37,7 @@ app.get('/lockeddata/:id', db.lockeduserdata)
 app.delete('/delete/:id', db.deletedata)
 app.patch('/updatemyadmindata/:id', db.updateadmindata)
 app.get('/getadmindata/:id', db.getadminmydata)
-//app.delete('/deletepassword/:id', db.deletepass)
 app.patch('/updatemyadminpass/:id', db.updateadminpass)
-//app.get("/bigoof",db.getimg)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

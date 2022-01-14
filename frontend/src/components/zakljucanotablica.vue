@@ -16,18 +16,26 @@
         {{ moment(a.datum_obavljanja_kraj).format("DD.MM.YYYY") }}
       </td>
       <td class="col-md-1">
-        {{a.br_sati}}
+        {{ a.br_sati }}
       </td>
       <td class="col-md-1">
         <b>Zaključano</b>
       </td>
-      <td v-if="a.prihvaceno_od_admina==true" class="col-md-2"><img src="https://i.ibb.co/pnx1gTR/check-mark.png"></td>
-      <td v-if="a.prihvaceno_od_admina==false" class="col-md-2"><img src="https://i.ibb.co/6Zf3p1W/delete.png"></td>
-      <td v-if="a.prihvaceno_od_admina==null" class="col-md-2"><img src="https://i.ibb.co/h1wtBDf/sand-clock.png"></td>
-      <td class="col-md-3"><p id="text-admin">{{a.razlog_admin}}</p></td>
+      <td v-if="a.prihvaceno_od_admina == true" class="col-md-2">
+        <img src="https://i.ibb.co/pnx1gTR/check-mark.png" />
+      </td>
+      <td v-if="a.prihvaceno_od_admina == false" class="col-md-2">
+        <img src="https://i.ibb.co/6Zf3p1W/delete.png" />
+      </td>
+      <td v-if="a.prihvaceno_od_admina == null" class="col-md-2">
+        <img src="https://i.ibb.co/h1wtBDf/sand-clock.png" />
+      </td>
+      <td class="col-md-3">
+        <p id="text-admin">{{ a.razlog_admin }}</p>
+      </td>
       <td class="col-md-2">
         <button class="btn btn-light" @click="download(a)">
-          <img src="https://svgshare.com/i/d3E.svg" width="20%" height="20%" />
+          <img src="../../assets/pdficon.svg" width="20%" height="20%" />
         </button>
       </td>
     </tr>
@@ -36,24 +44,26 @@
 <script>
 import moment from "moment";
 import jsPDF from "jspdf";
-import image from '@/image.js'
-import store from '@/store.js'
+import image from "@/image.js";
+import store from "@/store.js";
 export default {
   props: ["data", "search"],
-  components: {
-  },
+  components: {},
   data() {
     return {
       moment,
-      store
+      store,
     };
   },
-  computed:{
+  computed: {
     filtrirano() {
-      return this.data.filter(post => {
-        return moment(post.datum_obavljanja_pocetak).format("DD.MM.YYYY").toLowerCase().includes(this.search.toLowerCase())
-      })
-    }
+      return this.data.filter((post) => {
+        return moment(post.datum_obavljanja_pocetak)
+          .format("DD.MM.YYYY")
+          .toLowerCase()
+          .includes(this.search.toLowerCase());
+      });
+    },
   },
   methods: {
     encode(input) {
@@ -65,8 +75,8 @@ export default {
 
       while (i < input.length) {
         chr1 = input[i++];
-        chr2 = i < input.length ? input[i++] : Number.NaN; 
-        chr3 = i < input.length ? input[i++] : Number.NaN; 
+        chr2 = i < input.length ? input[i++] : Number.NaN;
+        chr3 = i < input.length ? input[i++] : Number.NaN;
 
         enc1 = chr1 >> 2;
         enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
@@ -128,8 +138,8 @@ export default {
       if (data.odsutan != null) {
         doc.text("Odsutan: " + data.odsutan.toString(), 10, 140);
       }
-      if(data.prihvaceno_od_admina == null){
-        doc.text("Prihvaceno od admina: Ceka potvrdu" , 10, 150);
+      if (data.prihvaceno_od_admina == null) {
+        doc.text("Prihvaceno od admina: Ceka potvrdu", 10, 150);
       }
       if (data.prihvaceno_od_admina == false) {
         doc.text("Prihvaceno od admina: Nije prihvaceno", 10, 150);
@@ -137,14 +147,17 @@ export default {
       if (data.prihvaceno_od_admina == true) {
         doc.text("Prihvaceno od admina: Prihvaceno", 10, 150);
       }
-      if(data.razlog_admin!=null){
-        doc.text("Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(), 10, 160);
+      if (data.razlog_admin != null) {
+        doc.text(
+          "Razlog prihvacanja/odbijanja: " + data.razlog_admin.toString(),
+          10,
+          160
+        );
       }
       if (data.img != null) {
         var arrayBuffer = data.img.__ob__.value.data;
         var bytes = new Uint8Array(arrayBuffer);
         let image = "data:image/png;base64," + this.encode(bytes);
-        //console.log(this.encode(bytes));
         doc.addImage(image, "PNG", 50, 245, 100, 50);
       }
       doc.setLanguage("hr-HR");
@@ -154,7 +167,7 @@ export default {
 };
 </script>
 <style>
-#text-admin{
-  font-size:0.82vw;
+#text-admin {
+  font-size: 0.82vw;
 }
 </style>

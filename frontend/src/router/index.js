@@ -74,11 +74,9 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-//kao ako u aplikaciji trazi da ides u navedene rute a admin je false onda umjesto tih ruta idi na rutu korisnik
 router.beforeEach((to,from,next)=>{
   const javneStranice=["/login","/register","/pocetna","/"]
   const loginPotreban=javneStranice.includes(to.path)
-  console.log(loginPotreban)
   const admin=Auth.state.admin;
   if(loginPotreban && admin==false){
     return next('/korisnik')

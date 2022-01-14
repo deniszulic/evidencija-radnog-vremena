@@ -1,75 +1,114 @@
 <template>
   <div>
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <br>
-    <div v-if="errorMessage" class="alert alert-danger">
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <br />
+        <div v-if="errorMessage" class="alert alert-danger">
           <strong>Greška! </strong>
           <strong v-if="errorMessage">(Lozinke se ne podudaraju!)</strong>
         </div>
-    <form @submit.prevent="register">
-      <input required type="text" id="register" class="fadeIn first" name="register" placeholder="ime" v-model="ime">
-      <input required type="text" id="register2" class="fadeIn first" name="register" placeholder="prezime" v-model="prezime">
-      <input required type="email" id="register3" class="fadeIn first" name="register" placeholder="Email" v-model="email">
-      <input required type="password" id="password" class="fadeIn second" name="register" placeholder="lozinka" v-model="password">
-      <input required type="password" id="password2" class="fadeIn second" name="register" placeholder="ponovljena lozinka" v-model="password2">
-      
-      <input type="submit" class="fadeIn fourth" value="Registracija">
-    </form>
+        <form @submit.prevent="register">
+          <input
+            required
+            type="text"
+            id="register"
+            class="fadeIn first"
+            name="register"
+            placeholder="ime"
+            v-model="ime"
+          />
+          <input
+            required
+            type="text"
+            id="register2"
+            class="fadeIn first"
+            name="register"
+            placeholder="prezime"
+            v-model="prezime"
+          />
+          <input
+            required
+            type="email"
+            id="register3"
+            class="fadeIn first"
+            name="register"
+            placeholder="Email"
+            v-model="email"
+          />
+          <input
+            required
+            type="password"
+            id="password"
+            class="fadeIn second"
+            name="register"
+            placeholder="lozinka"
+            v-model="password"
+          />
+          <input
+            required
+            type="password"
+            id="password2"
+            class="fadeIn second"
+            name="register"
+            placeholder="ponovljena lozinka"
+            v-model="password2"
+          />
 
-    <div id="formFooter">
-      <a class="underlineHover" href="/login">Već ste korisnik?</a>
+          <input type="submit" class="fadeIn fourth" value="Registracija" />
+        </form>
+
+        <div id="formFooter">
+          <a class="underlineHover" href="/login">Već ste korisnik?</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   </div>
 </template>
 
 <script>
-import {Registracija} from "@/services";
+import { Registracija } from "@/services";
 import { Auth } from "@/services";
 export default {
-  name: 'register',
-  data(){
-    return{
-      ime:'',
-      prezime:'',
-      email:'',
-      password:'',
-      password2: '',
-      errorMessage: ''
-    }
+  name: "register",
+  data() {
+    return {
+      ime: "",
+      prezime: "",
+      email: "",
+      password: "",
+      password2: "",
+      errorMessage: "",
+    };
   },
-  methods:{
-    async register(){
-      if(this.password !== this.password2 || this.password2 !== this.password){
+  methods: {
+    async register() {
+      if (
+        this.password !== this.password2 ||
+        this.password2 !== this.password
+      ) {
         this.errorMessage = "Lozinke se ne podudaraju !";
+      } else {
+        let a = {
+          ime: this.ime,
+          prezime: this.prezime,
+          email: this.email,
+          lozinka: this.password.toString(),
+          admin: false,
+          datumReg: Date.now(),
+        };
+        try {
+          await Registracija.register(a);
+          this.$router.push({ name: "login" });
+        } catch (error) {
+          this.errorMessage = error.message;
+        }
       }
-      else{
-      let a={
-        ime:this.ime,
-        prezime:this.prezime,
-        email:this.email,
-        lozinka:this.password.toString(),
-        admin:false,
-        datumReg: Date.now()
-      }
-      try{
-      await Registracija.register(a);
-      this.$router.push({name:"login"})
-      }
-      catch (error) {
-        this.errorMessage = error.message;
-      }
-    }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-
 /* BASIC */
 
 /*html {
@@ -82,7 +121,7 @@ body {
 
 a {
   color: #92badd;
-  display:inline-block;
+  display: inline-block;
   text-decoration: none;
   font-weight: 400;
 }
@@ -92,19 +131,17 @@ h2 {
   font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
-  display:inline-block;
-  margin: 40px 8px 10px 8px; 
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
   color: #cccccc;
 }
-
-
 
 /* STRUCTURE */
 
 .wrapper {
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   min-height: 100%;
@@ -120,8 +157,8 @@ h2 {
   max-width: 450px;
   position: relative;
   padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -134,8 +171,6 @@ h2 {
   border-radius: 0 0 10px 10px;
 }
 
-
-
 /* TABS */
 
 h2.inactive {
@@ -147,11 +182,11 @@ h2.active {
   border-bottom: 2px solid #5fbae9;
 }
 
-
-
 /* FORM TYPOGRAPHY*/
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -161,8 +196,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 5px 20px 40px 20px;
@@ -173,11 +208,15 @@ input[type=button], input[type=submit], input[type=reset]  {
   transition: all 0.3s ease-in-out;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
   background-color: #39ace7;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -185,7 +224,9 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password], input[type=email] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -206,16 +247,14 @@ input[type=text], input[type=password], input[type=email] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type="text"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-input[type=text]:placeholder {
+input[type="text"]:placeholder {
   color: #cccccc;
 }
-
-
 
 /* ANIMATIONS */
 
@@ -256,23 +295,44 @@ input[type=text]:placeholder {
 }
 
 /* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 .fadeIn {
-  opacity:0;
-  -webkit-animation:fadeIn ease-in 1;
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
 
-  -webkit-animation-fill-mode:forwards;
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
-  -webkit-animation-duration:1s;
-  -moz-animation-duration:1s;
-  animation-duration:1s;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 .fadeIn.first {
@@ -315,21 +375,17 @@ input[type=text]:placeholder {
   color: #0d0d0d;
 }
 
-.underlineHover:hover:after{
+.underlineHover:hover:after {
   width: 100%;
 }
-
-
 
 /* OTHERS */
 
 *:focus {
-    outline: none;
-} 
-
-#icon {
-  width:60%;
+  outline: none;
 }
 
-
+#icon {
+  width: 60%;
+}
 </style>
