@@ -1,6 +1,3 @@
--- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-01-01 15:53:44.171
-
 -- tables
 -- Table: KALENDAR
 CREATE TABLE KALENDAR (
