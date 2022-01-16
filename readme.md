@@ -1,7 +1,7 @@
 <div id="top"></div>
 
 <!-- ABOUt -->
-## About The Project
+## O projektu
 
 
 wHours aplikacija je vrlo jednostavna i lagana aplikacija za korištenje. Predviđena je za evidenciju radnih sati. 
@@ -25,11 +25,20 @@ Datume i sate sami unosimo i neovisni su o godini ili području što aplikaciju 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+### Prototip
+
+[![prototip]](https://bit.ly/3twdSHH)
+
+<p align="left">(<a href="https://bit.ly/3twdSHH">Click me</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Requirements
 
 - Node.js v14.15.3
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
 
 ### Installation
 
@@ -43,7 +52,7 @@ Install NPM packages
    ```sh
    npm install
    ```
-Enter your postgresql database details in backend/queries.js
+Postaviti vezu s bazom podataka u  backend/queries.js
 
 Run
    ```sh
@@ -51,3 +60,7 @@ Run
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+[prototip]: https://github.com/othneildrew/Best-README-Template/blob/master/images/screenshot.png?raw=true
