@@ -25,6 +25,15 @@ Datume i sate sami unosimo i neovisni su o godini ili području što aplikaciju 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+### Pristupni podaci
+
+
+
+email: user@user.com
+password: user
+
+email: admin@admin.com
+password: admin
 
 ### Prototip
 

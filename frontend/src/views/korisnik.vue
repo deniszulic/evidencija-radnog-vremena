@@ -27,9 +27,17 @@
             <div
               class="col-4 alert alert-danger"
               role="alert"
-              v-if="locked.length != null"
+              v-if="locked.length"
             >
               Imate nepotpisanih sati !
+            </div>
+            
+            <div
+              class="col-4 alert alert-success"
+              role="alert"
+              v-if="!locked.length"
+            >
+              Svi sati su potpisani
             </div>
           </div>
         </div>
