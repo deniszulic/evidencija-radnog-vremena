@@ -20,6 +20,7 @@ Datume i sate sami unosimo i neovisni su o godini ili području što aplikaciju 
 * [Vue.js](https://vuejs.org/)
 * [Express.js](https://expressjs.com/)
 * [Postgresql](https://www.postgresql.org/)
+* [Nodemailer](https://nodemailer.com/about/)
 * [Bootstrap](https://getbootstrap.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
