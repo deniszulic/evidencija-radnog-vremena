@@ -27,7 +27,7 @@ Datume i sate sami unosimo i neovisni su o godini ili području što aplikaciju 
 
 ### Pristupni podaci
 
-
+Hosted app: https://whours.vercel.app/pocetna
 
 email: user@user.com
 password: user
